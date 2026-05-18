@@ -260,6 +260,7 @@ function renderFilms(movieList) {
       >
         <div class="vhs-case-inner">
           <div class="vhs-face vhs-front">
+            <div class="vhs-gloss" aria-hidden="true"></div>
             <div class="vhs-spine" aria-hidden="true">
               <span>${getAisleName(film.genre)}</span>
             </div>
@@ -317,6 +318,7 @@ function renderFilms(movieList) {
             </div>
           </div>
           <div class="vhs-face vhs-back">
+            <div class="vhs-gloss" aria-hidden="true"></div>
             <div class="vhs-back-spine" aria-hidden="true">
               <span>${getAisleName(film.genre)}</span>
             </div>
@@ -581,6 +583,7 @@ function addFilmToRentalBag(film, sourceButton) {
   if (films[featuredFilmIndex]?.id === film.id) {
     updateProjectorBagButton(film);
   }
+  syncFilmBagState(film);
   prependActivity(film, `@you added ${film.title} to Tonight's Watchlist ${renderStars(getReview(film).stars)}`);
   animateRentalBag();
   playInteractionSound("bag");
@@ -611,6 +614,42 @@ function handleSwipeBag() {
   }
 
   advanceSwipe("right");
+}
+
+function syncFilmBagState(film) {
+  if (!film) {
+    return;
+  }
+
+  const isBagged = rentalBag.some((rental) => rental.id === film.id);
+  document.querySelectorAll(`[data-film-id="${film.id}"]`).forEach((button) => {
+    if (
+      button.classList.contains("bag-button") ||
+      button.classList.contains("detail-bag-button") ||
+      button.classList.contains("midnight-bag-button") ||
+      button.classList.contains("midnight-queue-button")
+    ) {
+      button.classList.toggle("btn-warning", !isBagged);
+      button.classList.toggle("btn-light", isBagged);
+      button.setAttribute("aria-pressed", String(isBagged));
+      if (button.classList.contains("midnight-queue-button")) {
+        button.textContent = isBagged ? "Saved To Tonight's Queue" : "Save To Tonight's Queue";
+      } else {
+        button.textContent = isBagged ? "In The Bag" : "Throw In Bag";
+      }
+    }
+  });
+
+  document
+    .querySelector(`.vhs-card[data-card-film-id="${film.id}"] .bagged-badge`)
+    ?.classList.toggle("is-visible", isBagged);
+  document
+    .querySelector(`.vhs-card[data-card-film-id="${film.id}"] .bag-confirmation`)
+    ?.classList.toggle("is-visible", isBagged);
+
+  if (films[featuredFilmIndex]?.id === film.id) {
+    updateProjectorBagButton(film);
+  }
 }
 
 function openSwipeReviews() {
@@ -893,6 +932,12 @@ function openMovieDetail(film) {
         <p class="back-label">Backside of the box</p>
         <h3>${film.title}</h3>
         <p class="detail-director">Directed by ${film.director}</p>
+        <div class="detail-back-stickers" aria-label="Rental box labels">
+          <span>Rental Label</span>
+          <span>Return by Monday</span>
+          <span>Be Kind Rewind</span>
+          <span>${getBarcodeLabel(film)}</span>
+        </div>
         <div class="detail-info-grid">
           <span>Aisle</span>
           <strong>${getAisleName(film.genre)}</strong>
@@ -903,7 +948,7 @@ function openMovieDetail(film) {
           <span>Critic Rating</span>
           <strong>${details.criticRating}</strong>
         </div>
-        <div class="detail-copy-block">
+        <div class="detail-copy-block detail-synopsis-block">
           <span>Rental Synopsis</span>
           <p>${details.synopsis}</p>
         </div>
@@ -912,6 +957,7 @@ function openMovieDetail(film) {
           <p>${details.cast.join(" · ")}</p>
         </div>
         <div class="detail-social-block">
+          <span class="detail-section-label">Community Review</span>
           <div class="mini-review detail-review">
             <span class="review-avatar">${getReview(film).avatar}</span>
             <div>
@@ -920,9 +966,6 @@ function openMovieDetail(film) {
               <cite>— @${getReview(film).username}</cite>
             </div>
           </div>
-          <div class="detail-vibe-tags">
-            ${(film.vibeTags || []).map((tag) => `<span>${tag}</span>`).join("")}
-          </div>
         </div>
         <div class="employee-recommendation">
           <span>${details.employee}'s Employee Recommendation</span>
@@ -930,14 +973,19 @@ function openMovieDetail(film) {
           <p>${details.employeeRecommendation}</p>
           <em>${details.staffNote}</em>
         </div>
-        <button
-          class="btn ${isBagged ? "btn-light" : "btn-warning"} detail-bag-button"
-          type="button"
-          data-film-id="${film.id}"
-          aria-pressed="${isBagged}"
-        >
-          ${isBagged ? "In The Bag" : "Throw In Bag"}
-        </button>
+        <div class="detail-action-row">
+          <button
+            class="btn ${isBagged ? "btn-light" : "btn-warning"} detail-bag-button"
+            type="button"
+            data-film-id="${film.id}"
+            aria-pressed="${isBagged}"
+          >
+            ${isBagged ? "In The Bag" : "Throw In Bag"}
+          </button>
+          <button class="btn btn-outline-light detail-close-box-button" type="button" data-close-detail>
+            Close Box
+          </button>
+        </div>
       </div>
     </div>
   `;
@@ -1110,6 +1158,7 @@ function handleBagClick(event) {
   if (films[featuredFilmIndex]?.id === film.id) {
     updateProjectorBagButton(film);
   }
+  syncFilmBagState(film);
   prependActivity(film, `@you added ${film.title} to Tonight's Watchlist ${renderStars(getReview(film).stars)}`);
   playInteractionSound("bag");
   animateRentalBag();
@@ -1147,6 +1196,7 @@ function addFeaturedRentalToBag() {
   rentalBag.push(film);
   updateRentalBag();
   updateProjectorBagButton(film);
+  syncFilmBagState(film);
   prependActivity(film, `@you added ${film.title} to Tonight's Watchlist ${renderStars(getReview(film).stars)}`);
   playInteractionSound("bag");
   animateRentalBag();
@@ -1229,6 +1279,7 @@ function removeRental(filmId) {
 
   rentalBag.splice(rentalIndex, 1);
   updateRentalBag();
+  syncFilmBagState({ id: filmId });
   if (films[featuredFilmIndex]?.id === filmId) {
     updateProjectorBagButton(films[featuredFilmIndex]);
   }
@@ -1258,7 +1309,8 @@ function handleDetailExpansionClick(event) {
   if (
     event.target === detailExpansionBackdrop ||
     event.target === detailCloseButton ||
-    event.target.closest("#detailCloseButton")
+    event.target.closest("#detailCloseButton") ||
+    event.target.closest("[data-close-detail]")
   ) {
     closeMovieDetail();
     return;

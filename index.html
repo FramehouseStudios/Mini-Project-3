@@ -175,6 +175,108 @@
         </article>
       </section>
 
+      <section class="container midnight-watchlist home-midnight-watchlist" aria-labelledby="midnightWatchlistHeading">
+        <div class="midnight-copy">
+          <p class="eyebrow">The Midnight Watchlist</p>
+          <h2 id="midnightWatchlistHeading">An emotional watchlist generator for insomniacs.</h2>
+          <p>
+            Tell the night what shape you are in. The clerk behind the counter
+            will pull one VHS, one drink, and one soundtrack from the after-hours shelf.
+          </p>
+          <span class="home-midnight-count" id="homeMidnightCount">Night Bag: 0 tapes</span>
+        </div>
+
+        <form class="midnight-form" id="midnightForm" aria-label="Midnight Watchlist generator">
+          <div>
+            <label class="form-label" for="midnightTime">Time of night</label>
+            <select class="form-select form-select-lg" id="midnightTime">
+              <option>Early Evening</option>
+              <option>10 PM</option>
+              <option selected>Midnight</option>
+              <option>2 AM</option>
+              <option>4 AM</option>
+              <option>Sunrise</option>
+            </select>
+          </div>
+          <div>
+            <label class="form-label" for="midnightMood">Emotional state</label>
+            <select class="form-select form-select-lg" id="midnightMood">
+              <option>Lonely</option>
+              <option>Heartbroken</option>
+              <option>Nostalgic</option>
+              <option>Dissociated</option>
+              <option>Inspired</option>
+              <option>Romantic</option>
+              <option>Burned out</option>
+              <option selected>Dreamy</option>
+              <option>Angry</option>
+              <option>Hopeful</option>
+              <option>Numb</option>
+              <option>Euphoric</option>
+            </select>
+          </div>
+          <div>
+            <label class="form-label" for="midnightWeather">Weather</label>
+            <select class="form-select form-select-lg" id="midnightWeather">
+              <option>Raining</option>
+              <option>Thunderstorm</option>
+              <option>Foggy</option>
+              <option>Summer heat</option>
+              <option>Snowing</option>
+              <option>Windy</option>
+              <option selected>Clear night</option>
+              <option>Neon city</option>
+              <option>Overcast</option>
+            </select>
+          </div>
+          <div>
+            <label class="form-label" for="midnightNeed">What do you need?</label>
+            <select class="form-select form-select-lg" id="midnightNeed">
+              <option selected>Comfort me</option>
+              <option>Destroy me gently</option>
+              <option>Wake me up</option>
+              <option>Make it weird</option>
+              <option>Give me hope</option>
+              <option>Let me spiral</option>
+            </select>
+          </div>
+          <div class="midnight-slider-field">
+            <label class="form-label" for="midnightIntensity">
+              Emotional volume
+              <span id="midnightIntensityLabel">7</span>
+            </label>
+            <input
+              class="form-range"
+              id="midnightIntensity"
+              type="range"
+              min="1"
+              max="10"
+              value="7"
+            />
+          </div>
+          <button class="btn btn-warning btn-lg" type="submit">
+            Ask the Night Clerk
+          </button>
+        </form>
+
+        <article class="midnight-result" id="midnightResult" aria-live="polite">
+          <div class="midnight-empty">
+            <span>2:13 AM</span>
+            <p>Choose a mood, a weather pattern, and a time. The right tape is already humming on the shelf.</p>
+          </div>
+        </article>
+
+        <aside class="midnight-bag-stack" aria-labelledby="midnightBagStackHeading">
+          <div>
+            <p class="eyebrow">Tonight's counter stack</p>
+            <h3 id="midnightBagStackHeading">Night Bag</h3>
+          </div>
+          <ol id="homeMidnightStack">
+            <li>No tapes selected yet.</li>
+          </ol>
+        </aside>
+      </section>
+
       <section class="container section-block home-rental-shelf" aria-labelledby="trending-heading">
         <div class="section-heading">
           <div>
@@ -183,10 +285,11 @@
           </div>
           <a href="films.html">View all</a>
         </div>
-        <div class="home-shelf-rail" aria-hidden="true"></div>
+        <div class="shelf-rail"></div>
         <div class="row g-4 home-trending-grid">
           <article class="col-md-6 col-xl-3 home-vhs-slot">
             <div class="card movie-card home-vhs-card h-100">
+              <div class="vhs-gloss" aria-hidden="true"></div>
               <div class="home-vhs-spine"><span>RENTAL</span></div>
               <img
                 src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=900&q=80"
@@ -209,6 +312,7 @@
           </article>
           <article class="col-md-6 col-xl-3 home-vhs-slot">
             <div class="card movie-card home-vhs-card h-100">
+              <div class="vhs-gloss" aria-hidden="true"></div>
               <div class="home-vhs-spine"><span>STAFF PICK</span></div>
               <img
                 src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=900&q=80"
@@ -231,6 +335,7 @@
           </article>
           <article class="col-md-6 col-xl-3 home-vhs-slot">
             <div class="card movie-card home-vhs-card h-100">
+              <div class="vhs-gloss" aria-hidden="true"></div>
               <div class="home-vhs-spine"><span>HORROR</span></div>
               <img
                 src="https://images.unsplash.com/photo-1505686994434-e3cc5abf1330?auto=format&fit=crop&w=900&q=80"
@@ -253,6 +358,7 @@
           </article>
           <article class="col-md-6 col-xl-3 home-vhs-slot">
             <div class="card movie-card home-vhs-card h-100">
+              <div class="vhs-gloss" aria-hidden="true"></div>
               <div class="home-vhs-spine"><span>SCI-FI</span></div>
               <img
                 src="https://images.unsplash.com/photo-1518676590629-3dcbd9c5a5c9?auto=format&fit=crop&w=900&q=80"
@@ -286,6 +392,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/camera.js"></script>
+    <script src="js/home.js"></script>
     <script>
       const storeIntro = document.querySelector("#storeIntro");
       const enterStore = document.querySelector("#enterStore");

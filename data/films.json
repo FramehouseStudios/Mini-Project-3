@@ -5,12 +5,20 @@
     "genre": "Action",
     "director": "Christopher Nolan",
     "year": 2008,
-    "rating": 9.0,
+    "rating": 9,
     "runtime": 152,
     "rewatches": 18420,
     "favoriteScene": "Interrogation room standoff",
-    "vibeTags": ["rainy city", "crime epic", "comic-book noir"],
-    "cultureTags": ["CULT CLASSIC", "MOST REWATCHED", "STAFF PICK"],
+    "vibeTags": [
+      "rainy city",
+      "crime epic",
+      "comic-book noir"
+    ],
+    "cultureTags": [
+      "CULT CLASSIC",
+      "MOST REWATCHED",
+      "STAFF PICK"
+    ],
     "review": {
       "stars": 4.5,
       "username": "filmnerd99",
@@ -38,7 +46,25 @@
       }
     ],
     "description": "Batman faces a criminal mastermind whose chaos pushes Gotham, Harvey Dent, and Bruce Wayne to their breaking points.",
-    "poster": "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=900&q=80"
+    "poster": "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=900&q=80",
+    "moods": [
+      "Angry",
+      "Burned out",
+      "Numb",
+      "Inspired"
+    ],
+    "weatherTags": [
+      "Raining",
+      "Thunderstorm",
+      "Neon city",
+      "Clear night"
+    ],
+    "lateNightScore": 94,
+    "soundtrack": "dark synthwave and rain-soaked trip-hop",
+    "drinkPairing": "black coffee in a paper cup",
+    "cinematicQuote": "Some nights need thunder before they can become quiet.",
+    "visualMood": "Blue police lights sliding across wet apartment windows.",
+    "emotionalSynopsis": "For when your thoughts are loud and the city outside feels like it has a pulse."
   },
   {
     "id": 2,
@@ -50,8 +76,16 @@
     "runtime": 111,
     "rewatches": 9620,
     "favoriteScene": "Diner reunion glow",
-    "vibeTags": ["tender", "ocean blue", "quiet heartbreak"],
-    "cultureTags": ["FILM SCHOOL FAVORITE", "EMPLOYEE FAVORITE", "STAFF PICK"],
+    "vibeTags": [
+      "tender",
+      "ocean blue",
+      "quiet heartbreak"
+    ],
+    "cultureTags": [
+      "FILM SCHOOL FAVORITE",
+      "EMPLOYEE FAVORITE",
+      "STAFF PICK"
+    ],
     "review": {
       "stars": 5,
       "username": "softfocusmaya",
@@ -79,7 +113,26 @@
       }
     ],
     "description": "A lyrical portrait of identity, tenderness, and survival told across three defining chapters in a young man's life.",
-    "poster": "https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=900&q=80"
+    "poster": "https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=900&q=80",
+    "moods": [
+      "Lonely",
+      "Heartbroken",
+      "Nostalgic",
+      "Numb",
+      "Hopeful"
+    ],
+    "weatherTags": [
+      "Raining",
+      "Foggy",
+      "Clear night",
+      "Overcast"
+    ],
+    "lateNightScore": 98,
+    "soundtrack": "ambient jazz, oceanic strings, and soft piano",
+    "drinkPairing": "hot tea with too much honey",
+    "cinematicQuote": "The quiet parts of you still deserve a screen that listens.",
+    "visualMood": "Blue neon leaking through blinds while the world holds its breath.",
+    "emotionalSynopsis": "A gentle tape for the hour when loneliness starts sounding like memory."
   },
   {
     "id": 3,
@@ -91,8 +144,16 @@
     "runtime": 127,
     "rewatches": 7110,
     "favoriteScene": "The final attic reveal",
-    "vibeTags": ["dread", "family curse", "lights on"],
-    "cultureTags": ["MIDNIGHT RENTAL", "CULT CLASSIC", "HORROR VAULT"],
+    "vibeTags": [
+      "dread",
+      "family curse",
+      "lights on"
+    ],
+    "cultureTags": [
+      "MIDNIGHT RENTAL",
+      "CULT CLASSIC",
+      "HORROR VAULT"
+    ],
     "review": {
       "stars": 4,
       "username": "midnightmovies",
@@ -120,7 +181,25 @@
       }
     ],
     "description": "After a family tragedy, a grieving household uncovers a terrifying inheritance that turns mourning into nightmare.",
-    "poster": "https://images.unsplash.com/photo-1505686994434-e3cc5abf1330?auto=format&fit=crop&w=900&q=80"
+    "poster": "https://images.unsplash.com/photo-1505686994434-e3cc5abf1330?auto=format&fit=crop&w=900&q=80",
+    "moods": [
+      "Dissociated",
+      "Angry",
+      "Numb",
+      "Burned out"
+    ],
+    "weatherTags": [
+      "Thunderstorm",
+      "Windy",
+      "Foggy",
+      "Overcast"
+    ],
+    "lateNightScore": 89,
+    "soundtrack": "droning strings, analog hiss, and basement ambience",
+    "drinkPairing": "bitter black coffee gone cold",
+    "cinematicQuote": "If the house feels awake, let the movie be louder than the hallway.",
+    "visualMood": "A single lamp on while rain claws gently at the window.",
+    "emotionalSynopsis": "For when sleep feels impossible and every shadow has a story."
   },
   {
     "id": 4,
@@ -132,8 +211,16 @@
     "runtime": 139,
     "rewatches": 13250,
     "favoriteScene": "Rocks under a silent sky",
-    "vibeTags": ["maximalist", "family chaos", "absurd tears"],
-    "cultureTags": ["CULT CLASSIC", "MOST REWATCHED", "NEW RELEASE"],
+    "vibeTags": [
+      "maximalist",
+      "family chaos",
+      "absurd tears"
+    ],
+    "cultureTags": [
+      "CULT CLASSIC",
+      "MOST REWATCHED",
+      "NEW RELEASE"
+    ],
     "review": {
       "stars": 4.5,
       "username": "bagelverse",
@@ -161,7 +248,26 @@
       }
     ],
     "description": "A laundromat owner is pulled through the multiverse and discovers that cosmic chaos may still come down to family.",
-    "poster": "https://images.unsplash.com/photo-1518676590629-3dcbd9c5a5c9?auto=format&fit=crop&w=900&q=80"
+    "poster": "https://images.unsplash.com/photo-1518676590629-3dcbd9c5a5c9?auto=format&fit=crop&w=900&q=80",
+    "moods": [
+      "Euphoric",
+      "Inspired",
+      "Dreamy",
+      "Hopeful",
+      "Dissociated"
+    ],
+    "weatherTags": [
+      "Neon city",
+      "Clear night",
+      "Summer heat",
+      "Windy"
+    ],
+    "lateNightScore": 91,
+    "soundtrack": "glitch pop, warm synths, and sentimental karaoke",
+    "drinkPairing": "cherry coke with crushed ice",
+    "cinematicQuote": "Even chaos can look like a doorway if you stare long enough.",
+    "visualMood": "A laundromat glowing like a spaceship at 2 AM.",
+    "emotionalSynopsis": "A maximalist rental for nights when your brain has too many tabs open but your heart still wants to be found."
   },
   {
     "id": 5,
@@ -173,8 +279,16 @@
     "runtime": 120,
     "rewatches": 15880,
     "favoriteScene": "The sandstorm chase",
-    "vibeTags": ["chrome", "desert opera", "full volume"],
-    "cultureTags": ["MOST REWATCHED", "STAFF PICK", "CULT CLASSIC"],
+    "vibeTags": [
+      "chrome",
+      "desert opera",
+      "full volume"
+    ],
+    "cultureTags": [
+      "MOST REWATCHED",
+      "STAFF PICK",
+      "CULT CLASSIC"
+    ],
     "review": {
       "stars": 5,
       "username": "chromewitness",
@@ -202,7 +316,25 @@
       }
     ],
     "description": "A desert chase becomes a roaring survival myth filled with chrome, dust, rebellion, and practical spectacle.",
-    "poster": "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80"
+    "poster": "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80",
+    "moods": [
+      "Angry",
+      "Euphoric",
+      "Burned out",
+      "Inspired"
+    ],
+    "weatherTags": [
+      "Summer heat",
+      "Windy",
+      "Clear night",
+      "Thunderstorm"
+    ],
+    "lateNightScore": 86,
+    "soundtrack": "industrial drums, desert metal, and engine noise",
+    "drinkPairing": "cheap whiskey with one melting cube",
+    "cinematicQuote": "Sometimes survival needs to be watched at full volume.",
+    "visualMood": "Headlights cutting through dust like a fever dream.",
+    "emotionalSynopsis": "For when you are too wired to sleep and need the movie to outrun your thoughts."
   },
   {
     "id": 6,
@@ -214,8 +346,16 @@
     "runtime": 104,
     "rewatches": 10240,
     "favoriteScene": "The Sunken Place",
-    "vibeTags": ["social horror", "nervous laughs", "sharp"],
-    "cultureTags": ["FILM SCHOOL FAVORITE", "MIDNIGHT RENTAL", "STAFF PICK"],
+    "vibeTags": [
+      "social horror",
+      "nervous laughs",
+      "sharp"
+    ],
+    "cultureTags": [
+      "FILM SCHOOL FAVORITE",
+      "MIDNIGHT RENTAL",
+      "STAFF PICK"
+    ],
     "review": {
       "stars": 4.5,
       "username": "videostorekid",
@@ -243,7 +383,25 @@
       }
     ],
     "description": "A weekend visit becomes a razor-sharp nightmare about race, control, liberal politeness, and stolen identity.",
-    "poster": "https://images.unsplash.com/photo-1509248961158-e54f6934749c?auto=format&fit=crop&w=900&q=80"
+    "poster": "https://images.unsplash.com/photo-1509248961158-e54f6934749c?auto=format&fit=crop&w=900&q=80",
+    "moods": [
+      "Dissociated",
+      "Angry",
+      "Numb",
+      "Inspired"
+    ],
+    "weatherTags": [
+      "Overcast",
+      "Foggy",
+      "Clear night",
+      "Raining"
+    ],
+    "lateNightScore": 88,
+    "soundtrack": "minimal strings, chopped soul, and uneasy silence",
+    "drinkPairing": "red wine you forgot to finish",
+    "cinematicQuote": "Trust the feeling that tells you something is off.",
+    "visualMood": "A quiet suburb under moonlight, too still to be comforting.",
+    "emotionalSynopsis": "A sharp midnight rental for when polite rooms feel stranger than empty streets."
   },
   {
     "id": 7,
@@ -251,12 +409,20 @@
     "genre": "Romance",
     "director": "Damien Chazelle",
     "year": 2016,
-    "rating": 8.0,
+    "rating": 8,
     "runtime": 128,
     "rewatches": 12100,
     "favoriteScene": "Planetarium dance",
-    "vibeTags": ["neon romance", "bittersweet", "golden hour"],
-    "cultureTags": ["FRIDAY NIGHT FAVORITE", "MOST REWATCHED", "DATE NIGHT PICK"],
+    "vibeTags": [
+      "neon romance",
+      "bittersweet",
+      "golden hour"
+    ],
+    "cultureTags": [
+      "FRIDAY NIGHT FAVORITE",
+      "MOST REWATCHED",
+      "DATE NIGHT PICK"
+    ],
     "review": {
       "stars": 4,
       "username": "neonmusical",
@@ -284,7 +450,26 @@
       }
     ],
     "description": "Two artists chase love and ambition through a dreamlike Los Angeles filled with music, color, and bittersweet choices.",
-    "poster": "https://images.unsplash.com/photo-1499364615650-ec38552f4f34?auto=format&fit=crop&w=900&q=80"
+    "poster": "https://images.unsplash.com/photo-1499364615650-ec38552f4f34?auto=format&fit=crop&w=900&q=80",
+    "moods": [
+      "Romantic",
+      "Heartbroken",
+      "Nostalgic",
+      "Dreamy",
+      "Hopeful"
+    ],
+    "weatherTags": [
+      "Clear night",
+      "Neon city",
+      "Summer heat",
+      "Sunrise"
+    ],
+    "lateNightScore": 90,
+    "soundtrack": "lonely jazz piano and golden-hour strings",
+    "drinkPairing": "diner milkshake with two straws you do not need",
+    "cinematicQuote": "Some dreams stay beautiful because they never came home with us.",
+    "visualMood": "Streetlights turning Los Angeles into a memory you can almost touch.",
+    "emotionalSynopsis": "For the ache after midnight when nostalgia and romance are wearing the same jacket."
   },
   {
     "id": 8,
@@ -296,8 +481,16 @@
     "runtime": 117,
     "rewatches": 17640,
     "favoriteScene": "Leap of faith",
-    "vibeTags": ["comic splash", "kinetic", "heart-forward"],
-    "cultureTags": ["MOST REWATCHED", "FAMILY MATINEE", "STAFF PICK"],
+    "vibeTags": [
+      "comic splash",
+      "kinetic",
+      "heart-forward"
+    ],
+    "cultureTags": [
+      "MOST REWATCHED",
+      "FAMILY MATINEE",
+      "STAFF PICK"
+    ],
     "review": {
       "stars": 5,
       "username": "halftonehero",
@@ -325,6 +518,24 @@
       }
     ],
     "description": "Miles Morales discovers a multiverse of Spider-heroes in a kinetic comic-book adventure bursting with style and heart.",
-    "poster": "https://images.unsplash.com/photo-1608889476561-6242cfdbf622?auto=format&fit=crop&w=900&q=80"
+    "poster": "https://images.unsplash.com/photo-1608889476561-6242cfdbf622?auto=format&fit=crop&w=900&q=80",
+    "moods": [
+      "Hopeful",
+      "Inspired",
+      "Euphoric",
+      "Dreamy"
+    ],
+    "weatherTags": [
+      "Clear night",
+      "Neon city",
+      "Snowing",
+      "Windy"
+    ],
+    "lateNightScore": 84,
+    "soundtrack": "bright hip-hop, comic-book drums, and rooftop synths",
+    "drinkPairing": "orange soda from the back of the fridge",
+    "cinematicQuote": "The leap still counts even if your hands are shaking.",
+    "visualMood": "City windows blinking like panels in a comic at sunrise.",
+    "emotionalSynopsis": "A late-night boost for when you need proof that becoming yourself can be messy and electric."
   }
 ]
