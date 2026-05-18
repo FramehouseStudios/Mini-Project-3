@@ -73,3 +73,22 @@ any HTML/CSS**:
 
   Exit code `0` = valid, `1` = errors (with a per-field report).
 
+## Styles (`css/style.css` is generated)
+
+`css/style.css` is a **build artifact** — do not edit it directly. The source
+of truth is the ordered partials in **`css/src/`** (`01-base.css` …
+`10-late-passes-responsive.css`), split by area so edits stay focused instead
+of scrolling a 13k-line monolith.
+
+```bash
+node scripts/build-css.mjs           # rebuild css/style.css from css/src/*
+node scripts/build-css.mjs --check   # CI: fail if style.css is out of date
+```
+
+Partials are concatenated in filename order with no separator, so the shipped
+stylesheet is **byte-identical** to the old monolith (cascade/order unchanged —
+zero visual change). `css/style.css` stays committed so the site still works
+with no build step. Further breaking up the large `03-components-core.css`
+should be done one component at a time, re-running the build and diffing the
+output to keep it byte-stable.
+
