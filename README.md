@@ -49,3 +49,27 @@ Created by Joshua Ojeda.
 - Add user reviews
 - Add trailers
 - Deploy with GitHub Pages
+
+## Backend Integration (future)
+
+The app is intentionally frontend-only for this assignment, but the data layer
+is documented and validated so a backend can be added later **without changing
+any HTML/CSS**:
+
+- **`docs/data-schema.md`** — audited field contract for `data/films.json`,
+  the controlled vocabularies (genre / moods / weather), and a proposed
+  normalized model for a real database.
+- **`docs/api-contracts.md`** — request/response contracts for a future API
+  (`GET /films`, `GET /films/:id`, `GET /reviews?filmId=`, `POST /rental-bag`,
+  `DELETE /rental-bag/:id`, `POST /midnight-recommendation`) plus the exact
+  URL-only migration path for `js/app.js` / `js/home.js`.
+- **`scripts/validate-films.mjs`** — zero-dependency catalog validator. Run it
+  after any data edit and in CI:
+
+  ```bash
+  node scripts/validate-films.mjs              # offline structural check
+  node scripts/validate-films.mjs --check-urls # also verifies poster URLs
+  ```
+
+  Exit code `0` = valid, `1` = errors (with a per-field report).
+
