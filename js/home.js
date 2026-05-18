@@ -603,6 +603,23 @@ function setHomeText(selector, value) {
   }
 }
 
+function getHomeLiveViewerCount(film, index = 0) {
+  return 18 + ((film.id * 19 + index * 7) % 86);
+}
+
+function renderHomeLiveWatchingStrip(film, index = 0) {
+  const count = getHomeLiveViewerCount(film, index);
+  const label = count === 1 ? "person" : "people";
+
+  return `
+    <div class="live-watch-strip home-live-watch-strip" aria-label="${count} ${label} streaming ${escapeHomeHtml(film.title)} right now">
+      <span class="live-dot" aria-hidden="true"></span>
+      <strong>${count}</strong>
+      <span>streaming right now</span>
+    </div>
+  `;
+}
+
 function homeShelfCard(film, index) {
   const reactionPool = [
     "watched twice this week",
@@ -629,6 +646,7 @@ function homeShelfCard(film, index) {
           loading="lazy"
           decoding="async"
         />
+        ${renderHomeLiveWatchingStrip(film, index)}
         <span class="home-vhs-sticker">BLOCKBUSTER VIDEO</span>
         <span class="home-vhs-label">${index === 0 ? "Premium Pick" : "Staff Pick"}</span>
         <span class="home-vhs-barcode">BB+ ${String(film.id).padStart(3, "0")}-${escapeHomeHtml(film.year)}</span>

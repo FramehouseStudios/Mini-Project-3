@@ -13003,6 +13003,480 @@ body.theater-open .sound-toggle {
   }
 }
 
+/* Live viewer signal: quiet Apple-style presence under each VHS poster. */
+.live-watch-strip {
+  position: relative;
+  z-index: 6;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.42rem;
+  width: calc(100% - 2.1rem);
+  min-height: 2.15rem;
+  margin: 0.55rem 1rem 0.1rem;
+  border: 1px solid rgba(255, 255, 255, 0.105);
+  border-radius: 999px;
+  padding: 0.46rem 0.72rem;
+  color: rgba(248, 250, 252, 0.74);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.115), rgba(255, 255, 255, 0.035)),
+    rgba(2, 6, 23, 0.58);
+  box-shadow:
+    0 14px 32px rgba(0, 0, 0, 0.26),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(18px) saturate(1.25);
+  font-size: 0.74rem;
+  font-weight: 850;
+  letter-spacing: 0.01em;
+  transform: translateZ(12px);
+}
+
+.live-watch-strip strong {
+  color: #f8fafc;
+  font-variant-numeric: tabular-nums;
+  font-weight: 950;
+}
+
+.live-dot {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 999px;
+  background: #35f2a1;
+  box-shadow:
+    0 0 0 4px rgba(53, 242, 161, 0.08),
+    0 0 18px rgba(53, 242, 161, 0.7);
+  animation: liveAudiencePulse 2.8s ease-in-out infinite;
+}
+
+.vhs-front > .live-watch-strip {
+  flex: 0 0 auto;
+  margin-left: calc(24px + 0.82rem);
+  width: calc(100% - 24px - 1.64rem);
+}
+
+.home-live-watch-strip {
+  margin: 0.56rem 0.82rem 0;
+  width: calc(100% - 1.64rem);
+  font-size: 0.72rem;
+}
+
+.home-vhs-card:hover .live-watch-strip,
+.home-vhs-slot:focus-within .live-watch-strip,
+.vhs-card:hover .live-watch-strip,
+.vhs-slot:focus-within .live-watch-strip {
+  border-color: rgba(255, 213, 0, 0.18);
+  color: rgba(248, 250, 252, 0.88);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.045)),
+    rgba(2, 6, 23, 0.66);
+  box-shadow:
+    0 16px 42px rgba(0, 0, 0, 0.32),
+    0 0 24px rgba(53, 242, 161, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+
+@keyframes liveAudiencePulse {
+  0%,
+  100% {
+    transform: scale(0.86);
+    opacity: 0.72;
+  }
+
+  50% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 575px) {
+  .live-watch-strip {
+    min-height: 2rem;
+    font-size: 0.68rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .live-dot {
+    animation: none;
+  }
+}
+
+/* Guestbook elevation: a living wall of late-night movie confessions. */
+.pitch-home .culture-board {
+  position: relative;
+  isolation: isolate;
+  grid-template-columns: minmax(280px, 1.08fr) minmax(230px, 0.72fr) repeat(2, minmax(200px, 0.82fr));
+  grid-auto-rows: minmax(118px, auto);
+  gap: clamp(0.9rem, 1.8vw, 1.25rem);
+  margin-top: clamp(4rem, 8vw, 7rem);
+  padding: clamp(0.45rem, 1vw, 0.8rem);
+}
+
+.pitch-home .culture-board::before {
+  content: "";
+  position: absolute;
+  inset: -5rem -4rem -3rem;
+  z-index: -1;
+  height: auto;
+  background:
+    radial-gradient(ellipse at 18% 20%, rgba(255, 213, 0, 0.11), transparent 22rem),
+    radial-gradient(ellipse at 82% 32%, rgba(56, 189, 248, 0.14), transparent 26rem),
+    radial-gradient(ellipse at 50% 110%, rgba(124, 58, 237, 0.12), transparent 25rem),
+    repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.018) 0 1px, transparent 1px 8px);
+  opacity: 0.9;
+  filter: blur(0.2px);
+  animation: guestbookAmbientDrift 34s ease-in-out infinite;
+}
+
+.pitch-home .culture-board::after {
+  content: "";
+  position: absolute;
+  left: 0.4rem;
+  right: 0.4rem;
+  top: -1rem;
+  z-index: -1;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, rgba(255, 213, 0, 0.52), rgba(56, 189, 248, 0.28), transparent);
+  box-shadow:
+    0 0 24px rgba(255, 213, 0, 0.16),
+    0 0 40px rgba(56, 189, 248, 0.1);
+}
+
+.pitch-home .culture-board .culture-card {
+  border-color: rgba(255, 255, 255, 0.075);
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 16% 0%, rgba(255, 213, 0, 0.08), transparent 12rem),
+    radial-gradient(circle at 100% 18%, rgba(56, 189, 248, 0.09), transparent 14rem),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.018)),
+    rgba(5, 10, 23, 0.5);
+  box-shadow:
+    0 24px 70px rgba(0, 0, 0, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(18px) saturate(1.08);
+}
+
+.pitch-home .culture-board .culture-card::before {
+  opacity: 0.13;
+  background:
+    linear-gradient(115deg, transparent 0 34%, rgba(255, 255, 255, 0.12) 46%, transparent 58%),
+    repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 0 1px, transparent 1px 7px);
+}
+
+.pitch-home .culture-board .culture-card:hover {
+  border-color: rgba(255, 213, 0, 0.18);
+  transform: translateY(-4px);
+  box-shadow:
+    0 32px 90px rgba(0, 0, 0, 0.3),
+    0 0 34px rgba(255, 213, 0, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.pitch-home .culture-hero-card {
+  min-height: 340px;
+  padding: clamp(1.35rem, 2.2vw, 1.8rem);
+  justify-content: center;
+}
+
+.pitch-home .culture-hero-card h2 {
+  max-width: 11ch;
+  color: #f7f0e4;
+  font-size: clamp(2.9rem, 5.6vw, 5.25rem);
+  line-height: 0.88;
+  letter-spacing: 0;
+  text-shadow:
+    0 2px 34px rgba(0, 0, 0, 0.6),
+    0 0 34px rgba(255, 213, 0, 0.12);
+}
+
+.pitch-home .culture-hero-card p:not(.eyebrow) {
+  max-width: 31rem;
+  color: rgba(226, 232, 240, 0.76);
+  font-size: clamp(0.98rem, 1.25vw, 1.08rem);
+  line-height: 1.72;
+}
+
+.pitch-home .regulars-row {
+  grid-template-columns: 1fr;
+  margin-top: 1.2rem;
+}
+
+.pitch-home .regulars-row span {
+  border-color: rgba(255, 213, 0, 0.14);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.018)),
+    rgba(2, 6, 23, 0.32);
+}
+
+.pitch-home .live-crowd-card {
+  grid-column: span 3;
+  min-height: 132px;
+  padding: 1.15rem;
+}
+
+.pitch-home .crowd-heading h3 {
+  color: #f7f0e4;
+  font-size: clamp(1.75rem, 3vw, 2.55rem);
+}
+
+.pitch-home .live-rail {
+  gap: 0.7rem;
+  padding-block: 0.12rem;
+}
+
+.pitch-home .live-rail span {
+  border-color: rgba(255, 255, 255, 0.09);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.018)),
+    rgba(2, 6, 23, 0.46);
+  box-shadow:
+    0 10px 28px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  animation: liveRailDrift 8.5s ease-in-out infinite alternate;
+}
+
+.pitch-home .live-rail i {
+  background: #ffe57b;
+  box-shadow:
+    0 0 0 4px rgba(255, 213, 0, 0.08),
+    0 0 14px rgba(255, 213, 0, 0.55);
+}
+
+.pitch-home .diary-card {
+  min-height: 156px;
+  border-radius: 22px;
+  transform: rotate(var(--diary-tilt, 0deg));
+}
+
+.pitch-home .diary-card:nth-of-type(3) {
+  --diary-tilt: -0.5deg;
+}
+
+.pitch-home .diary-card:nth-of-type(4) {
+  --diary-tilt: 0.4deg;
+}
+
+.pitch-home .diary-card:nth-of-type(8) {
+  --diary-tilt: -0.25deg;
+}
+
+.pitch-home .diary-card.is-tall {
+  grid-row: span 1;
+  min-height: 226px;
+  align-content: space-between;
+}
+
+.pitch-home .diary-card.is-tall > div {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.confession-slip {
+  position: relative;
+  margin-top: 0.25rem;
+  border: 1px solid rgba(255, 213, 0, 0.13);
+  border-left: 3px solid rgba(255, 213, 0, 0.72);
+  border-radius: 14px;
+  padding: 0.72rem 0.78rem;
+  background:
+    linear-gradient(135deg, rgba(255, 213, 0, 0.11), rgba(86, 124, 255, 0.06)),
+    rgba(2, 6, 23, 0.34);
+  box-shadow:
+    0 18px 34px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.confession-slip::after {
+  content: "";
+  position: absolute;
+  right: 1rem;
+  top: -0.28rem;
+  width: 2.4rem;
+  height: 0.6rem;
+  border-radius: 2px;
+  background: rgba(236, 229, 205, 0.26);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16);
+  transform: rotate(2.5deg);
+}
+
+.confession-slip span {
+  display: block;
+  margin-bottom: 0.25rem;
+  color: rgba(255, 229, 125, 0.92);
+  font-family: var(--font-heading);
+  font-size: 0.62rem;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.confession-slip p {
+  margin: 0;
+  color: rgba(248, 250, 252, 0.78) !important;
+  font-size: 0.78rem !important;
+  font-style: italic;
+  line-height: 1.45 !important;
+}
+
+.aisle-whisper {
+  grid-column: 1 / -1;
+  align-self: end;
+  margin: 0.35rem 0 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 0.75rem;
+  color: rgba(203, 213, 225, 0.64) !important;
+  font-family: var(--font-heading);
+  font-size: 0.68rem !important;
+  font-weight: 900;
+  letter-spacing: 0.045em;
+  text-transform: uppercase;
+}
+
+.pitch-home .diary-card.is-tall time {
+  grid-column: 1 / -1;
+  margin-top: 0;
+}
+
+.pitch-home .activity-log-card p {
+  color: rgba(248, 250, 252, 0.86);
+  font-size: 0.92rem;
+  line-height: 1.48;
+}
+
+.pitch-home .activity-log-card time {
+  color: rgba(203, 213, 225, 0.52);
+}
+
+.pitch-home .culture-tag {
+  border-color: rgba(255, 213, 0, 0.15);
+  background: rgba(255, 213, 0, 0.065);
+  color: rgba(255, 229, 125, 0.9);
+}
+
+.pitch-home .receipt-card-social {
+  position: relative;
+  min-height: 230px;
+  border: 0;
+  border-radius: 13px;
+  padding: 1.05rem;
+  color: #17120b;
+  background:
+    radial-gradient(circle at 20% 12%, rgba(255, 255, 255, 0.5), transparent 10rem),
+    repeating-linear-gradient(0deg, rgba(88, 65, 28, 0.045) 0 1px, transparent 1px 6px),
+    linear-gradient(135deg, #f6e8bf, #dac394 60%, #fbefcc) !important;
+  box-shadow:
+    0 28px 62px rgba(0, 0, 0, 0.32),
+    0 0 28px rgba(255, 213, 0, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.42);
+  transform: rotate(-1.1deg);
+}
+
+.pitch-home .receipt-card-social::after {
+  content: "RETURN BEFORE SUNRISE";
+  position: absolute;
+  right: 0.9rem;
+  bottom: 0.8rem;
+  border: 2px solid rgba(172, 30, 28, 0.72);
+  border-radius: 4px;
+  padding: 0.18rem 0.4rem;
+  color: rgba(172, 30, 28, 0.82);
+  background: transparent;
+  font-size: 0.58rem;
+  font-weight: 950;
+  letter-spacing: 0.04em;
+  opacity: 1;
+  transform: rotate(-4deg);
+}
+
+.pitch-home .receipt-card-social h3 {
+  color: #17120b;
+}
+
+.receipt-note {
+  margin: 0.75rem 0 0;
+  color: rgba(23, 18, 11, 0.66) !important;
+  font-family: "Comic Sans MS", "Bradley Hand", cursive;
+  font-size: 0.75rem;
+  font-weight: 800;
+  line-height: 1.35;
+  transform: rotate(-0.6deg);
+}
+
+.pitch-home .scene-card {
+  min-height: 210px;
+  transform: rotate(0.35deg);
+}
+
+.pitch-home .quote-card {
+  min-height: 210px;
+  transform: rotate(-0.35deg);
+}
+
+.pitch-home .scene-card h3,
+.pitch-home .quote-card blockquote {
+  color: #f7f0e4;
+}
+
+.pitch-home .scene-card h3 {
+  font-size: clamp(1.65rem, 2.8vw, 2.35rem);
+  line-height: 0.98;
+}
+
+.pitch-home .quote-card blockquote {
+  border-left-color: rgba(255, 213, 0, 0.66);
+  font-size: clamp(1.05rem, 1.6vw, 1.28rem);
+  line-height: 1.55;
+}
+
+.pin-note {
+  margin-top: 0.75rem;
+  color: rgba(203, 213, 225, 0.66) !important;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+@keyframes guestbookAmbientDrift {
+  0%,
+  100% {
+    transform: translate3d(-1%, -0.5%, 0);
+  }
+
+  50% {
+    transform: translate3d(1%, 0.6%, 0);
+  }
+}
+
+@media (max-width: 1199px) {
+  .pitch-home .culture-board {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .pitch-home .culture-hero-card,
+  .pitch-home .live-crowd-card {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 767px) {
+  .pitch-home .culture-board {
+    grid-template-columns: 1fr;
+  }
+
+  .pitch-home .culture-hero-card,
+  .pitch-home .live-crowd-card,
+  .pitch-home .diary-card.is-tall {
+    grid-column: auto;
+    grid-row: auto;
+    min-height: auto;
+  }
+
+  .pitch-home .live-rail {
+    flex-direction: column;
+    mask-image: none;
+  }
+}
+
 @media (max-width: 575px) {
   .pitch-home .home-now-playing {
     padding: 1.1rem;
@@ -13216,6 +13690,443 @@ body.theater-open .sound-toggle {
 
   .pitch-home .pitch-hero .hero-panel {
     justify-self: start;
+    transform: none;
+  }
+}
+
+/* Checkout Stack elevation: the late-night counter becomes the ritual center. */
+.tonight-queue-section {
+  isolation: isolate;
+  grid-template-columns: minmax(290px, 0.62fr) minmax(420px, 1fr);
+  gap: clamp(1.35rem, 3.2vw, 2.6rem);
+  margin-top: clamp(2rem, 5vw, 4rem);
+  padding: clamp(1.35rem, 3.4vw, 2.6rem);
+  border-color: rgba(255, 255, 255, 0.08);
+  background:
+    radial-gradient(ellipse at 72% 20%, rgba(255, 213, 0, 0.18), transparent 22rem),
+    radial-gradient(ellipse at 20% 90%, rgba(37, 99, 235, 0.22), transparent 26rem),
+    radial-gradient(ellipse at 50% 115%, rgba(124, 58, 237, 0.16), transparent 28rem),
+    linear-gradient(120deg, rgba(3, 8, 20, 0.96), rgba(14, 22, 45, 0.78) 48%, rgba(2, 6, 23, 0.92));
+  box-shadow:
+    0 46px 130px rgba(0, 0, 0, 0.42),
+    0 0 90px rgba(37, 99, 235, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    inset 0 -70px 110px rgba(0, 0, 0, 0.24);
+}
+
+.tonight-queue-section::before {
+  inset: auto 2rem 1.15rem 2rem;
+  height: 54px;
+  background:
+    radial-gradient(ellipse at 62% 50%, rgba(255, 213, 0, 0.28), transparent 42%),
+    linear-gradient(90deg, transparent, rgba(255, 213, 0, 0.2), rgba(37, 99, 235, 0.18), transparent);
+  filter: blur(16px);
+  opacity: 0.9;
+}
+
+.tonight-queue-section::after {
+  background:
+    linear-gradient(112deg, transparent 0 32%, rgba(255, 255, 255, 0.08) 46%, transparent 62%),
+    radial-gradient(circle at 24% 28%, rgba(255, 255, 255, 0.05) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 78% 60%, rgba(255, 213, 0, 0.055) 0 1px, transparent 1.5px),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.018) 0 1px, transparent 1px 7px);
+  background-size: auto, 120px 90px, 180px 140px, auto;
+  opacity: 0.48;
+  animation: checkoutCounterDust 32s linear infinite;
+}
+
+.tonight-stack-copy {
+  justify-content: start;
+  padding-top: clamp(0.4rem, 1.6vw, 1rem);
+}
+
+.tonight-stack-copy .eyebrow {
+  color: rgba(255, 213, 0, 0.82);
+  letter-spacing: 0.14em;
+}
+
+.tonight-queue-section h2 {
+  color: #f7f0e4;
+  font-size: clamp(3.2rem, 6vw, 6.1rem);
+  line-height: 0.86;
+  text-shadow:
+    0 2px 36px rgba(0, 0, 0, 0.62),
+    0 0 34px rgba(255, 213, 0, 0.14);
+}
+
+.tonight-stack-copy > p:not(.eyebrow):not(.stack-flare-message) {
+  max-width: 27rem;
+  color: rgba(226, 232, 240, 0.74);
+  font-size: clamp(1rem, 1.35vw, 1.16rem);
+  line-height: 1.7;
+}
+
+.stack-mood-card {
+  margin-top: 1.35rem;
+  border: 0;
+  border-left: 3px solid rgba(255, 213, 0, 0.56);
+  border-radius: 18px;
+  padding: 1rem 1.1rem;
+  background:
+    radial-gradient(circle at 0% 20%, rgba(255, 213, 0, 0.12), transparent 12rem),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.024) 0 1px, transparent 1px 7px),
+    rgba(255, 255, 255, 0.035);
+  box-shadow:
+    0 18px 54px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.stack-mood-card span {
+  color: rgba(255, 213, 0, 0.78);
+}
+
+.stack-mood-card p {
+  color: rgba(246, 240, 228, 0.92);
+  font-size: 0.96rem;
+  line-height: 1.58;
+}
+
+.projector-session-card {
+  border: 0;
+  border-radius: 24px;
+  padding: 1rem;
+  background:
+    radial-gradient(circle at 0% 0%, rgba(255, 213, 0, 0.13), transparent 12rem),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.065), rgba(255, 255, 255, 0.018)),
+    rgba(1, 5, 14, 0.44);
+  box-shadow:
+    0 22px 70px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px);
+}
+
+.projector-session-card::before {
+  content: "TAPE HISS / REEL WARM";
+  position: absolute;
+  right: 1rem;
+  top: 0.92rem;
+  color: rgba(255, 213, 0, 0.52);
+  font-size: 0.52rem;
+  font-weight: 950;
+  letter-spacing: 0.12em;
+}
+
+.projector-session-card::after {
+  opacity: 0.32;
+}
+
+.projector-session-copy strong {
+  color: #f7f0e4;
+  font-family: "Oswald", sans-serif;
+  font-size: clamp(1.45rem, 2.7vw, 2.15rem);
+  line-height: 0.98;
+}
+
+.projector-session-copy p {
+  color: rgba(226, 232, 240, 0.68);
+}
+
+.projector-progress {
+  height: 0.86rem;
+  border: 1px solid rgba(255, 213, 0, 0.12);
+  background:
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.08) 0 1px, transparent 1px 14px),
+    rgba(0, 0, 0, 0.34);
+  box-shadow:
+    inset 0 0 18px rgba(0, 0, 0, 0.48),
+    0 0 24px rgba(255, 213, 0, 0.08);
+}
+
+.projector-progress span {
+  background:
+    linear-gradient(90deg, rgba(255, 213, 0, 0.96), rgba(255, 255, 255, 0.78) 44%, rgba(59, 130, 246, 0.86)),
+    repeating-linear-gradient(90deg, rgba(2, 6, 23, 0.22) 0 1px, transparent 1px 9px);
+  animation: checkoutTrackingPulse 5.2s ease-in-out infinite;
+}
+
+.projector-eq {
+  opacity: 0.68;
+}
+
+.stack-actions {
+  gap: 0.78rem;
+  margin-top: 1.25rem;
+}
+
+.stack-actions .btn {
+  min-height: 3rem;
+  border-radius: 14px;
+}
+
+#startStackScreening {
+  min-width: 170px;
+  box-shadow:
+    0 18px 46px rgba(0, 0, 0, 0.32),
+    0 0 36px rgba(255, 213, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.58);
+}
+
+#startStackScreening:hover,
+#startStackScreening:focus-visible {
+  transform: translateY(-3px);
+}
+
+.stack-actions .btn-outline-light {
+  opacity: 0.82;
+}
+
+.stack-flare-message {
+  margin-top: 0.8rem;
+  color: rgba(255, 229, 125, 0.9);
+}
+
+.checkout-counter {
+  position: relative;
+  grid-template-columns: minmax(210px, 0.56fr) minmax(300px, 1fr);
+  gap: clamp(1rem, 2.2vw, 1.45rem);
+  align-items: end;
+  min-height: 25rem;
+  padding: clamp(0.45rem, 1vw, 0.8rem);
+}
+
+.checkout-counter::before {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 38%;
+  border-radius: 28px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.012)),
+    radial-gradient(ellipse at 62% 0%, rgba(255, 213, 0, 0.12), transparent 48%),
+    rgba(0, 0, 0, 0.16);
+  transform: perspective(900px) rotateX(62deg);
+  transform-origin: bottom;
+  filter: blur(0.2px);
+  opacity: 0.74;
+}
+
+.checkout-counter::after {
+  content: "12 night owls at the counter · most replayed during rainstorms";
+  position: absolute;
+  right: 1.1rem;
+  top: 0.65rem;
+  max-width: 18rem;
+  color: rgba(255, 213, 0, 0.32);
+  font-size: 0.62rem;
+  font-weight: 950;
+  letter-spacing: 0.12em;
+  line-height: 1.4;
+  text-align: right;
+  text-transform: uppercase;
+}
+
+.receipt-card {
+  z-index: 2;
+  min-height: 20rem;
+  border: 0;
+  border-radius: 12px;
+  padding: 1.1rem 1rem 1.25rem;
+  color: #17120b;
+  background:
+    radial-gradient(circle at 18% 14%, rgba(255, 255, 255, 0.48), transparent 10rem),
+    repeating-linear-gradient(0deg, rgba(88, 65, 28, 0.04) 0 1px, transparent 1px 6px),
+    linear-gradient(135deg, #f6e8bf, #dac394 58%, #fbefcc);
+  box-shadow:
+    0 28px 62px rgba(0, 0, 0, 0.34),
+    0 0 32px rgba(255, 213, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.42);
+  transform: rotate(-1.2deg) translateY(-0.35rem);
+}
+
+.receipt-card::before {
+  top: -2px;
+}
+
+.receipt-card::after {
+  bottom: -2px;
+  box-shadow:
+    inset 0 -18px 18px rgba(23, 32, 51, 0.05),
+    0 -28px 42px rgba(255, 255, 255, 0.12);
+}
+
+.receipt-card::selection {
+  background: rgba(255, 213, 0, 0.35);
+}
+
+.receipt-kicker {
+  color: rgba(23, 18, 11, 0.78);
+  letter-spacing: 0.12em;
+}
+
+.receipt-kicker::after {
+  content: "RETURN BEFORE SUNRISE";
+  display: block;
+  width: fit-content;
+  margin-top: 0.7rem;
+  border: 2px solid rgba(172, 30, 28, 0.72);
+  border-radius: 4px;
+  padding: 0.18rem 0.42rem;
+  color: rgba(172, 30, 28, 0.82);
+  font-size: 0.68rem;
+  font-weight: 950;
+  letter-spacing: 0.04em;
+  transform: rotate(-2deg);
+}
+
+.receipt-list {
+  margin-top: 0.8rem;
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+
+.receipt-list li {
+  border-bottom-color: rgba(23, 18, 11, 0.15);
+}
+
+.receipt-total {
+  color: #17120b !important;
+  line-height: 1.4;
+}
+
+.receipt-total::after {
+  content: "Clerk note: excellent insomnia pairing.";
+  display: block;
+  margin-top: 0.58rem;
+  color: rgba(23, 18, 11, 0.66);
+  font-family: "Comic Sans MS", "Bradley Hand", cursive;
+  font-size: 0.76rem;
+  text-transform: none;
+  transform: rotate(-0.6deg);
+}
+
+.tonight-queue-list {
+  z-index: 2;
+  align-self: center;
+  align-content: center;
+  min-height: 22rem;
+  padding: 1.4rem 1.1rem 1.6rem;
+}
+
+.tonight-queue-list::before {
+  right: 1.2rem;
+  bottom: 1rem;
+  left: 1.2rem;
+  height: 34px;
+  background:
+    radial-gradient(ellipse, rgba(0, 0, 0, 0.44), transparent 70%),
+    linear-gradient(90deg, transparent, rgba(255, 213, 0, 0.32), rgba(37, 99, 235, 0.18), transparent);
+  filter: blur(12px);
+}
+
+.queue-empty,
+.queue-tape {
+  border-color: rgba(255, 255, 255, 0.09);
+  background:
+    linear-gradient(90deg, rgba(255, 213, 0, 0.18), transparent 12%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.028)),
+    rgba(5, 10, 23, 0.68);
+  backdrop-filter: blur(12px);
+}
+
+.queue-tape {
+  min-height: 4.9rem;
+  border-radius: 18px;
+  padding: 0.82rem 0.9rem 0.95rem;
+  box-shadow:
+    calc(-1 * var(--stack-offset, 0rem)) 18px 36px rgba(0, 0, 0, 0.28),
+    0 16px 34px rgba(0, 0, 0, 0.22),
+    inset 7px 0 0 var(--yellow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    inset -16px 0 28px rgba(0, 0, 0, 0.18);
+}
+
+.queue-tape::after {
+  left: -0.86rem;
+  width: 0.86rem;
+  background:
+    linear-gradient(180deg, rgba(255, 238, 130, 0.98), rgba(255, 213, 0, 0.88), rgba(184, 134, 11, 0.8)),
+    repeating-linear-gradient(to bottom, rgba(2, 6, 23, 0.22) 0 1px, transparent 1px 7px);
+}
+
+.queue-tape::before {
+  content: "CONDITION: SHELF-WORN";
+  right: 0.84rem;
+  bottom: 0.38rem;
+  color: rgba(255, 213, 0, 0.64);
+}
+
+.queue-tape > span {
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.18) inset,
+    0 10px 20px rgba(0, 0, 0, 0.22);
+}
+
+.queue-tape strong {
+  color: #f7f0e4;
+  font-size: 1rem;
+}
+
+.queue-tape p {
+  color: rgba(226, 232, 240, 0.68);
+  line-height: 1.35;
+}
+
+.queue-tape:hover,
+.queue-tape:focus-within {
+  border-color: rgba(255, 213, 0, 0.32);
+  box-shadow:
+    calc(-1 * var(--stack-offset, 0rem)) 24px 46px rgba(0, 0, 0, 0.34),
+    0 22px 52px rgba(0, 0, 0, 0.3),
+    0 0 32px rgba(255, 213, 0, 0.14),
+    inset 7px 0 0 var(--yellow);
+  transform:
+    translateX(calc(var(--stack-offset) + 0.42rem))
+    translateY(-0.42rem)
+    rotate(calc(var(--stack-tilt) * 0.45))
+    perspective(720px)
+    rotateY(-1deg)
+    scale(1.01);
+}
+
+.tonight-queue-section.is-projecting .projector-session-card {
+  box-shadow:
+    0 24px 78px rgba(0, 0, 0, 0.28),
+    0 0 46px rgba(255, 213, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+@keyframes checkoutCounterDust {
+  from {
+    background-position: 0 0, 0 0, 0 0, 0 0;
+  }
+
+  to {
+    background-position: 0 0, 120px 90px, 180px 140px, 0 0;
+  }
+}
+
+@keyframes checkoutTrackingPulse {
+  0%,
+  100% {
+    filter: brightness(1) saturate(1);
+  }
+
+  50% {
+    filter: brightness(1.12) saturate(1.08);
+  }
+}
+
+@media (max-width: 991px) {
+  .tonight-queue-section {
+    grid-template-columns: 1fr;
+  }
+
+  .checkout-counter {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .receipt-card {
     transform: none;
   }
 }

@@ -272,6 +272,23 @@ function populateGenreFilter(movieList) {
   });
 }
 
+function getLiveViewerCount(film, index = 0) {
+  return 18 + ((film.id * 19 + index * 7) % 86);
+}
+
+function renderLiveWatchingStrip(film, index = 0) {
+  const count = getLiveViewerCount(film, index);
+  const label = count === 1 ? "person" : "people";
+
+  return `
+    <div class="live-watch-strip" aria-label="${count} ${label} streaming ${film.title} right now">
+      <span class="live-dot" aria-hidden="true"></span>
+      <strong>${count}</strong>
+      <span>streaming right now</span>
+    </div>
+  `;
+}
+
 function renderFilms(movieList) {
   movieGrid.innerHTML = "";
 
@@ -330,6 +347,7 @@ function renderFilms(movieList) {
               <span class="pull-tab">Flip case</span>
               <span class="bagged-badge ${isBagged ? "is-visible" : ""}">Bagged</span>
             </div>
+            ${renderLiveWatchingStrip(film, index)}
             <div class="card-body d-flex flex-column">
               <div class="badge-row movie-meta">
                 <span>${getAisleName(film.genre)}</span>
@@ -898,8 +916,13 @@ function updateTonightQueue() {
     startStackScreening.disabled = false;
     nextStackReel.disabled = true;
     pauseStackScreening.disabled = true;
-    receiptList.innerHTML = `<li>Waiting for rentals...</li>`;
-    receiptTotal.textContent = "0 tapes • projector idle";
+    receiptList.innerHTML = `
+      <li class="receipt-meta"><span>STORE</span> BB+ 0482 / AFTER HOURS</li>
+      <li class="receipt-meta"><span>COUNTER</span> EMPTY VHS STACK</li>
+      <li>Waiting for rentals...</li>
+      <li class="receipt-meta"><span>CLERK</span> projector warming under blue light</li>
+    `;
+    receiptTotal.textContent = "0 tapes • projector idle • return before sunrise";
     stackClerkNote.textContent = "Pull a VHS from the shelf and the clerk will call the vibe.";
     projectorSessionPaused = true;
     activeProjectionIndex = 0;
@@ -920,6 +943,10 @@ function updateTonightQueue() {
   const vibeTags = [...new Set(rentalBag.flatMap((film) => film.vibeTags || []))];
   const projectedMood = getProjectedMood(rentalBag);
   const lateFeeRisk = getLateFeeRisk(totalRuntime, rentalBag.length);
+  const firstFilm = rentalBag[0];
+  const mostReplayedScene = firstFilm?.favoriteScene || "front counter scene";
+  const stormRental = rentalBag.some((film) => (film.weatherTags || []).includes("Thunderstorm") || film.genre === "Horror");
+  const receiptWeather = stormRental ? "Projected during rainstorm" : "Best watched after midnight";
 
   startStackScreening.disabled = false;
   nextStackReel.disabled = false;
@@ -928,9 +955,11 @@ function updateTonightQueue() {
   receiptList.innerHTML = `
     <li class="receipt-meta"><span>STORE</span> BB+ 0482 / AFTER HOURS</li>
     <li class="receipt-meta"><span>RETURN</span> BY SUNRISE</li>
+    <li class="receipt-meta"><span>NOTE</span> ${receiptWeather}</li>
     ${rentalBag
       .map((film, index) => `<li><span>${String(index + 1).padStart(2, "0")}.</span> ${film.title}</li>`)
       .join("")}
+    <li class="receipt-meta"><span>REPLAY</span> ${mostReplayedScene}</li>
   `;
   receiptTotal.textContent = `${rentalBag.length} tape${rentalBag.length === 1 ? "" : "s"} • ${runtimeLabel} • ${projectedMood} • ${lateFeeRisk}`;
   updateProjectorSession();
@@ -942,7 +971,7 @@ function updateTonightQueue() {
           <span>${index + 1}</span>
           <div>
             <strong>${film.title}</strong>
-            <p>${getAisleName(film.genre)} · ${film.runtime || "??"} min · ${vibeTags[index % Math.max(vibeTags.length, 1)] || "projector ready"}</p>
+            <p>${getAisleName(film.genre)} · ${film.runtime || "??"} min · ${vibeTags[index % Math.max(vibeTags.length, 1)] || "projector ready"} · ${index === 0 ? "first tape loaded" : "double-feature compatible"}</p>
           </div>
           <button type="button" data-stack-remove="${film.id}" aria-label="Remove ${film.title} from Tonight's Stack">×</button>
         </li>
