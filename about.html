@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Learn about the Blockbuster+ concept, technologies, design inspiration, and future improvements."
+    />
+    <title>About | Blockbuster+</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="scanlines" aria-hidden="true"></div>
+    <header class="site-header">
+      <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand brand-mark" href="index.html">BLOCKBUSTER<span>+</span></a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#mainNav"
+            aria-controls="mainNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="mainNav">
+            <ul class="navbar-nav ms-auto align-items-lg-center">
+              <li class="nav-item">
+                <a class="nav-link" href="index.html">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="films.html">Films</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="about.html">About</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="page-main">
+      <section class="container page-hero about-hero" aria-labelledby="about-heading">
+        <p class="eyebrow">Alternate timeline</p>
+        <h1 id="about-heading">What if Blockbuster survived?</h1>
+        <p>
+          Blockbuster+ imagines the video store evolving into a premium movie
+          discovery platform: nostalgic like Friday night rentals, polished like
+          modern streaming, and social enough to feel curated by real film fans.
+        </p>
+      </section>
+
+      <section class="container section-block">
+        <div class="row g-4">
+          <article class="col-lg-6">
+            <div class="info-panel h-100">
+              <h2>The Concept</h2>
+              <p>
+                The app combines the visual memory of Blockbuster shelves, VHS
+                texture, and yellow-blue branding with the speed and layout of a
+                streaming catalog. Users can explore films, search by title,
+                filter by genre, and add rentals to a queue.
+              </p>
+            </div>
+          </article>
+          <article class="col-lg-6">
+            <div class="info-panel h-100">
+              <h2>Technologies Used</h2>
+              <ul class="feature-list">
+                <li>HTML5 semantic page structure</li>
+                <li>CSS gradients, Grid, Flexbox, animation, and responsive design</li>
+                <li>JavaScript with async/await, fetch(), filter(), and forEach()</li>
+                <li>Bootstrap 5 navbar, buttons, forms, spacing, and grid system</li>
+                <li>Local JSON data for movie catalog content</li>
+              </ul>
+            </div>
+          </article>
+          <article class="col-lg-6">
+            <div class="info-panel h-100">
+              <h2>Design Inspiration</h2>
+              <p>
+                The interface borrows Blockbuster's bright yellow confidence,
+                Netflix's browsable catalog rhythm, Spotify's premium dark UI,
+                and Letterboxd's film-discovery energy. The scanline overlay and
+                glowing type add a VHS-era signal without making the app feel old.
+              </p>
+            </div>
+          </article>
+          <article class="col-lg-6">
+            <div class="info-panel h-100">
+              <h2>Future Improvements</h2>
+              <ul class="feature-list">
+                <li>Save the queue with localStorage</li>
+                <li>Add user ratings and review cards</li>
+                <li>Create actor, decade, and mood filters</li>
+                <li>Add trailers, watchlist sorting, and rental history</li>
+                <li>Deploy the app with GitHub Pages or Netlify</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-content">
+        <p>© 2026 Blockbuster+ | Premium nostalgia for movie night.</p>
+        <a href="films.html">Browse rentals</a>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/camera.js"></script>
+  </body>
+</html>

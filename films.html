@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Search, filter, and throw Blockbuster+ films into your rental bag."
+    />
+    <title>Films | Blockbuster+</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="scanlines" aria-hidden="true"></div>
+    <header class="site-header">
+      <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand brand-mark" href="index.html">BLOCKBUSTER<span>+</span></a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#mainNav"
+            aria-controls="mainNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="mainNav">
+            <ul class="navbar-nav ms-auto align-items-lg-center">
+              <li class="nav-item">
+                <a class="nav-link" href="index.html">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="films.html">Films</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="about.html">About</a>
+              </li>
+              <li class="nav-item ms-lg-2">
+                <a class="btn btn-warning nav-cta" href="#movieGrid">Browse Now</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="page-main films-main">
+      <section class="container rental-dashboard" aria-labelledby="films-heading">
+        <div class="rental-dashboard-copy">
+          <p class="eyebrow">Staff-curated video store</p>
+          <h1 id="films-heading">Available Rentals</h1>
+          <p>
+            Browse human-picked shelves, pull a worn VHS case forward, and add
+            tonight's rental to your plastic Blockbuster+ checkout bag.
+          </p>
+        </div>
+        <div class="rental-status-row" aria-label="Rental status">
+          <p class="results-count" id="resultsCount">Now Renting: loading...</p>
+          <p class="bag-count-label" id="bagCountLabel">Rental Bag: 0 films</p>
+        </div>
+
+        <form class="row g-3 align-items-end discovery-form" aria-label="Movie filters">
+          <div class="col-lg-7">
+            <label class="form-label" for="searchInput">Search by title</label>
+            <input
+              class="form-control form-control-lg"
+              id="searchInput"
+              type="search"
+              placeholder="Search The Dark Knight, Moonlight, Hereditary..."
+              autocomplete="off"
+            />
+          </div>
+          <div class="col-lg-3">
+            <label class="form-label" for="genreFilter">Choose an aisle</label>
+            <select class="form-select form-select-lg" id="genreFilter">
+              <option value="All">All aisles</option>
+            </select>
+          </div>
+          <div class="col-lg-2">
+            <button class="btn btn-outline-light btn-lg w-100 reset-button" id="resetFilters" type="button">
+              Reset
+            </button>
+          </div>
+        </form>
+        <div class="quick-filters" aria-label="Staff-curated rental aisles">
+          <span>Staff recommends:</span>
+          <button type="button" data-genre="Romance">Friday Night Favorites</button>
+          <button type="button" data-genre="Horror">Horror Vault</button>
+          <button type="button" data-genre="Drama">Indie Shelf</button>
+          <button type="button" data-genre="Action">Staff Picks Wall</button>
+        </div>
+      </section>
+
+      <section class="container currently-playing" aria-labelledby="currently-playing-heading">
+        <div class="projection-copy">
+          <p class="eyebrow">Front store display</p>
+          <h2 id="currently-playing-heading">Now Playing Tonight</h2>
+          <p id="projectorDescription">
+            Tonight's featured rental is standing under the projector lights,
+            ready to be pulled from the new-release wall.
+          </p>
+          <div class="now-playing-meta" id="projectorMeta" aria-label="Currently playing movie details">
+            <span>Staff Pick</span>
+            <span>Action</span>
+            <span>152 min</span>
+          </div>
+          <div class="projector-controls" aria-label="Projector controls">
+            <button class="btn btn-warning" id="projectorInspect" type="button">
+              Pull This Rental
+            </button>
+            <button class="btn btn-warning projector-bag-button" id="projectorBag" type="button">
+              Throw In Bag
+            </button>
+            <button class="btn btn-outline-light" id="projectorNext" type="button">
+              Next Reel
+            </button>
+          </div>
+        </div>
+        <article class="featured-vhs-display" aria-label="Currently playing VHS display">
+          <div class="projection-beam" aria-hidden="true"></div>
+          <div class="projector-wall" aria-hidden="true">
+            <img
+              id="projectorImage"
+              src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=900&q=80"
+              alt=""
+            />
+            <span class="projector-status">Now Playing Tonight</span>
+          </div>
+          <div class="featured-vhs-case">
+            <div class="featured-vhs-spine">
+              <span>NOW PLAYING</span>
+            </div>
+            <div class="featured-vhs-cover">
+              <img
+                id="featuredVhsImage"
+                src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=900&q=80"
+                alt="The Dark Knight featured VHS cover"
+              />
+              <span class="featured-rental-label">BLOCKBUSTER VIDEO</span>
+              <span class="featured-now-label">NOW PLAYING</span>
+              <h3 id="featuredVhsTitle">The Dark Knight</h3>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section class="container social-storefront" aria-label="Community movie culture">
+        <article class="watchlist-panel">
+          <div>
+            <p class="eyebrow">Tonight's Watchlist</p>
+            <h2>Rental Bag Moodboard</h2>
+          </div>
+          <div class="watchlist-stats" aria-label="Watchlist summary">
+            <span id="watchlistCount">0 tapes</span>
+            <span id="watchlistRuntime">0 min</span>
+            <span id="watchlistRewatches">0 rewatches</span>
+          </div>
+          <p id="watchlistMood">
+            Throw tapes into the bag to build a late-night watchlist with runtime,
+            rewatches, and mood tags.
+          </p>
+          <div class="watchlist-vibes" id="watchlistVibes" aria-label="Watchlist mood tags">
+            <span>vhs glow</span>
+            <span>staff picked</span>
+            <span>11PM rental</span>
+          </div>
+        </article>
+        <aside class="activity-feed" aria-labelledby="activityFeedHeading">
+          <div class="feed-heading">
+            <p class="eyebrow">Recently logged</p>
+            <h2 id="activityFeedHeading">Store Activity</h2>
+          </div>
+          <div class="feed-list" id="recentActivity"></div>
+        </aside>
+      </section>
+
+      <section class="container tonight-queue-section" aria-labelledby="tonightQueueHeading">
+        <div>
+          <p class="eyebrow">Curated by people, not algorithms</p>
+          <h2 id="tonightQueueHeading">Tonight's Queue</h2>
+          <p>
+            Your selected VHS rentals stack here in order, like tapes waiting on
+            the checkout counter.
+          </p>
+        </div>
+        <ol class="tonight-queue-list" id="tonightQueueList" aria-live="polite">
+          <li class="queue-empty">No tapes selected yet.</li>
+        </ol>
+      </section>
+
+      <section class="container swipe-shelf-section" aria-labelledby="swipeShelfHeading">
+        <div class="swipe-shelf-copy">
+          <p class="eyebrow">Swipe the Shelf</p>
+          <h2 id="swipeShelfHeading">Pick tonight's tape.</h2>
+          <p>
+            Browse one rental at a time. Skip it left, throw it in the bag right,
+            or open the regulars' reviews before you commit.
+          </p>
+        </div>
+        <div class="swipe-shelf-stage" id="swipeShelfStage" aria-live="polite">
+          <div class="swipe-card" id="swipeCard"></div>
+        </div>
+        <div class="swipe-actions" aria-label="Swipe shelf actions">
+          <button class="btn btn-outline-light btn-lg" id="swipeSkip" type="button">
+            Skip
+          </button>
+          <button class="btn btn-outline-light btn-lg" id="swipeReviews" type="button">
+            Reviews
+          </button>
+          <button class="btn btn-warning btn-lg" id="swipeBag" type="button">
+            Throw In Bag
+          </button>
+        </div>
+      </section>
+
+      <section class="container section-block" aria-labelledby="catalog-heading">
+        <h2 class="visually-hidden" id="catalog-heading">Digital rental aisles</h2>
+        <div class="vhs-shelf">
+          <div class="shelf-rail shelf-rail-top" aria-hidden="true"></div>
+          <div class="row g-4" id="movieGrid" aria-live="polite"></div>
+          <div class="shelf-rail shelf-rail-bottom" aria-hidden="true"></div>
+        </div>
+      </section>
+    </main>
+
+    <section
+      class="movie-detail-expansion"
+      id="movieDetailExpansion"
+      aria-labelledby="detailExpansionTitle"
+      aria-hidden="true"
+    >
+      <button
+        class="detail-expansion-backdrop"
+        id="detailExpansionBackdrop"
+        type="button"
+        aria-label="Close movie details"
+      ></button>
+      <article class="detail-expansion-stage" role="dialog" aria-modal="true">
+        <button
+          class="detail-close-button"
+          id="detailCloseButton"
+          type="button"
+          aria-label="Close movie details"
+        >
+          ×
+        </button>
+        <div class="detail-expansion-content" id="detailExpansionContent"></div>
+      </article>
+    </section>
+
+    <section class="secret-vhs-vault" id="secretVhsVault" aria-labelledby="secretVaultTitle" aria-hidden="true">
+      <button
+        class="secret-vault-backdrop"
+        id="secretVaultBackdrop"
+        type="button"
+        aria-label="Close secret after-hours aisle"
+      ></button>
+      <article class="secret-vault-stage" role="dialog" aria-modal="true">
+        <button class="secret-close-button" id="secretCloseButton" type="button" aria-label="Close secret aisle">
+          ×
+        </button>
+        <div class="secret-vhs-case" aria-label="Hidden Blockbuster Plus VHS">
+          <div class="secret-vhs-spine"><span>AFTER HOURS</span></div>
+          <div class="secret-vhs-cover">
+            <span class="secret-store-label">BLOCKBUSTER VIDEO</span>
+            <span class="secret-red-label">EMPLOYEES ONLY</span>
+            <span class="secret-rewind-label">BE KIND REWIND</span>
+            <h2 id="secretVaultTitle">The Lost Tape</h2>
+            <p>Hidden Horror Aisle • Staff-only midnight rental</p>
+          </div>
+        </div>
+        <div class="membership-card">
+          <p class="eyebrow">Secret membership unlocked</p>
+          <h3>Blockbuster+ After Hours Club</h3>
+          <p>Member: Friday Night Regular</p>
+          <p>Perk: One mysterious shelf pull after 11PM</p>
+          <button class="btn btn-warning" id="rewindSecretTape" type="button">
+            Rewind Tape
+          </button>
+        </div>
+      </article>
+    </section>
+
+    <section class="review-drawer" id="reviewDrawer" aria-labelledby="reviewDrawerTitle" aria-hidden="true">
+      <button
+        class="review-drawer-backdrop"
+        id="reviewDrawerBackdrop"
+        type="button"
+        aria-label="Close reviews"
+      ></button>
+      <article class="review-drawer-panel" role="dialog" aria-modal="true">
+        <button class="review-close-button" id="reviewCloseButton" type="button" aria-label="Close reviews">
+          ×
+        </button>
+        <p class="eyebrow">Regulars' reviews</p>
+        <h2 id="reviewDrawerTitle">Shelf Reviews</h2>
+        <div class="review-drawer-list" id="reviewDrawerList"></div>
+      </article>
+    </section>
+
+    <div class="easter-toast" id="easterToast" role="status" aria-live="polite">
+      Secret After Hours Aisle unlocked
+    </div>
+
+    <aside class="rental-bag-panel" id="rentalBagPanel" aria-labelledby="rentalBagTitle" aria-hidden="true">
+      <div class="bag-panel-header">
+        <div>
+          <p class="eyebrow">Checkout counter</p>
+          <h2 id="rentalBagTitle">Rental Bag</h2>
+        </div>
+        <button class="bag-close-button" id="closeBagPanel" type="button" aria-label="Close rental bag">
+          ×
+        </button>
+      </div>
+      <div class="bag-items" id="bagItems"></div>
+      <div class="bag-panel-footer">
+        <p id="bagTotal">Total rentals: 0</p>
+        <button class="btn btn-warning w-100" type="button">Checkout VHS</button>
+      </div>
+    </aside>
+
+    <button class="floating-rental-bag" id="rentalBagButton" type="button" aria-label="Open rental bag">
+      <span class="bag-handle" aria-hidden="true"></span>
+      <span class="bag-logo">BLOCKBUSTER<span>+</span></span>
+      <span class="bag-caption">Rental Bag</span>
+      <span class="bag-counter" id="bagCounter">0</span>
+    </button>
+
+    <button class="sound-toggle" id="soundToggle" type="button" aria-pressed="false">
+      Sound Off
+    </button>
+
+    <footer class="site-footer">
+      <div class="container footer-content">
+        <p>© 2026 Blockbuster+ | Rebuilt for the streaming age.</p>
+        <a href="about.html">About the concept</a>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/camera.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>

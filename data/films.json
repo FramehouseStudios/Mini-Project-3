@@ -1,0 +1,330 @@
+[
+  {
+    "id": 1,
+    "title": "The Dark Knight",
+    "genre": "Action",
+    "director": "Christopher Nolan",
+    "year": 2008,
+    "rating": 9.0,
+    "runtime": 152,
+    "rewatches": 18420,
+    "favoriteScene": "Interrogation room standoff",
+    "vibeTags": ["rainy city", "crime epic", "comic-book noir"],
+    "cultureTags": ["CULT CLASSIC", "MOST REWATCHED", "STAFF PICK"],
+    "review": {
+      "stars": 4.5,
+      "username": "filmnerd99",
+      "avatar": "FN",
+      "quote": "Still one of the best superhero films ever made."
+    },
+    "reviews": [
+      {
+        "stars": 4.5,
+        "username": "filmnerd99",
+        "avatar": "FN",
+        "quote": "Still one of the best superhero films ever made."
+      },
+      {
+        "stars": 5,
+        "username": "jawsh",
+        "avatar": "JW",
+        "quote": "Rainy Gotham, giant swings, perfect rental night."
+      },
+      {
+        "stars": 4,
+        "username": "capedcinema",
+        "avatar": "CC",
+        "quote": "A crime tape hiding inside a superhero box."
+      }
+    ],
+    "description": "Batman faces a criminal mastermind whose chaos pushes Gotham, Harvey Dent, and Bruce Wayne to their breaking points.",
+    "poster": "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=900&q=80"
+  },
+  {
+    "id": 2,
+    "title": "Moonlight",
+    "genre": "Drama",
+    "director": "Barry Jenkins",
+    "year": 2016,
+    "rating": 7.4,
+    "runtime": 111,
+    "rewatches": 9620,
+    "favoriteScene": "Diner reunion glow",
+    "vibeTags": ["tender", "ocean blue", "quiet heartbreak"],
+    "cultureTags": ["FILM SCHOOL FAVORITE", "EMPLOYEE FAVORITE", "STAFF PICK"],
+    "review": {
+      "stars": 5,
+      "username": "softfocusmaya",
+      "avatar": "SM",
+      "quote": "The kind of movie that whispers and somehow fills the whole room."
+    },
+    "reviews": [
+      {
+        "stars": 5,
+        "username": "softfocusmaya",
+        "avatar": "SM",
+        "quote": "The kind of movie that whispers and somehow fills the whole room."
+      },
+      {
+        "stars": 5,
+        "username": "indieshelf",
+        "avatar": "IS",
+        "quote": "A quiet masterpiece for the last customer in the store."
+      },
+      {
+        "stars": 4.5,
+        "username": "bluehourfilm",
+        "avatar": "BH",
+        "quote": "Tender, blue, and impossible to shake."
+      }
+    ],
+    "description": "A lyrical portrait of identity, tenderness, and survival told across three defining chapters in a young man's life.",
+    "poster": "https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=900&q=80"
+  },
+  {
+    "id": 3,
+    "title": "Hereditary",
+    "genre": "Horror",
+    "director": "Ari Aster",
+    "year": 2018,
+    "rating": 7.3,
+    "runtime": 127,
+    "rewatches": 7110,
+    "favoriteScene": "The final attic reveal",
+    "vibeTags": ["dread", "family curse", "lights on"],
+    "cultureTags": ["MIDNIGHT RENTAL", "CULT CLASSIC", "HORROR VAULT"],
+    "review": {
+      "stars": 4,
+      "username": "midnightmovies",
+      "avatar": "MM",
+      "quote": "I regret watching this alone, which means it worked perfectly."
+    },
+    "reviews": [
+      {
+        "stars": 4,
+        "username": "midnightmovies",
+        "avatar": "MM",
+        "quote": "I regret watching this alone, which means it worked perfectly."
+      },
+      {
+        "stars": 4.5,
+        "username": "horrorvault",
+        "avatar": "HV",
+        "quote": "Pure hallway-light-on cinema."
+      },
+      {
+        "stars": 4,
+        "username": "latefeefear",
+        "avatar": "LF",
+        "quote": "A cursed tape you absolutely return before Monday."
+      }
+    ],
+    "description": "After a family tragedy, a grieving household uncovers a terrifying inheritance that turns mourning into nightmare.",
+    "poster": "https://images.unsplash.com/photo-1505686994434-e3cc5abf1330?auto=format&fit=crop&w=900&q=80"
+  },
+  {
+    "id": 4,
+    "title": "Everything Everywhere All At Once",
+    "genre": "Sci-Fi",
+    "director": "Daniel Kwan and Daniel Scheinert",
+    "year": 2022,
+    "rating": 7.8,
+    "runtime": 139,
+    "rewatches": 13250,
+    "favoriteScene": "Rocks under a silent sky",
+    "vibeTags": ["maximalist", "family chaos", "absurd tears"],
+    "cultureTags": ["CULT CLASSIC", "MOST REWATCHED", "NEW RELEASE"],
+    "review": {
+      "stars": 4.5,
+      "username": "bagelverse",
+      "avatar": "BV",
+      "quote": "A multiverse movie that somehow feels handmade."
+    },
+    "reviews": [
+      {
+        "stars": 4.5,
+        "username": "bagelverse",
+        "avatar": "BV",
+        "quote": "A multiverse movie that somehow feels handmade."
+      },
+      {
+        "stars": 5,
+        "username": "googlyeyes",
+        "avatar": "GE",
+        "quote": "Maximalist chaos with a tiny beating heart."
+      },
+      {
+        "stars": 4,
+        "username": "cultclassicclub",
+        "avatar": "CC",
+        "quote": "The staff pick for weird families and louder snacks."
+      }
+    ],
+    "description": "A laundromat owner is pulled through the multiverse and discovers that cosmic chaos may still come down to family.",
+    "poster": "https://images.unsplash.com/photo-1518676590629-3dcbd9c5a5c9?auto=format&fit=crop&w=900&q=80"
+  },
+  {
+    "id": 5,
+    "title": "Mad Max: Fury Road",
+    "genre": "Action",
+    "director": "George Miller",
+    "year": 2015,
+    "rating": 8.1,
+    "runtime": 120,
+    "rewatches": 15880,
+    "favoriteScene": "The sandstorm chase",
+    "vibeTags": ["chrome", "desert opera", "full volume"],
+    "cultureTags": ["MOST REWATCHED", "STAFF PICK", "CULT CLASSIC"],
+    "review": {
+      "stars": 5,
+      "username": "chromewitness",
+      "avatar": "CW",
+      "quote": "Two hours of pure cinema engine noise."
+    },
+    "reviews": [
+      {
+        "stars": 5,
+        "username": "chromewitness",
+        "avatar": "CW",
+        "quote": "Two hours of pure cinema engine noise."
+      },
+      {
+        "stars": 4.5,
+        "username": "desertopera",
+        "avatar": "DO",
+        "quote": "A chase scene became a whole religion."
+      },
+      {
+        "stars": 5,
+        "username": "furyrewatch",
+        "avatar": "FR",
+        "quote": "Most rewatched for a reason. Full volume only."
+      }
+    ],
+    "description": "A desert chase becomes a roaring survival myth filled with chrome, dust, rebellion, and practical spectacle.",
+    "poster": "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80"
+  },
+  {
+    "id": 6,
+    "title": "Get Out",
+    "genre": "Horror",
+    "director": "Jordan Peele",
+    "year": 2017,
+    "rating": 7.8,
+    "runtime": 104,
+    "rewatches": 10240,
+    "favoriteScene": "The Sunken Place",
+    "vibeTags": ["social horror", "nervous laughs", "sharp"],
+    "cultureTags": ["FILM SCHOOL FAVORITE", "MIDNIGHT RENTAL", "STAFF PICK"],
+    "review": {
+      "stars": 4.5,
+      "username": "videostorekid",
+      "avatar": "VK",
+      "quote": "A perfect Friday night rental because everyone talks after."
+    },
+    "reviews": [
+      {
+        "stars": 4.5,
+        "username": "videostorekid",
+        "avatar": "VK",
+        "quote": "A perfect Friday night rental because everyone talks after."
+      },
+      {
+        "stars": 5,
+        "username": "sunkenplace",
+        "avatar": "SP",
+        "quote": "Sharp, funny, terrifying, and still getting logged."
+      },
+      {
+        "stars": 4,
+        "username": "filmclassdropout",
+        "avatar": "FD",
+        "quote": "Film school favorite without feeling like homework."
+      }
+    ],
+    "description": "A weekend visit becomes a razor-sharp nightmare about race, control, liberal politeness, and stolen identity.",
+    "poster": "https://images.unsplash.com/photo-1509248961158-e54f6934749c?auto=format&fit=crop&w=900&q=80"
+  },
+  {
+    "id": 7,
+    "title": "La La Land",
+    "genre": "Romance",
+    "director": "Damien Chazelle",
+    "year": 2016,
+    "rating": 8.0,
+    "runtime": 128,
+    "rewatches": 12100,
+    "favoriteScene": "Planetarium dance",
+    "vibeTags": ["neon romance", "bittersweet", "golden hour"],
+    "cultureTags": ["FRIDAY NIGHT FAVORITE", "MOST REWATCHED", "DATE NIGHT PICK"],
+    "review": {
+      "stars": 4,
+      "username": "neonmusical",
+      "avatar": "NM",
+      "quote": "Still hurts, still sparkles, still gets rented."
+    },
+    "reviews": [
+      {
+        "stars": 4,
+        "username": "neonmusical",
+        "avatar": "NM",
+        "quote": "Still hurts, still sparkles, still gets rented."
+      },
+      {
+        "stars": 4.5,
+        "username": "datenightnina",
+        "avatar": "DN",
+        "quote": "The ending feels like returning a tape late."
+      },
+      {
+        "stars": 4,
+        "username": "jazzhands",
+        "avatar": "JH",
+        "quote": "Golden-hour heartbreak with a glossy cover."
+      }
+    ],
+    "description": "Two artists chase love and ambition through a dreamlike Los Angeles filled with music, color, and bittersweet choices.",
+    "poster": "https://images.unsplash.com/photo-1499364615650-ec38552f4f34?auto=format&fit=crop&w=900&q=80"
+  },
+  {
+    "id": 8,
+    "title": "Spider-Man: Into the Spider-Verse",
+    "genre": "Animation",
+    "director": "Bob Persichetti, Peter Ramsey, and Rodney Rothman",
+    "year": 2018,
+    "rating": 8.4,
+    "runtime": 117,
+    "rewatches": 17640,
+    "favoriteScene": "Leap of faith",
+    "vibeTags": ["comic splash", "kinetic", "heart-forward"],
+    "cultureTags": ["MOST REWATCHED", "FAMILY MATINEE", "STAFF PICK"],
+    "review": {
+      "stars": 5,
+      "username": "halftonehero",
+      "avatar": "HH",
+      "quote": "Looks like a comic book learned to breathe."
+    },
+    "reviews": [
+      {
+        "stars": 5,
+        "username": "halftonehero",
+        "avatar": "HH",
+        "quote": "Looks like a comic book learned to breathe."
+      },
+      {
+        "stars": 5,
+        "username": "leapoffaith",
+        "avatar": "LF",
+        "quote": "A perfect family matinee with real style."
+      },
+      {
+        "stars": 4.5,
+        "username": "comicreel",
+        "avatar": "CR",
+        "quote": "Every frame feels like a favorite scene."
+      }
+    ],
+    "description": "Miles Morales discovers a multiverse of Spider-heroes in a kinetic comic-book adventure bursting with style and heart.",
+    "poster": "https://images.unsplash.com/photo-1608889476561-6242cfdbf622?auto=format&fit=crop&w=900&q=80"
+  }
+]
