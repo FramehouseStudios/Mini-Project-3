@@ -13101,6 +13101,318 @@ body.theater-open .sound-toggle {
   }
 }
 
+/* Counter Moodboard: tactile collage board for building the night. */
+.social-storefront .watchlist-panel {
+  isolation: isolate;
+  min-height: 38rem;
+  padding: clamp(1.15rem, 2.7vw, 1.7rem);
+  background:
+    radial-gradient(ellipse at 76% 12%, rgba(255, 213, 0, 0.16), transparent 18rem),
+    radial-gradient(ellipse at 22% 68%, rgba(59, 130, 246, 0.18), transparent 24rem),
+    linear-gradient(120deg, rgba(5, 10, 23, 0.94), rgba(13, 20, 42, 0.76) 46%, rgba(3, 8, 20, 0.94)),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.018) 0 1px, transparent 1px 18px);
+  box-shadow:
+    0 38px 120px rgba(0, 0, 0, 0.38),
+    0 0 70px rgba(37, 99, 235, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    inset 0 -70px 120px rgba(0, 0, 0, 0.28);
+}
+
+.social-storefront .watchlist-panel::before {
+  content: "";
+  position: absolute;
+  inset: auto 1rem 1rem 1rem;
+  z-index: 0;
+  height: 46%;
+  border-radius: 28px;
+  background:
+    radial-gradient(ellipse at 50% 0, rgba(255, 213, 0, 0.12), transparent 52%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.012)),
+    rgba(0, 0, 0, 0.12);
+  transform: perspective(900px) rotateX(64deg);
+  transform-origin: bottom;
+  filter: blur(0.2px);
+  pointer-events: none;
+}
+
+.social-storefront .watchlist-panel > * {
+  position: relative;
+  z-index: 1;
+}
+
+.social-storefront .watchlist-panel h2 {
+  color: #f8f0df;
+  font-size: clamp(2.6rem, 4.8vw, 5rem);
+  letter-spacing: 0;
+  text-shadow:
+    0 2px 30px rgba(0, 0, 0, 0.55),
+    0 0 30px rgba(255, 213, 0, 0.12);
+}
+
+.moodboard-ritual-strip {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(180px, auto);
+  gap: 0.7rem;
+  margin-top: 1rem;
+}
+
+.moodboard-ritual-strip span {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 18px;
+  padding: 0.8rem 0.9rem;
+  color: rgba(248, 250, 252, 0.86);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.025)),
+    rgba(2, 6, 23, 0.42);
+  box-shadow:
+    0 18px 38px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  font-weight: 950;
+  line-height: 1.25;
+}
+
+.moodboard-ritual-strip span:first-child {
+  border-color: rgba(255, 213, 0, 0.18);
+  color: rgba(255, 229, 125, 0.96);
+}
+
+.moodboard-clerk-notes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.62rem;
+  align-items: start;
+  margin-top: 1rem;
+  min-height: 4.3rem;
+}
+
+.sticky-note {
+  position: relative;
+  max-width: 15rem;
+  border-radius: 4px 14px 12px 5px;
+  padding: 0.62rem 0.72rem;
+  color: #211a0d;
+  background:
+    repeating-linear-gradient(0deg, rgba(73, 47, 12, 0.045) 0 1px, transparent 1px 8px),
+    linear-gradient(135deg, #fff0a8, #e9c94d);
+  box-shadow:
+    0 18px 36px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.52);
+  font-family: "Comic Sans MS", "Bradley Hand", cursive;
+  font-size: 0.78rem;
+  font-weight: 900;
+  line-height: 1.28;
+  transform: rotate(-1.5deg);
+}
+
+.sticky-note::before {
+  content: "";
+  position: absolute;
+  top: -0.28rem;
+  left: 50%;
+  width: 2rem;
+  height: 0.55rem;
+  border-radius: 2px;
+  background: rgba(245, 238, 214, 0.34);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.16);
+  transform: translateX(-50%) rotate(2deg);
+}
+
+.sticky-note.is-blue {
+  color: #e8f1ff;
+  background:
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.045) 0 1px, transparent 1px 8px),
+    linear-gradient(135deg, #23406d, #17233f);
+  transform: rotate(1.2deg);
+}
+
+.sticky-note.is-red {
+  color: #fff1df;
+  background:
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.04) 0 1px, transparent 1px 8px),
+    linear-gradient(135deg, #733236, #30131c);
+  transform: rotate(-0.4deg);
+}
+
+.sticky-note.is-small {
+  max-width: 13rem;
+  transform: rotate(1.6deg);
+}
+
+.social-storefront .watchlist-tape-stack {
+  min-height: 255px;
+  margin-top: 1.15rem;
+  overflow: visible;
+  border-color: rgba(255, 255, 255, 0.08);
+  border-radius: 28px;
+  background:
+    radial-gradient(ellipse at 54% 96%, rgba(0, 0, 0, 0.42), transparent 54%),
+    radial-gradient(ellipse at 45% 20%, rgba(255, 213, 0, 0.14), transparent 24rem),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.018)),
+    rgba(2, 6, 23, 0.28);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.075),
+    inset 0 -52px 80px rgba(0, 0, 0, 0.26);
+}
+
+.social-storefront .watchlist-tape-stack::before {
+  right: -0.5rem;
+  bottom: 1.2rem;
+  left: -0.5rem;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, rgba(255, 213, 0, 0.62), rgba(59, 130, 246, 0.26), transparent);
+  filter: blur(1px);
+  opacity: 0.75;
+}
+
+.social-storefront .watchlist-tape-stack::after {
+  height: 54px;
+  opacity: 0.85;
+}
+
+.social-storefront .counter-vhs-tape {
+  grid-template-columns: 34px 46px minmax(0, 1fr);
+  width: min(335px, calc(100% - 1.4rem));
+  min-height: 82px;
+  bottom: clamp(1.35rem, 3vw, 2.05rem);
+  left: clamp(0.8rem, 2vw, 1.25rem);
+  border-radius: 16px;
+  transform:
+    translateX(calc(var(--tape-x) * 1.18))
+    translateY(calc(-1 * var(--tape-y) - (var(--tape-order) * 0.12rem)))
+    rotate(var(--tape-rotate))
+    perspective(720px)
+    rotateX(4deg);
+}
+
+.social-storefront .counter-vhs-tape:hover,
+.social-storefront .counter-vhs-tape:focus-visible,
+.social-storefront .counter-vhs-tape.is-drop-target {
+  transform:
+    translateX(calc(var(--tape-x) * 1.18 + 0.3rem))
+    translateY(calc(-1 * var(--tape-y) - (var(--tape-order) * 0.12rem) - 14px))
+    rotate(calc(var(--tape-rotate) * 0.62))
+    perspective(720px)
+    rotateX(1deg)
+    scale(1.035);
+}
+
+.counter-vhs-poster {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 40px;
+  height: 58px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 6px;
+  box-shadow:
+    0 10px 18px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
+
+.counter-vhs-poster img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.social-storefront .counter-vhs-copy {
+  padding-right: 4.9rem;
+}
+
+.social-storefront .counter-vhs-copy strong {
+  font-size: 0.95rem;
+}
+
+.social-storefront .counter-vhs-copy small {
+  white-space: normal;
+}
+
+.social-storefront .watchlist-tape-list {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 1rem;
+}
+
+.social-storefront .counter-tape-row {
+  position: relative;
+  min-height: 4.2rem;
+  border-style: dashed;
+  background:
+    linear-gradient(100deg, rgba(255, 213, 0, 0.13), transparent 2rem),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)),
+    rgba(5, 10, 23, 0.48);
+}
+
+.social-storefront .counter-tape-row::after {
+  content: "drag to reorder";
+  position: absolute;
+  right: 0.62rem;
+  bottom: 0.32rem;
+  color: rgba(255, 213, 0, 0.38);
+  font-size: 0.52rem;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.social-storefront .watchlist-vibes {
+  gap: 0.55rem;
+  margin-top: 1rem;
+}
+
+.social-storefront .watchlist-vibes span {
+  border-color: rgba(255, 213, 0, 0.16);
+  color: rgba(248, 250, 252, 0.86);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.02)),
+    rgba(255, 213, 0, 0.055);
+  text-transform: lowercase;
+}
+
+.social-storefront .stack-empty {
+  color: rgba(248, 250, 252, 0.76);
+  font-family: var(--font-heading);
+  font-size: clamp(1.05rem, 2vw, 1.4rem);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 991px) {
+  .moodboard-ritual-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .social-storefront .watchlist-tape-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 575px) {
+  .social-storefront .watchlist-panel {
+    min-height: auto;
+  }
+
+  .moodboard-clerk-notes {
+    display: grid;
+  }
+
+  .sticky-note {
+    max-width: none;
+    transform: none;
+  }
+
+  .social-storefront .counter-vhs-tape {
+    grid-template-columns: 30px minmax(0, 1fr);
+    width: calc(100% - 1rem);
+  }
+
+  .counter-vhs-poster {
+    display: none;
+  }
+}
+
 /* Guestbook elevation: a living wall of late-night movie confessions. */
 .pitch-home .culture-board {
   position: relative;

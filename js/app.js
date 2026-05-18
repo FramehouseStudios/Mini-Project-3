@@ -17,6 +17,9 @@ const watchlistMood = document.querySelector("#watchlistMood");
 const watchlistVibes = document.querySelector("#watchlistVibes");
 const watchlistTapeStack = document.querySelector("#watchlistTapeStack");
 const watchlistTapeList = document.querySelector("#watchlistTapeList");
+const moodboardEnergy = document.querySelector("#moodboardEnergy");
+const moodboardPairing = document.querySelector("#moodboardPairing");
+const moodboardClerkNotes = document.querySelector(".moodboard-clerk-notes");
 const recentActivity = document.querySelector("#recentActivity");
 const tonightStackSection = document.querySelector("#tonightStackSection");
 const tonightQueueList = document.querySelector("#tonightQueueList");
@@ -1065,6 +1068,86 @@ function getClerkNote(stack) {
   return `${firstFilm.title} is a strong first pull. The clerk approves this shelf energy.`;
 }
 
+function getMoodboardEnergy(stack) {
+  const genres = stack.map((film) => film.genre);
+  const hasHorror = genres.includes("Horror");
+  const hasSciFi = genres.includes("Sci-Fi");
+  const hasDrama = genres.includes("Drama");
+  const hasRomance = genres.includes("Romance");
+  const hasAction = genres.includes("Action");
+
+  if (stack.length === 0) {
+    return "The projector is waiting.";
+  }
+
+  if (hasHorror && hasSciFi) {
+    return "Emotionally unsafe after-hours spiral.";
+  }
+
+  if (hasDrama && hasRomance) {
+    return "Rainy-window heartbreak double feature.";
+  }
+
+  if (hasAction && stack.length > 1) {
+    return "Cherry-coke adrenaline counter stack.";
+  }
+
+  if (stack.length >= 4) {
+    return "Sleep-deprived film-club ritual.";
+  }
+
+  return `${stack[0].title} sets the room tone.`;
+}
+
+function getMoodboardPairing(stack) {
+  if (stack.length === 0) {
+    return "No double-feature pinned yet.";
+  }
+
+  if (stack.length === 1) {
+    return `Pair ${stack[0].title} with something that changes the weather.`;
+  }
+
+  return `Double feature: ${stack[0].title} + ${stack[1].title}`;
+}
+
+function getMoodboardNotes(stack) {
+  if (stack.length === 0) {
+    return [
+      "Pull a tape from the aisle.",
+      "Build a beautiful mess.",
+      "Maximum emotional damage optional.",
+    ];
+  }
+
+  const notes = [
+    getClerkNote(stack),
+    getMoodboardEnergy(stack),
+    stack[0]?.favoriteScene ? `Most replayed scene: ${stack[0].favoriteScene}.` : "Ask for the scene everyone talks about.",
+  ];
+
+  if (stack.some((film) => film.genre === "Horror")) {
+    notes.push("Do NOT watch the horror tape alone.");
+  } else if (stack.some((film) => film.genre === "Drama")) {
+    notes.push("Apartment movie certified.");
+  } else {
+    notes.push("Late-night essential. Snacks required.");
+  }
+
+  return notes.slice(0, 4);
+}
+
+function renderMoodboardNotes(stack) {
+  if (!moodboardClerkNotes) {
+    return;
+  }
+
+  const noteClasses = ["", "is-blue", "is-red", "is-small"];
+  moodboardClerkNotes.innerHTML = getMoodboardNotes(stack)
+    .map((note, index) => `<span class="sticky-note ${noteClasses[index] || ""}">${note}</span>`)
+    .join("");
+}
+
 function updateWatchlistPanel() {
   if (
     !watchlistCount ||
@@ -1089,7 +1172,14 @@ function updateWatchlistPanel() {
   watchlistMood.textContent =
     bagSize === 0
       ? "Toss tapes into the bag to build a late-night rental stack with runtime, rewatches, and mood tags."
-      : `Tonight feels like ${vibes.slice(0, 3).join(", ")}.`;
+      : `${getMoodboardEnergy(rentalBag)} ${vibes.length ? `The counter is giving ${vibes.slice(0, 3).join(", ")}.` : ""}`;
+  if (moodboardEnergy) {
+    moodboardEnergy.textContent = getMoodboardEnergy(rentalBag);
+  }
+  if (moodboardPairing) {
+    moodboardPairing.textContent = getMoodboardPairing(rentalBag);
+  }
+  renderMoodboardNotes(rentalBag);
   watchlistTapeStack.innerHTML =
     bagSize === 0
       ? `<span class="stack-empty">The counter is empty. Pull a VHS from the aisles.</span>`
@@ -1111,9 +1201,12 @@ function updateWatchlistPanel() {
                 }deg; --tape-delay: ${index * 60}ms;"
               >
                 <span class="counter-vhs-spine">${String(index + 1).padStart(2, "0")}</span>
+                <span class="counter-vhs-poster" aria-hidden="true">
+                  <img src="${film.poster}" alt="" width="80" height="120" loading="lazy" decoding="async">
+                </span>
                 <div class="counter-vhs-copy">
                   <strong>${film.title}</strong>
-                  <small>${getAisleName(film.genre)} &middot; ${film.runtime || "??"} min</small>
+                  <small>${getAisleName(film.genre)} &middot; ${film.runtime || "??"} min &middot; ${film.vibeTags?.[0] || "counter pick"}</small>
                 </div>
                 <div class="counter-vhs-controls" aria-label="Tape controls">
                   <button type="button" data-stack-move="left" data-stack-index="${index}" aria-label="Move ${film.title} earlier" ${
