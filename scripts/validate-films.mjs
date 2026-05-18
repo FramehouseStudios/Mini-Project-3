@@ -128,6 +128,19 @@ function validateFilm(film, index, seenIds) {
     err(where, `poster is not a valid URL: ${JSON.stringify(film.poster)}`);
   }
 
+  try {
+    const t = new URL(film.trailer);
+    if (t.protocol !== "https:") {
+      err(where, `trailer must be an https URL (got ${t.protocol})`);
+    } else if (t.host !== "www.youtube.com" && t.host !== "youtube.com") {
+      err(where, `trailer host must be youtube.com (got ${t.host})`);
+    } else if (!/^\/embed\/[\w-]+$/.test(t.pathname)) {
+      err(where, `trailer must be a /embed/<id> URL (got ${t.pathname})`);
+    }
+  } catch {
+    err(where, `trailer is not a valid URL: ${JSON.stringify(film.trailer)}`);
+  }
+
   validateReview(`${where}.review`, film.review);
   if (!Array.isArray(film.reviews) || film.reviews.length === 0) {
     err(`${where}.reviews`, "must be a non-empty array");

@@ -47,6 +47,7 @@ validated for shape only, not membership.
 | `favoriteScene` | string | yes | non-empty |
 | `description` | string | yes | non-empty |
 | `poster` | string (URL) | yes | `https://` URL; host SHOULD be `image.tmdb.org` |
+| `trailer` | string (URL) | yes | `https://www.youtube.com/embed/<id>` (YouTube embed only) |
 | `vibeTags` | string[] | yes | each non-empty string |
 | `cultureTags` | string[] | yes | each non-empty string |
 | `moods` | string[] (enum) | yes | non-empty; each ∈ `moods` vocab |

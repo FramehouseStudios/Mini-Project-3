@@ -45,7 +45,7 @@
                 <a class="nav-link" href="about.html">About</a>
               </li>
               <li class="nav-item ms-lg-2">
-                <a class="btn btn-warning nav-cta" href="#movieGrid">Browse Now</a>
+                <a class="btn btn-warning nav-cta" href="#movieGrid">Browse Aisles</a>
               </li>
             </ul>
           </div>
@@ -61,6 +61,10 @@
           <p>
             Browse human-picked shelves, pull a worn VHS case forward, and add
             tonight's rental to your plastic Blockbuster+ checkout bag.
+          </p>
+          <p class="rental-dashboard-hint">
+            Tip: click any VHS once to flip to the back cover, then click again
+            for the full rental box.
           </p>
         </div>
         <div class="rental-status-row" aria-label="Rental status">
@@ -93,96 +97,33 @@
         </form>
         <div class="quick-filters" aria-label="Staff-curated rental aisles">
           <span>Staff recommends:</span>
-          <button type="button" data-genre="Romance">Friday Night Favorites</button>
-          <button type="button" data-genre="Horror">Horror Vault</button>
-          <button type="button" data-genre="Drama">Indie Shelf</button>
-          <button type="button" data-genre="Action">Staff Picks Wall</button>
+          <button type="button" data-genre="Romance">Rainy Tokyo</button>
+          <button type="button" data-genre="Horror">Midnight Horror</button>
+          <button type="button" data-genre="Drama">Quiet Apartment Movies</button>
+          <button type="button" data-genre="Action">Desert Chrome</button>
         </div>
-      </section>
-
-      <section class="container currently-playing" aria-labelledby="currently-playing-heading">
-        <div class="projection-copy">
-          <p class="eyebrow">Front store display</p>
-          <h2 id="currently-playing-heading">Now Playing Tonight</h2>
-          <p id="projectorDescription">
-            Tonight's featured rental is standing under the projector lights,
-            ready to be pulled from the new-release wall.
-          </p>
-          <div class="now-playing-meta" id="projectorMeta" aria-label="Currently playing movie details">
-            <span>Staff Pick</span>
-            <span>Action</span>
-            <span>152 min</span>
-          </div>
-          <div class="projector-controls" aria-label="Projector controls">
-            <button class="btn btn-warning" id="projectorInspect" type="button">
-              Pull This Rental
-            </button>
-            <button class="btn btn-warning projector-bag-button" id="projectorBag" type="button">
-              Throw In Bag
-            </button>
-            <button class="btn btn-outline-light" id="projectorNext" type="button">
-              Next Reel
-            </button>
-          </div>
-        </div>
-        <article class="featured-vhs-display" aria-label="Currently playing VHS display">
-          <div class="projection-beam" aria-hidden="true"></div>
-          <div class="projector-wall" aria-hidden="true">
-            <img
-              id="projectorImage"
-              src="https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg"
-              alt=""
-              width="500"
-              height="750"
-              decoding="async"
-            />
-            <span class="projector-status">Now Playing Tonight</span>
-          </div>
-          <div class="featured-vhs-case">
-            <div class="featured-vhs-spine">
-              <span>NOW PLAYING</span>
-            </div>
-            <div class="featured-vhs-cover">
-              <img
-                id="featuredVhsImage"
-                src="https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg"
-                alt="The Dark Knight featured VHS cover"
-                width="500"
-                height="750"
-                decoding="async"
-              />
-              <span class="featured-rental-label">BLOCKBUSTER VIDEO</span>
-              <span class="featured-now-label">NOW PLAYING</span>
-              <h3 id="featuredVhsTitle">The Dark Knight</h3>
-            </div>
-          </div>
-        </article>
       </section>
 
       <section class="container social-storefront" aria-label="Community movie culture">
         <article class="watchlist-panel">
           <div>
-            <p class="eyebrow">Tonight's Watchlist</p>
-            <h2>Rental Bag Moodboard</h2>
+            <p class="eyebrow">Tonight's Rentals</p>
+            <h2>Counter Moodboard</h2>
           </div>
-          <div class="watchlist-stats" aria-label="Watchlist summary">
+          <div class="watchlist-stats" aria-label="Rental bag summary">
             <span id="watchlistCount">0 tapes</span>
             <span id="watchlistRuntime">0 min</span>
             <span id="watchlistRewatches">0 rewatches</span>
           </div>
           <p id="watchlistMood">
-            Throw tapes into the bag to build a late-night watchlist with runtime,
+            Toss tapes into the bag to build a late-night rental stack with runtime,
             rewatches, and mood tags.
           </p>
-          <div class="watchlist-playlist-tools" aria-label="Rental playlist controls">
-            <button class="btn btn-warning btn-sm" id="shuffleTapeStack" type="button">Shuffle Stack</button>
-            <p id="doubleFeaturePick">Double Feature: add two tapes to pair the night.</p>
-          </div>
           <div class="watchlist-tape-stack" id="watchlistTapeStack" aria-label="VHS tapes in rental bag">
-            <span class="stack-empty">No tapes on the counter yet.</span>
+            <span class="stack-empty">The counter is empty. Pull a VHS from the aisles.</span>
           </div>
-          <div class="watchlist-tape-list" id="watchlistTapeList" aria-label="Editable rental playlist"></div>
-          <div class="watchlist-vibes" id="watchlistVibes" aria-label="Watchlist mood tags">
+          <div class="watchlist-tape-list" id="watchlistTapeList" aria-label="Rental stack order"></div>
+          <div class="watchlist-vibes" id="watchlistVibes" aria-label="Rental mood tags">
             <span>vhs glow</span>
             <span>staff picked</span>
             <span>11PM rental</span>
@@ -200,7 +141,7 @@
       <section class="container tonight-queue-section" id="tonightStackSection" aria-labelledby="tonightQueueHeading">
         <div class="tonight-stack-copy">
           <p class="eyebrow">Checkout Counter</p>
-          <h2 id="tonightQueueHeading">Tonight's Stack</h2>
+          <h2 id="tonightQueueHeading">Checkout Stack</h2>
           <p>Your VHS picks waiting beside the register.</p>
           <div class="stack-mood-card" aria-live="polite">
             <span>Clerk Note</span>
@@ -208,9 +149,27 @@
               Pull a VHS from the shelf and the clerk will call the vibe.
             </p>
           </div>
+          <div class="projector-session-card" id="projectorSessionCard" aria-live="polite">
+            <div class="projector-session-copy">
+              <span class="projector-session-kicker">Currently projecting</span>
+              <strong id="projectorSessionTitle">Projector idle</strong>
+              <p id="projectorSessionMeta">Start the projector when your stack is ready.</p>
+            </div>
+            <div class="projector-progress" aria-hidden="true">
+              <span id="projectorProgressBar"></span>
+            </div>
+            <div class="projector-eq" aria-hidden="true">
+              <i></i>
+              <i></i>
+              <i></i>
+              <i></i>
+              <i></i>
+            </div>
+          </div>
           <div class="stack-actions">
-            <button class="btn btn-warning" id="startStackScreening" type="button">Start Screening</button>
-            <button class="btn btn-outline-light" id="shuffleTonightStack" type="button">Shuffle Stack</button>
+            <button class="btn btn-warning" id="startStackScreening" type="button">Start Projector</button>
+            <button class="btn btn-outline-light" id="nextStackReel" type="button">Next Reel</button>
+            <button class="btn btn-outline-light" id="pauseStackScreening" type="button">Pause Screening</button>
           </div>
           <p class="stack-flare-message" id="stackFlareMessage" aria-live="polite"></p>
         </div>
@@ -236,8 +195,8 @@
           <p class="eyebrow">Swipe the Shelf</p>
           <h2 id="swipeShelfHeading">Pick tonight's tape.</h2>
           <p>
-            Browse one rental at a time. Skip it left, throw it in the bag right,
-            or open the regulars' reviews before you commit.
+            Browse one rental at a time. Pass it back to the shelf, toss it into
+            the bag, or open the regulars' reviews before you commit.
           </p>
         </div>
         <div class="swipe-shelf-stage" id="swipeShelfStage" aria-live="polite">
@@ -341,6 +300,55 @@
       </article>
     </section>
 
+    <section
+      class="projector-theater"
+      id="projectorTheater"
+      aria-labelledby="projectorTheaterTitle"
+      aria-hidden="true"
+    >
+      <button
+        class="projector-theater-backdrop"
+        id="projectorTheaterBackdrop"
+        type="button"
+        aria-label="Stop screening and close projector"
+      ></button>
+      <div class="projector-grain" aria-hidden="true"></div>
+      <div class="projector-houselight" aria-hidden="true"></div>
+      <article class="projector-theater-stage" role="dialog" aria-modal="true">
+        <header class="projector-theater-head">
+          <div>
+            <span class="projector-theater-kicker">Now Screening</span>
+            <h2 id="projectorTheaterTitle">Tonight's Tape</h2>
+            <p id="projectorTheaterMeta">Loading reel…</p>
+          </div>
+          <button
+            class="projector-theater-close"
+            id="projectorTheaterClose"
+            type="button"
+          >
+            Pause Screening
+          </button>
+        </header>
+        <div class="projector-screen">
+          <div class="projector-beam" aria-hidden="true"></div>
+          <div class="projector-screen-glow" aria-hidden="true"></div>
+          <div class="projector-frame">
+            <iframe
+              id="projectorTrailerFrame"
+              title="Movie trailer"
+              allow="autoplay; encrypted-media; picture-in-picture"
+              allowfullscreen
+              loading="lazy"
+              referrerpolicy="strict-origin-when-cross-origin"
+            ></iframe>
+            <div class="projector-screen-noise" aria-hidden="true"></div>
+            <div class="projector-screen-vignette" aria-hidden="true"></div>
+          </div>
+          <span class="projector-screen-label">BLOCKBUSTER<span>+</span> PROJECTOR</span>
+        </div>
+      </article>
+    </section>
+
     <div class="easter-toast" id="easterToast" role="status" aria-live="polite">
       Secret After Hours Aisle unlocked
     </div>
@@ -372,28 +380,6 @@
     <button class="sound-toggle" id="soundToggle" type="button" aria-pressed="false">
       Sound Off
     </button>
-
-    <aside class="screening-bar" id="screeningBar" aria-label="Tonight's Screening">
-      <div class="screening-now">
-        <span class="screening-cover" aria-hidden="true">
-          <img id="screeningBarImage" src="" alt="" />
-        </span>
-        <div>
-          <p class="screening-kicker">Tonight's Screening</p>
-          <h2 id="screeningBarTitle">Loading reel...</h2>
-          <p id="screeningBarMeta">Projector warming up</p>
-        </div>
-      </div>
-      <div class="screening-progress" aria-hidden="true">
-        <span></span>
-      </div>
-      <div class="screening-actions">
-        <button class="screening-icon-button" id="screeningResume" type="button">Resume Screening</button>
-        <button class="screening-icon-button" id="screeningNext" type="button">Next Reel</button>
-        <button class="screening-icon-button" id="screeningBag" type="button">Add To Bag</button>
-        <button class="screening-icon-button is-gold" id="screeningShuffle" type="button">Shuffle Night</button>
-      </div>
-    </aside>
 
     <footer class="site-footer">
       <div class="container footer-content">
