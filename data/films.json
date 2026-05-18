@@ -46,7 +46,7 @@
       }
     ],
     "description": "Batman faces a criminal mastermind whose chaos pushes Gotham, Harvey Dent, and Bruce Wayne to their breaking points.",
-    "poster": "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=900&q=80",
+    "poster": "https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg",
     "moods": [
       "Angry",
       "Burned out",
@@ -113,7 +113,7 @@
       }
     ],
     "description": "A lyrical portrait of identity, tenderness, and survival told across three defining chapters in a young man's life.",
-    "poster": "https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=900&q=80",
+    "poster": "https://image.tmdb.org/t/p/w500/4911T5FbJ9eD2Faz5Z8cT3SUhU3.jpg",
     "moods": [
       "Lonely",
       "Heartbroken",
@@ -181,7 +181,7 @@
       }
     ],
     "description": "After a family tragedy, a grieving household uncovers a terrifying inheritance that turns mourning into nightmare.",
-    "poster": "https://images.unsplash.com/photo-1505686994434-e3cc5abf1330?auto=format&fit=crop&w=900&q=80",
+    "poster": "https://image.tmdb.org/t/p/w500/lHV8HHlhwNup2VbpiACtlKzaGIQ.jpg",
     "moods": [
       "Dissociated",
       "Angry",
@@ -248,7 +248,7 @@
       }
     ],
     "description": "A laundromat owner is pulled through the multiverse and discovers that cosmic chaos may still come down to family.",
-    "poster": "https://images.unsplash.com/photo-1518676590629-3dcbd9c5a5c9?auto=format&fit=crop&w=900&q=80",
+    "poster": "https://image.tmdb.org/t/p/w500/u68AjlvlutfEIcpmbYpKcdi09ut.jpg",
     "moods": [
       "Euphoric",
       "Inspired",
@@ -316,7 +316,7 @@
       }
     ],
     "description": "A desert chase becomes a roaring survival myth filled with chrome, dust, rebellion, and practical spectacle.",
-    "poster": "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80",
+    "poster": "https://image.tmdb.org/t/p/w500/8tZYtuWezp8JbcsvHYO0O46tFbo.jpg",
     "moods": [
       "Angry",
       "Euphoric",
@@ -383,7 +383,7 @@
       }
     ],
     "description": "A weekend visit becomes a razor-sharp nightmare about race, control, liberal politeness, and stolen identity.",
-    "poster": "https://images.unsplash.com/photo-1509248961158-e54f6934749c?auto=format&fit=crop&w=900&q=80",
+    "poster": "https://image.tmdb.org/t/p/w500/tFXcEccSQMf3lfhfXKSU9iRBpa3.jpg",
     "moods": [
       "Dissociated",
       "Angry",
@@ -450,7 +450,7 @@
       }
     ],
     "description": "Two artists chase love and ambition through a dreamlike Los Angeles filled with music, color, and bittersweet choices.",
-    "poster": "https://images.unsplash.com/photo-1499364615650-ec38552f4f34?auto=format&fit=crop&w=900&q=80",
+    "poster": "https://image.tmdb.org/t/p/w500/uDO8zWDhfWwoFdKS4fzkUJt0Rf0.jpg",
     "moods": [
       "Romantic",
       "Heartbroken",
@@ -518,7 +518,7 @@
       }
     ],
     "description": "Miles Morales discovers a multiverse of Spider-heroes in a kinetic comic-book adventure bursting with style and heart.",
-    "poster": "https://images.unsplash.com/photo-1608889476561-6242cfdbf622?auto=format&fit=crop&w=900&q=80",
+    "poster": "https://image.tmdb.org/t/p/w500/iiZZdoQBEYBv6id8su7ImL0oCbD.jpg",
     "moods": [
       "Hopeful",
       "Inspired",
@@ -537,5 +537,397 @@
     "cinematicQuote": "The leap still counts even if your hands are shaking.",
     "visualMood": "City windows blinking like panels in a comic at sunrise.",
     "emotionalSynopsis": "A late-night boost for when you need proof that becoming yourself can be messy and electric."
+  },
+  {
+    "id": 9,
+    "title": "Inception",
+    "genre": "Sci-Fi",
+    "director": "Christopher Nolan",
+    "year": 2010,
+    "rating": 8.4,
+    "runtime": 148,
+    "rewatches": 16240,
+    "favoriteScene": "The hallway fight in zero gravity",
+    "vibeTags": ["dream logic", "heist", "folding cities"],
+    "cultureTags": ["CULT CLASSIC", "MOST REWATCHED", "STAFF PICK"],
+    "review": {
+      "stars": 4.5,
+      "username": "totemspin",
+      "avatar": "TS",
+      "quote": "A heist movie that rents space in your head for weeks."
+    },
+    "reviews": [
+      {
+        "stars": 4.5,
+        "username": "totemspin",
+        "avatar": "TS",
+        "quote": "A heist movie that rents space in your head for weeks."
+      },
+      {
+        "stars": 5,
+        "username": "dreamarchitect",
+        "avatar": "DA",
+        "quote": "Still arguing about the ending at the counter."
+      },
+      {
+        "stars": 4,
+        "username": "kickme",
+        "avatar": "KM",
+        "quote": "Loud, cold, and built for a big screen."
+      }
+    ],
+    "description": "A thief who steals corporate secrets through dream-sharing technology is offered a chance to erase his past by planting an idea instead.",
+    "poster": "https://image.tmdb.org/t/p/w500/oYuLEt3zVCKq57qu2F8dT7NIa6f.jpg",
+    "moods": ["Dissociated", "Inspired", "Burned out", "Numb"],
+    "weatherTags": ["Thunderstorm", "Raining", "Neon city", "Overcast"],
+    "lateNightScore": 92,
+    "soundtrack": "brass-heavy Zimmer swells and slowed-down sirens",
+    "drinkPairing": "espresso you should not be having this late",
+    "cinematicQuote": "Some nights fold in on themselves until morning feels optional.",
+    "visualMood": "A city bending over itself while the rain keeps perfect time.",
+    "emotionalSynopsis": "For nights when your mind keeps building rooms you do not remember entering."
+  },
+  {
+    "id": 10,
+    "title": "Parasite",
+    "genre": "Drama",
+    "director": "Bong Joon-ho",
+    "year": 2019,
+    "rating": 8.5,
+    "runtime": 132,
+    "rewatches": 14110,
+    "favoriteScene": "The rainstorm walk home",
+    "vibeTags": ["class satire", "slow dread", "perfect staircases"],
+    "cultureTags": ["FILM SCHOOL FAVORITE", "MOST REWATCHED", "STAFF PICK"],
+    "review": {
+      "stars": 5,
+      "username": "stairwellcinema",
+      "avatar": "SC",
+      "quote": "Funny, then unbearable, then unforgettable."
+    },
+    "reviews": [
+      {
+        "stars": 5,
+        "username": "stairwellcinema",
+        "avatar": "SC",
+        "quote": "Funny, then unbearable, then unforgettable."
+      },
+      {
+        "stars": 5,
+        "username": "basementlight",
+        "avatar": "BL",
+        "quote": "Every frame is doing three jobs at once."
+      },
+      {
+        "stars": 4.5,
+        "username": "ramdonnoodles",
+        "avatar": "RN",
+        "quote": "A perfect rainy-night rental that ruins your week."
+      }
+    ],
+    "description": "A poor family schemes their way into the household of a wealthy one, until a hidden truth turns the arrangement violent.",
+    "poster": "https://image.tmdb.org/t/p/w500/7IiTTgloJzvGI1TAYymCfbfl3vT.jpg",
+    "moods": ["Dissociated", "Angry", "Heartbroken", "Numb"],
+    "weatherTags": ["Raining", "Thunderstorm", "Overcast", "Foggy"],
+    "lateNightScore": 95,
+    "soundtrack": "elegant piano that slowly starts to rot",
+    "drinkPairing": "soju you forgot was in the freezer",
+    "cinematicQuote": "Some stories climb the stairs politely before they break the door.",
+    "visualMood": "Rain sheeting down a window above a half-flooded street.",
+    "emotionalSynopsis": "For the late hour when the difference between luck and cruelty stops feeling clear."
+  },
+  {
+    "id": 11,
+    "title": "The Shining",
+    "genre": "Horror",
+    "director": "Stanley Kubrick",
+    "year": 1980,
+    "rating": 8.2,
+    "runtime": 146,
+    "rewatches": 13980,
+    "favoriteScene": "The hallway of the Overlook",
+    "vibeTags": ["slow corridors", "cold dread", "snowbound"],
+    "cultureTags": ["MIDNIGHT RENTAL", "CULT CLASSIC", "HORROR VAULT"],
+    "review": {
+      "stars": 4.5,
+      "username": "room237kid",
+      "avatar": "RK",
+      "quote": "The carpet pattern lives in my brain rent free."
+    },
+    "reviews": [
+      {
+        "stars": 4.5,
+        "username": "room237kid",
+        "avatar": "RK",
+        "quote": "The carpet pattern lives in my brain rent free."
+      },
+      {
+        "stars": 5,
+        "username": "overlookdesk",
+        "avatar": "OD",
+        "quote": "Slowest dread in the Horror Vault. Worth it."
+      },
+      {
+        "stars": 4,
+        "username": "winterhedge",
+        "avatar": "WH",
+        "quote": "Watch it snowed in with every light on."
+      }
+    ],
+    "description": "A writer takes a winter caretaker job at an isolated hotel, where supernatural forces and cabin fever unravel his family.",
+    "poster": "https://image.tmdb.org/t/p/w500/b6ko0IKC8MdYBBPkkA1aBPLe2yz.jpg",
+    "moods": ["Dissociated", "Numb", "Burned out", "Angry"],
+    "weatherTags": ["Snowing", "Windy", "Overcast", "Foggy"],
+    "lateNightScore": 90,
+    "soundtrack": "low droning strings and one distant heartbeat",
+    "drinkPairing": "whiskey, neat, that you keep not drinking",
+    "cinematicQuote": "Some hallways are longer at 3 AM than they were at noon.",
+    "visualMood": "Snow piling against a window while the hotel hums to itself.",
+    "emotionalSynopsis": "For when the quiet of the house starts to feel like it is watching back."
+  },
+  {
+    "id": 12,
+    "title": "Blade Runner 2049",
+    "genre": "Sci-Fi",
+    "director": "Denis Villeneuve",
+    "year": 2017,
+    "rating": 8,
+    "runtime": 164,
+    "rewatches": 11760,
+    "favoriteScene": "The orange Vegas walk",
+    "vibeTags": ["neon fog", "synth ache", "rain and ruin"],
+    "cultureTags": ["CULT CLASSIC", "STAFF PICK", "NEW RELEASE"],
+    "review": {
+      "stars": 4.5,
+      "username": "neondust",
+      "avatar": "ND",
+      "quote": "Two and a half hours of beautiful loneliness."
+    },
+    "reviews": [
+      {
+        "stars": 4.5,
+        "username": "neondust",
+        "avatar": "ND",
+        "quote": "Two and a half hours of beautiful loneliness."
+      },
+      {
+        "stars": 5,
+        "username": "replicantregular",
+        "avatar": "RR",
+        "quote": "Best-looking tape on the Sci-Fi Corridor."
+      },
+      {
+        "stars": 4,
+        "username": "foghorn",
+        "avatar": "FH",
+        "quote": "Slow, sad, and worth every minute after midnight."
+      }
+    ],
+    "description": "A new blade runner unearths a long-buried secret that could plunge what's left of society into chaos as he searches for a vanished man.",
+    "poster": "https://image.tmdb.org/t/p/w500/gajva2L0rPYkEWjzgFlBXCAVBE5.jpg",
+    "moods": ["Lonely", "Dreamy", "Numb", "Dissociated"],
+    "weatherTags": ["Foggy", "Raining", "Neon city", "Snowing"],
+    "lateNightScore": 93,
+    "soundtrack": "vast synth walls and rain on chrome",
+    "drinkPairing": "neat bourbon and a glass of flat water",
+    "cinematicQuote": "Some questions only feel safe to ask after the city goes quiet.",
+    "visualMood": "Orange fog rolling over a dead skyline that still glows.",
+    "emotionalSynopsis": "For the 2 AM stretch when you want to feel something enormous and far away."
+  },
+  {
+    "id": 13,
+    "title": "Whiplash",
+    "genre": "Drama",
+    "director": "Damien Chazelle",
+    "year": 2014,
+    "rating": 8.5,
+    "runtime": 106,
+    "rewatches": 12880,
+    "favoriteScene": "The final drum solo",
+    "vibeTags": ["sweat and brass", "obsession", "tempo"],
+    "cultureTags": ["FILM SCHOOL FAVORITE", "MOST REWATCHED", "STAFF PICK"],
+    "review": {
+      "stars": 5,
+      "username": "doubletime",
+      "avatar": "DT",
+      "quote": "Leaves you wired like you played the set yourself."
+    },
+    "reviews": [
+      {
+        "stars": 5,
+        "username": "doubletime",
+        "avatar": "DT",
+        "quote": "Leaves you wired like you played the set yourself."
+      },
+      {
+        "stars": 4.5,
+        "username": "rushingdragging",
+        "avatar": "RD",
+        "quote": "A drama that moves like an action movie."
+      },
+      {
+        "stars": 4.5,
+        "username": "coreband",
+        "avatar": "CB",
+        "quote": "Short, brutal, and impossible to pause."
+      }
+    ],
+    "description": "A young jazz drummer is pushed to the brink by a ruthless instructor who will stop at nothing to draw out greatness.",
+    "poster": "https://image.tmdb.org/t/p/w500/7fn624j5lj3xTme2SgiLCeuedmO.jpg",
+    "moods": ["Angry", "Inspired", "Burned out", "Euphoric"],
+    "weatherTags": ["Summer heat", "Thunderstorm", "Clear night", "Windy"],
+    "lateNightScore": 87,
+    "soundtrack": "frantic snare rolls and a screaming horn section",
+    "drinkPairing": "black coffee, third cup, no apology",
+    "cinematicQuote": "Some nights you need the movie to push as hard as the deadline did.",
+    "visualMood": "A practice room lit gold while the clock refuses to slow down.",
+    "emotionalSynopsis": "For the restless hours when you are chasing something and cannot put it down."
+  },
+  {
+    "id": 14,
+    "title": "Spirited Away",
+    "genre": "Animation",
+    "director": "Hayao Miyazaki",
+    "year": 2001,
+    "rating": 8.6,
+    "runtime": 125,
+    "rewatches": 19120,
+    "favoriteScene": "The quiet train across the water",
+    "vibeTags": ["hand-drawn", "gentle awe", "homesick magic"],
+    "cultureTags": ["FAMILY MATINEE", "MOST REWATCHED", "STAFF PICK"],
+    "review": {
+      "stars": 5,
+      "username": "bathhouse",
+      "avatar": "BH",
+      "quote": "The most comforting strange movie ever made."
+    },
+    "reviews": [
+      {
+        "stars": 5,
+        "username": "bathhouse",
+        "avatar": "BH",
+        "quote": "The most comforting strange movie ever made."
+      },
+      {
+        "stars": 5,
+        "username": "traincar",
+        "avatar": "TC",
+        "quote": "The train scene fixes something in you."
+      },
+      {
+        "stars": 4.5,
+        "username": "soottags",
+        "avatar": "ST",
+        "quote": "A family tape that adults secretly need more."
+      }
+    ],
+    "description": "A girl wandering into a spirit world must work in a bathhouse for the gods to free her parents and find her way home.",
+    "poster": "https://image.tmdb.org/t/p/w500/39wmItIWsg5sZMyRUHLkWBcuVCM.jpg",
+    "moods": ["Dreamy", "Nostalgic", "Hopeful", "Lonely"],
+    "weatherTags": ["Foggy", "Clear night", "Overcast", "Snowing"],
+    "lateNightScore": 96,
+    "soundtrack": "a single piano theme that feels like remembering",
+    "drinkPairing": "warm barley tea in a chipped mug",
+    "cinematicQuote": "Some tapes feel like being walked home by someone kind.",
+    "visualMood": "Lantern light on water while a slow train slides past.",
+    "emotionalSynopsis": "For the homesick hour when you need a story that holds your hand without talking."
+  },
+  {
+    "id": 15,
+    "title": "Pulp Fiction",
+    "genre": "Action",
+    "director": "Quentin Tarantino",
+    "year": 1994,
+    "rating": 8.5,
+    "runtime": 154,
+    "rewatches": 17240,
+    "favoriteScene": "The diner standoff",
+    "vibeTags": ["jukebox cool", "out of order", "danger and diners"],
+    "cultureTags": ["CULT CLASSIC", "MOST REWATCHED", "STAFF PICK"],
+    "review": {
+      "stars": 4.5,
+      "username": "royalewithcheese",
+      "avatar": "RC",
+      "quote": "Still the coolest tape on the back wall."
+    },
+    "reviews": [
+      {
+        "stars": 4.5,
+        "username": "royalewithcheese",
+        "avatar": "RC",
+        "quote": "Still the coolest tape on the back wall."
+      },
+      {
+        "stars": 5,
+        "username": "vincentvega",
+        "avatar": "VV",
+        "quote": "Dialogue you quote at the counter for years."
+      },
+      {
+        "stars": 4,
+        "username": "brieftcase",
+        "avatar": "BC",
+        "quote": "Loud, mean, funny, and endlessly rewatchable."
+      }
+    ],
+    "description": "The lives of two hitmen, a boxer, and a gangster's wife intertwine across a darkly comic, out-of-order crime mosaic.",
+    "poster": "https://image.tmdb.org/t/p/w500/d5iIlFn5s0ImszYzBPb8JPIfbXD.jpg",
+    "moods": ["Angry", "Euphoric", "Numb", "Inspired"],
+    "weatherTags": ["Summer heat", "Neon city", "Clear night", "Windy"],
+    "lateNightScore": 88,
+    "soundtrack": "surf guitar and diner jukebox swagger",
+    "drinkPairing": "a five dollar milkshake, no notes",
+    "cinematicQuote": "Some nights only a tape this cool keeps the room awake.",
+    "visualMood": "A neon diner sign buzzing over an empty parking lot.",
+    "emotionalSynopsis": "For the wired hour when you want talk, danger, and zero sincerity."
+  },
+  {
+    "id": 16,
+    "title": "Pride & Prejudice",
+    "genre": "Romance",
+    "director": "Joe Wright",
+    "year": 2005,
+    "rating": 7.8,
+    "runtime": 129,
+    "rewatches": 12640,
+    "favoriteScene": "The hand flex",
+    "vibeTags": ["golden fields", "slow yearning", "rain confession"],
+    "cultureTags": ["FRIDAY NIGHT FAVORITE", "MOST REWATCHED", "DATE NIGHT PICK"],
+    "review": {
+      "stars": 4.5,
+      "username": "handflex",
+      "avatar": "HF",
+      "quote": "The most rewatched comfort tape in the Romance aisle."
+    },
+    "reviews": [
+      {
+        "stars": 4.5,
+        "username": "handflex",
+        "avatar": "HF",
+        "quote": "The most rewatched comfort tape in the Romance aisle."
+      },
+      {
+        "stars": 5,
+        "username": "dawnmoor",
+        "avatar": "DM",
+        "quote": "Sunrise lighting and one devastating glance."
+      },
+      {
+        "stars": 4,
+        "username": "letterwriter",
+        "avatar": "LW",
+        "quote": "Quiet, golden, and impossible to return on time."
+      }
+    ],
+    "description": "Spirited Elizabeth Bennet spars with the proud Mr. Darcy as misjudgments slowly give way to an aching, unspoken love.",
+    "poster": "https://image.tmdb.org/t/p/w500/sGjIvtVvTlWnia2zfJfHz81pZ9Q.jpg",
+    "moods": ["Romantic", "Nostalgic", "Dreamy", "Hopeful", "Lonely"],
+    "weatherTags": ["Foggy", "Overcast", "Clear night", "Sunrise"],
+    "lateNightScore": 89,
+    "soundtrack": "lonely piano and morning-field strings",
+    "drinkPairing": "chamomile tea going cold beside you",
+    "cinematicQuote": "Some nights only longing told gently will do.",
+    "visualMood": "Mist over a field while the sky decides to turn gold.",
+    "emotionalSynopsis": "For the tender hour when you want yearning that finally, quietly resolves."
   }
 ]

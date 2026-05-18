@@ -8,10 +8,6 @@
       content="Blockbuster+ is a cinematic movie discovery app imagining Blockbuster as a premium streaming service."
     />
     <title>Blockbuster+ | The Video Store Lives On</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -103,22 +99,21 @@
               <button class="btn btn-warning" type="submit">Explore</button>
             </form>
           </div>
-          <aside class="hero-panel" aria-label="Featured rental">
+          <aside class="hero-panel" aria-label="Featured rental" id="heroFeatured">
             <img
-              src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=800&q=80"
-              alt="Cinema seats under warm theater lighting"
+              id="heroFeaturedImage"
+              src="https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg"
+              alt="Tonight's staff pick poster"
+              width="500"
+              height="750"
+              decoding="async"
             />
             <p class="panel-label">Tonight's Staff Pick</p>
-            <h2>The Dark Knight</h2>
-            <p>
-              A premium crime epic with comic-book scale, practical grit, and a
-              villain performance that still feels electric.
+            <h2 id="heroFeaturedTitle">Loading rental…</h2>
+            <p id="heroFeaturedDescription">
+              Pulling tonight's staff pick from the shelf…
             </p>
-            <div class="rental-meta">
-              <span>Action</span>
-              <span>2008</span>
-              <span>9.0</span>
-            </div>
+            <div class="rental-meta" id="heroFeaturedMeta"></div>
           </aside>
         </div>
       </section>
@@ -188,7 +183,7 @@
 
         <form class="midnight-form" id="midnightForm" aria-label="Midnight Watchlist generator">
           <div>
-            <label class="form-label" for="midnightTime">Time of night</label>
+            <label class="form-label" for="midnightTime">What time is it emotionally?</label>
             <select class="form-select form-select-lg" id="midnightTime">
               <option>Early Evening</option>
               <option>10 PM</option>
@@ -199,7 +194,7 @@
             </select>
           </div>
           <div>
-            <label class="form-label" for="midnightMood">Emotional state</label>
+            <label class="form-label" for="midnightMood">How does the room feel?</label>
             <select class="form-select form-select-lg" id="midnightMood">
               <option>Lonely</option>
               <option>Heartbroken</option>
@@ -216,7 +211,7 @@
             </select>
           </div>
           <div>
-            <label class="form-label" for="midnightWeather">Weather</label>
+            <label class="form-label" for="midnightWeather">What's happening outside?</label>
             <select class="form-select form-select-lg" id="midnightWeather">
               <option>Raining</option>
               <option>Thunderstorm</option>
@@ -230,7 +225,7 @@
             </select>
           </div>
           <div>
-            <label class="form-label" for="midnightNeed">What do you need?</label>
+            <label class="form-label" for="midnightNeed">What kind of night is this?</label>
             <select class="form-select form-select-lg" id="midnightNeed">
               <option selected>Comfort me</option>
               <option>Destroy me gently</option>
@@ -242,9 +237,12 @@
           </div>
           <div class="midnight-slider-field">
             <label class="form-label" for="midnightIntensity">
-              Emotional volume
+              Movie emotion frequencies
               <span id="midnightIntensityLabel">7</span>
             </label>
+            <div class="emotion-waveform" id="emotionWaveform" aria-hidden="true">
+              <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+            </div>
             <input
               class="form-range"
               id="midnightIntensity"
@@ -254,7 +252,16 @@
               value="7"
             />
           </div>
-          <button class="btn btn-warning btn-lg" type="submit">
+          <div class="midnight-mood-chips" aria-label="Late night mood presets">
+            <button class="mood-chip" type="button" data-mood="Lonely" data-weather="Neon city" data-need="Destroy me gently">Cry in Neon</button>
+            <button class="mood-chip" type="button" data-mood="Dissociated" data-weather="Thunderstorm" data-need="Let me spiral">Sleepover Horror</button>
+            <button class="mood-chip" type="button" data-mood="Dreamy" data-weather="Foggy" data-need="Make it weird">Existential Sci-Fi</button>
+            <button class="mood-chip" type="button" data-mood="Nostalgic" data-weather="Raining" data-need="Comfort me">Rainy Tokyo</button>
+            <button class="mood-chip" type="button" data-mood="Inspired" data-weather="Overcast" data-need="Give me hope">Film School Core</button>
+            <button class="mood-chip" type="button" data-mood="Romantic" data-weather="Clear night" data-need="Comfort me">Quiet Romance</button>
+            <button class="mood-chip" type="button" data-mood="Numb" data-weather="Neon city" data-need="Let me spiral">3AM Dissociation</button>
+          </div>
+          <button class="btn btn-warning btn-lg" id="midnightSubmit" type="submit">
             Ask the Night Clerk
           </button>
         </form>
@@ -263,6 +270,9 @@
           <div class="midnight-empty">
             <span>2:13 AM</span>
             <p>Choose a mood, a weather pattern, and a time. The right tape is already humming on the shelf.</p>
+            <div class="midnight-empty-wave" aria-hidden="true">
+              <i></i><i></i><i></i><i></i><i></i>
+            </div>
           </div>
         </article>
 
@@ -286,100 +296,7 @@
           <a href="films.html">View all</a>
         </div>
         <div class="shelf-rail"></div>
-        <div class="row g-4 home-trending-grid">
-          <article class="col-md-6 col-xl-3 home-vhs-slot">
-            <div class="card movie-card home-vhs-card h-100">
-              <div class="vhs-gloss" aria-hidden="true"></div>
-              <div class="home-vhs-spine"><span>RENTAL</span></div>
-              <img
-                src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=900&q=80"
-                class="card-img-top"
-                alt="Rows of red theater seats"
-              />
-              <span class="home-vhs-sticker">BLOCKBUSTER VIDEO</span>
-              <span class="home-vhs-label">Premium Pick</span>
-              <span class="home-vhs-barcode">BB+ 001-2008</span>
-              <span class="home-vhs-wear">Most rented this weekend</span>
-              <span class="home-pull-badge">Pull from shelf</span>
-              <div class="card-body">
-                <p class="movie-kicker">Staff Picks Wall</p>
-                <h3 class="card-title">The Dark Knight</h3>
-                <p class="card-text">
-                  Gotham goes widescreen in a crime saga built for a giant screen.
-                </p>
-              </div>
-            </div>
-          </article>
-          <article class="col-md-6 col-xl-3 home-vhs-slot">
-            <div class="card movie-card home-vhs-card h-100">
-              <div class="vhs-gloss" aria-hidden="true"></div>
-              <div class="home-vhs-spine"><span>STAFF PICK</span></div>
-              <img
-                src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=900&q=80"
-                class="card-img-top"
-                alt="Vintage movie theater sign"
-              />
-              <span class="home-vhs-sticker">BLOCKBUSTER VIDEO</span>
-              <span class="home-vhs-label">Be Kind Rewind</span>
-              <span class="home-vhs-barcode">BB+ 002-2016</span>
-              <span class="home-vhs-wear">Maya's employee favorite</span>
-              <span class="home-pull-badge">Pull from shelf</span>
-              <div class="card-body">
-                <p class="movie-kicker">Indie Shelf</p>
-                <h3 class="card-title">Moonlight</h3>
-                <p class="card-text">
-                  A tender, poetic coming-of-age story told in three chapters.
-                </p>
-              </div>
-            </div>
-          </article>
-          <article class="col-md-6 col-xl-3 home-vhs-slot">
-            <div class="card movie-card home-vhs-card h-100">
-              <div class="vhs-gloss" aria-hidden="true"></div>
-              <div class="home-vhs-spine"><span>HORROR</span></div>
-              <img
-                src="https://images.unsplash.com/photo-1505686994434-e3cc5abf1330?auto=format&fit=crop&w=900&q=80"
-                class="card-img-top"
-                alt="Dark cinematic hallway"
-              />
-              <span class="home-vhs-sticker">BLOCKBUSTER VIDEO</span>
-              <span class="home-vhs-label">Midnight</span>
-              <span class="home-vhs-barcode">BB+ 003-2018</span>
-              <span class="home-vhs-wear">Late night counter copy</span>
-              <span class="home-pull-badge">Pull from shelf</span>
-              <div class="card-body">
-                <p class="movie-kicker">Horror Vault</p>
-                <h3 class="card-title">Hereditary</h3>
-                <p class="card-text">
-                  Family trauma turns into one of modern horror's coldest chills.
-                </p>
-              </div>
-            </div>
-          </article>
-          <article class="col-md-6 col-xl-3 home-vhs-slot">
-            <div class="card movie-card home-vhs-card h-100">
-              <div class="vhs-gloss" aria-hidden="true"></div>
-              <div class="home-vhs-spine"><span>SCI-FI</span></div>
-              <img
-                src="https://images.unsplash.com/photo-1518676590629-3dcbd9c5a5c9?auto=format&fit=crop&w=900&q=80"
-                class="card-img-top"
-                alt="Colorful cinema screen glow"
-              />
-              <span class="home-vhs-sticker">BLOCKBUSTER VIDEO</span>
-              <span class="home-vhs-label">New Release</span>
-              <span class="home-vhs-barcode">BB+ 004-2022</span>
-              <span class="home-vhs-wear">Friday night essential</span>
-              <span class="home-pull-badge">Pull from shelf</span>
-              <div class="card-body">
-                <p class="movie-kicker">Sci-Fi Corridor</p>
-                <h3 class="card-title">Everything Everywhere All At Once</h3>
-                <p class="card-text">
-                  Maximalist sci-fi chaos with a deeply human heart.
-                </p>
-              </div>
-            </div>
-          </article>
-        </div>
+        <div class="row g-4 home-trending-grid" id="homeTrendingGrid"></div>
       </section>
     </main>
 
@@ -390,7 +307,6 @@
       </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/camera.js"></script>
     <script src="js/home.js"></script>
     <script>

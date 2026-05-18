@@ -9,13 +9,25 @@ const rentalBagPanel = document.querySelector("#rentalBagPanel");
 const closeBagPanel = document.querySelector("#closeBagPanel");
 const bagItems = document.querySelector("#bagItems");
 const bagTotal = document.querySelector("#bagTotal");
+const checkoutVhs = document.querySelector("#checkoutVhs");
 const watchlistCount = document.querySelector("#watchlistCount");
 const watchlistRuntime = document.querySelector("#watchlistRuntime");
 const watchlistRewatches = document.querySelector("#watchlistRewatches");
 const watchlistMood = document.querySelector("#watchlistMood");
 const watchlistVibes = document.querySelector("#watchlistVibes");
+const watchlistTapeStack = document.querySelector("#watchlistTapeStack");
+const watchlistTapeList = document.querySelector("#watchlistTapeList");
+const shuffleTapeStack = document.querySelector("#shuffleTapeStack");
+const doubleFeaturePick = document.querySelector("#doubleFeaturePick");
 const recentActivity = document.querySelector("#recentActivity");
+const tonightStackSection = document.querySelector("#tonightStackSection");
 const tonightQueueList = document.querySelector("#tonightQueueList");
+const receiptList = document.querySelector("#receiptList");
+const receiptTotal = document.querySelector("#receiptTotal");
+const stackClerkNote = document.querySelector("#stackClerkNote");
+const stackFlareMessage = document.querySelector("#stackFlareMessage");
+const startStackScreening = document.querySelector("#startStackScreening");
+const shuffleTonightStack = document.querySelector("#shuffleTonightStack");
 const soundToggle = document.querySelector("#soundToggle");
 const swipeCard = document.querySelector("#swipeCard");
 const swipeSkip = document.querySelector("#swipeSkip");
@@ -43,6 +55,14 @@ const featuredVhsTitle = document.querySelector("#featuredVhsTitle");
 const projectorNext = document.querySelector("#projectorNext");
 const projectorInspect = document.querySelector("#projectorInspect");
 const projectorBag = document.querySelector("#projectorBag");
+const screeningBar = document.querySelector("#screeningBar");
+const screeningBarImage = document.querySelector("#screeningBarImage");
+const screeningBarTitle = document.querySelector("#screeningBarTitle");
+const screeningBarMeta = document.querySelector("#screeningBarMeta");
+const screeningResume = document.querySelector("#screeningResume");
+const screeningNext = document.querySelector("#screeningNext");
+const screeningBag = document.querySelector("#screeningBag");
+const screeningShuffle = document.querySelector("#screeningShuffle");
 const quickFilters = document.querySelector(".quick-filters");
 const resetFiltersButton = document.querySelector("#resetFilters");
 const vhsShelf = document.querySelector(".vhs-shelf");
@@ -55,6 +75,8 @@ let projectorTimer = null;
 let isShelfDragging = false;
 let shelfDragStartX = 0;
 let shelfScrollStart = 0;
+let draggedTapeIndex = null;
+let previousRentalBagSize = 0;
 let swipeIndex = 0;
 let isSwipeAnimating = false;
 let soundEnabled = false;
@@ -72,6 +94,9 @@ const konamiCode = [
   "a",
 ];
 let konamiProgress = [];
+
+const RENTAL_BAG_STORAGE_KEY = "blockbusterRentalBag";
+let bagHydrated = false;
 
 const vhsDetails = {
   "The Dark Knight": {
@@ -125,6 +150,7 @@ async function fetchFilms() {
     }
 
     films = await response.json();
+    hydrateRentalBag();
     populateGenreFilter(films);
     renderFilms(films);
     renderActivityFeed(films);
@@ -166,6 +192,7 @@ function renderProjectorFeature(index) {
   featuredVhsImage.alt = `${film.title} featured VHS cover`;
   featuredVhsTitle.textContent = film.title;
   updateProjectorBagButton(film);
+  updateScreeningBar(film);
 
   const display = document.querySelector(".featured-vhs-display");
   display.classList.remove("is-switching");
@@ -179,11 +206,25 @@ function showNextProjectorFilm() {
   startProjectorRotation();
 }
 
+let projectorInView = true;
+
 function startProjectorRotation() {
   window.clearInterval(projectorTimer);
+  projectorTimer = null;
+
+  // Don't burn timers/animations while the tab is hidden or the
+  // projector section is scrolled out of view.
+  if (document.hidden || !projectorInView || !films.length) {
+    return;
+  }
+
   projectorTimer = window.setInterval(() => {
     renderProjectorFeature(featuredFilmIndex + 1);
   }, 6500);
+}
+
+function refreshProjectorRotation() {
+  startProjectorRotation();
 }
 
 function inspectProjectorFilm() {
@@ -200,10 +241,26 @@ function updateProjectorBagButton(film) {
   }
 
   const isBagged = rentalBag.some((rental) => rental.id === film.id);
-  projectorBag.textContent = isBagged ? "In The Bag" : "Throw In Bag";
+  projectorBag.textContent = isBagged ? "In The Stack" : "Throw In Bag";
   projectorBag.classList.toggle("btn-light", isBagged);
   projectorBag.classList.toggle("btn-warning", !isBagged);
   projectorBag.setAttribute("aria-pressed", String(isBagged));
+}
+
+function updateScreeningBar(film) {
+  if (!screeningBar || !film) {
+    return;
+  }
+
+  const details = getBackCoverDetails(film);
+  const isBagged = rentalBag.some((rental) => rental.id === film.id);
+  screeningBarImage.src = film.poster;
+  screeningBarImage.alt = "";
+  screeningBarTitle.textContent = film.title;
+  screeningBarMeta.textContent = `${film.director} • ${getAisleName(film.genre)} • ${details.runtime}`;
+  screeningBag.textContent = isBagged ? "In The Stack" : "Add To Bag";
+  screeningBag.setAttribute("aria-pressed", String(isBagged));
+  screeningBar.classList.remove("is-shuffling");
 }
 
 function populateGenreFilter(movieList) {
@@ -265,7 +322,7 @@ function renderFilms(movieList) {
               <span>${getAisleName(film.genre)}</span>
             </div>
             <div class="poster-frame">
-              <img src="${film.poster}" class="card-img-top" alt="${film.title} VHS cover">
+              <img src="${film.poster}" class="card-img-top" alt="${film.title} VHS cover" width="500" height="750" loading="lazy" decoding="async">
               <span class="rental-sticker">BLOCKBUSTER VIDEO</span>
               <span class="rewind-label">BE KIND REWIND</span>
               <span class="shelf-tag">${shelfTag}</span>
@@ -310,7 +367,7 @@ function renderFilms(movieList) {
                 data-film-id="${film.id}"
                 aria-pressed="${isBagged}"
               >
-                ${isBagged ? "In The Bag" : "Throw In Bag"}
+                ${isBagged ? "In The Stack" : "Throw In Bag"}
               </button>
               <p class="bag-confirmation ${isBagged ? "is-visible" : ""}">
                 Dropped into your rental bag
@@ -341,7 +398,10 @@ function renderFilms(movieList) {
                 <p>${film.favoriteScene || "Ask the counter clerk for the scene everyone talks about."}</p>
               </div>
               <div class="back-barcode" aria-hidden="true"></div>
-              <p class="back-hint">Click the shelf case to inspect the full rental box</p>
+              <button class="btn btn-warning btn-sm back-info-button" type="button" data-open-detail="${film.id}">
+                More Info
+              </button>
+              <p class="back-hint">Click the back cover again to inspect the full rental box.</p>
             </div>
           </div>
         </div>
@@ -354,7 +414,14 @@ function renderFilms(movieList) {
   resultsCount.textContent = `Now Renting: ${movieList.length} available`;
 }
 
+const backCoverCache = new Map();
+
 function getBackCoverDetails(film) {
+  const cached = backCoverCache.get(film.id);
+  if (cached) {
+    return cached;
+  }
+
   const fallback = {
     runtime: `${film.runtime || 100 + film.id * 7} min`,
     cast: ["Store Favorite", "Cult Performer", "Friday Night Regular"],
@@ -367,13 +434,15 @@ function getBackCoverDetails(film) {
   const details = vhsDetails[film.title] || fallback;
   const staffPick = getStaffPick(film, film.id);
 
-  return {
+  const result = {
     employee: staffPick.employee,
     staffTag: staffPick.tag,
     staffNote: staffPick.note,
     ...details,
     synopsis: `${film.description} A Blockbuster+ rental-card favorite with shelf-worn charm, late-fee energy, and enough replay value for one more weekend checkout.`,
   };
+  backCoverCache.set(film.id, result);
+  return result;
 }
 
 function getStaffPick(film, index) {
@@ -447,15 +516,20 @@ function getCultureTags(film, index) {
   return [getShelfTag(film, index), film.rating >= 8 ? "MOST REWATCHED" : "COUNTER FAVORITE"];
 }
 
+const reviewCache = new Map();
+
 function getReview(film) {
-  return (
-    film.review || {
+  let review = reviewCache.get(film.id);
+  if (!review) {
+    review = film.review || {
       stars: 4,
       username: "videostoreregular",
       avatar: "VR",
       quote: "Exactly the kind of tape you hope to find on the shelf.",
-    }
-  );
+    };
+    reviewCache.set(film.id, review);
+  }
+  return review;
 }
 
 function getReviews(film) {
@@ -520,7 +594,7 @@ function renderSwipeCard() {
   swipeSkip.disabled = false;
   swipeBag.disabled = false;
   swipeReviews.disabled = false;
-  swipeBag.textContent = isBagged ? "In The Bag" : "Throw In Bag";
+  swipeBag.textContent = isBagged ? "In The Stack" : "Throw In Bag";
   swipeBag.classList.toggle("btn-light", isBagged);
   swipeBag.classList.toggle("btn-warning", !isBagged);
 
@@ -528,7 +602,7 @@ function renderSwipeCard() {
     <article class="swipe-vhs-case" aria-label="${film.title} swipeable VHS rental">
       <div class="swipe-vhs-spine"><span>${getAisleName(film.genre)}</span></div>
       <div class="swipe-vhs-cover">
-        <img src="${film.poster}" alt="${film.title} VHS cover">
+        <img src="${film.poster}" alt="${film.title} VHS cover" width="500" height="750" loading="lazy" decoding="async">
         <span class="swipe-store-sticker">BLOCKBUSTER VIDEO</span>
         <span class="swipe-rewind-sticker">BE KIND REWIND</span>
         <span class="swipe-barcode">${getBarcodeLabel(film)}</span>
@@ -573,7 +647,7 @@ function handleSwipeSkip() {
   advanceSwipe("left");
 }
 
-function addFilmToRentalBag(film, sourceButton) {
+function addFilmToRentalBag(film, sourceButton, activityMessage) {
   if (!film || rentalBag.some((rental) => rental.id === film.id)) {
     return false;
   }
@@ -584,7 +658,11 @@ function addFilmToRentalBag(film, sourceButton) {
     updateProjectorBagButton(film);
   }
   syncFilmBagState(film);
-  prependActivity(film, `@you added ${film.title} to Tonight's Watchlist ${renderStars(getReview(film).stars)}`);
+  prependActivity(
+    film,
+    activityMessage ||
+      `@you added ${film.title} to Tonight's Watchlist ${renderStars(getReview(film).stars)}`,
+  );
   animateRentalBag();
   playInteractionSound("bag");
   if (sourceButton) {
@@ -594,25 +672,7 @@ function addFilmToRentalBag(film, sourceButton) {
 }
 
 function handleSwipeBag() {
-  const film = getCurrentSwipeFilm();
-  const added = addFilmToRentalBag(film, swipeBag);
-
-  if (added) {
-    const shelfButton = document.querySelector(`.bag-button[data-film-id="${film.id}"]`);
-    shelfButton?.classList.remove("btn-warning");
-    shelfButton?.classList.add("btn-light");
-    if (shelfButton) {
-      shelfButton.textContent = "In The Bag";
-      shelfButton.setAttribute("aria-pressed", "true");
-    }
-    document
-      .querySelector(`.vhs-card[data-card-film-id="${film.id}"] .bagged-badge`)
-      ?.classList.add("is-visible");
-    document
-      .querySelector(`.vhs-card[data-card-film-id="${film.id}"] .bag-confirmation`)
-      ?.classList.add("is-visible");
-  }
-
+  addFilmToRentalBag(getCurrentSwipeFilm(), swipeBag);
   advanceSwipe("right");
 }
 
@@ -633,9 +693,9 @@ function syncFilmBagState(film) {
       button.classList.toggle("btn-light", isBagged);
       button.setAttribute("aria-pressed", String(isBagged));
       if (button.classList.contains("midnight-queue-button")) {
-        button.textContent = isBagged ? "Saved To Tonight's Queue" : "Save To Tonight's Queue";
+        button.textContent = isBagged ? "Saved To Tonight's Stack" : "Save To Tonight's Stack";
       } else {
-        button.textContent = isBagged ? "In The Bag" : "Throw In Bag";
+        button.textContent = isBagged ? "In The Stack" : "Throw In Bag";
       }
     }
   });
@@ -750,15 +810,61 @@ function getAisleName(genre) {
   return aisleNames[genre] || `${genre} Aisle`;
 }
 
+function persistRentalBag() {
+  if (!bagHydrated) {
+    return;
+  }
+
+  try {
+    localStorage.setItem(
+      RENTAL_BAG_STORAGE_KEY,
+      JSON.stringify(rentalBag.map((film) => film.id)),
+    );
+  } catch (error) {
+    /* storage unavailable (private mode / quota) — bag stays in-memory only */
+  }
+}
+
+function hydrateRentalBag() {
+  let savedIds = [];
+
+  try {
+    savedIds = JSON.parse(localStorage.getItem(RENTAL_BAG_STORAGE_KEY) || "[]");
+  } catch (error) {
+    savedIds = [];
+  }
+
+  if (Array.isArray(savedIds)) {
+    savedIds.forEach((id) => {
+      const film = films.find((movie) => movie.id === id);
+      if (film && !rentalBag.some((rental) => rental.id === id)) {
+        rentalBag.push(film);
+      }
+    });
+  }
+
+  bagHydrated = true;
+  previousRentalBagSize = rentalBag.length;
+  updateRentalBag();
+}
+
 function updateRentalBag() {
   const bagSize = rentalBag.length;
   const label = `Rental Bag: ${bagSize} film${bagSize === 1 ? "" : "s"}`;
+  const addedToStack = bagSize > previousRentalBagSize;
 
   bagCountLabel.textContent = label;
   bagCounter.textContent = bagSize;
   bagTotal.textContent = `Total rentals: ${bagSize}`;
+  checkoutVhs.textContent = bagSize === 0 ? "Add a Tape First" : "Checkout VHS";
+  checkoutVhs.disabled = bagSize === 0;
   updateWatchlistPanel();
   updateTonightQueue();
+  if (addedToStack) {
+    animateTonightStackDrop(rentalBag[bagSize - 1]);
+  }
+  previousRentalBagSize = bagSize;
+  persistRentalBag();
 
   if (bagSize === 0) {
     bagItems.innerHTML = `
@@ -774,7 +880,7 @@ function updateRentalBag() {
     const item = document.createElement("article");
     item.className = "bag-item";
     item.innerHTML = `
-      <img src="${film.poster}" alt="${film.title} poster thumbnail">
+      <img src="${film.poster}" alt="${film.title} poster thumbnail" width="80" height="120" loading="lazy" decoding="async">
       <div>
         <h3>${film.title}</h3>
         <p>${getAisleName(film.genre)} · ${film.year}</p>
@@ -788,32 +894,124 @@ function updateRentalBag() {
 }
 
 function updateTonightQueue() {
-  if (!tonightQueueList) {
+  if (!tonightQueueList || !receiptList || !receiptTotal || !stackClerkNote || !startStackScreening || !shuffleTonightStack) {
     return;
   }
 
   if (rentalBag.length === 0) {
-    tonightQueueList.innerHTML = `<li class="queue-empty">No tapes selected yet.</li>`;
+    startStackScreening.disabled = true;
+    shuffleTonightStack.disabled = true;
+    receiptList.innerHTML = `<li>Waiting for rentals...</li>`;
+    receiptTotal.textContent = "0 tapes • projector idle";
+    stackClerkNote.textContent = "Pull a VHS from the shelf and the clerk will call the vibe.";
+    tonightQueueList.innerHTML = `
+      <li class="queue-empty">
+        <strong>NO TAPES ON THE COUNTER.</strong>
+        <span>Pull a VHS from the shelf to build tonight's movie night.</span>
+      </li>
+    `;
     return;
   }
+
+  const totalRuntime = rentalBag.reduce((total, film) => total + (film.runtime || 0), 0);
+  const hours = Math.floor(totalRuntime / 60);
+  const minutes = totalRuntime % 60;
+  const runtimeLabel = hours > 0 ? `${hours}h ${minutes}m` : `${minutes}m`;
+  const vibeTags = [...new Set(rentalBag.flatMap((film) => film.vibeTags || []))];
+  const projectedMood = getProjectedMood(rentalBag);
+  const lateFeeRisk = getLateFeeRisk(totalRuntime, rentalBag.length);
+
+  startStackScreening.disabled = false;
+  shuffleTonightStack.disabled = rentalBag.length < 2;
+  stackClerkNote.textContent = getClerkNote(rentalBag);
+  receiptList.innerHTML = rentalBag
+    .map((film, index) => `<li><span>${index + 1}.</span> ${film.title}</li>`)
+    .join("");
+  receiptTotal.textContent = `${rentalBag.length} tape${rentalBag.length === 1 ? "" : "s"} • ${runtimeLabel} • ${projectedMood} • ${lateFeeRisk}`;
 
   tonightQueueList.innerHTML = rentalBag
     .map(
       (film, index) => `
-        <li class="queue-tape" style="--queue-delay: ${index * 70}ms">
+        <li class="queue-tape" style="--queue-delay: ${index * 70}ms; --stack-offset: ${Math.min(index, 5) * 1.05}rem; --stack-tilt: ${(index % 2 === 0 ? -0.55 : 0.48).toFixed(2)}deg">
           <span>${index + 1}</span>
           <div>
             <strong>${film.title}</strong>
-            <p>${getAisleName(film.genre)} · ${film.runtime || "??"} min</p>
+            <p>${getAisleName(film.genre)} · ${film.runtime || "??"} min · ${vibeTags[index % Math.max(vibeTags.length, 1)] || "projector ready"}</p>
           </div>
+          <button type="button" data-stack-remove="${film.id}" aria-label="Remove ${film.title} from Tonight's Stack">×</button>
         </li>
       `,
     )
     .join("");
 }
 
+function getProjectedMood(stack) {
+  const genres = stack.map((film) => film.genre);
+
+  if (genres.filter((genre) => genre === "Horror").length >= 1) {
+    return "midnight horror spiral";
+  }
+
+  if (genres.includes("Drama") && genres.includes("Romance")) {
+    return "neon loneliness";
+  }
+
+  if (genres.includes("Action") && stack.length >= 2) {
+    return "adrenaline double bill";
+  }
+
+  if (stack.length >= 3) {
+    return "sleep-deprived film student energy";
+  }
+
+  return "clerk-approved movie night";
+}
+
+function getLateFeeRisk(totalRuntime, stackSize) {
+  if (totalRuntime >= 360) {
+    return "late fee risk: legendary";
+  }
+
+  if (stackSize >= 3) {
+    return "late fee risk: emotionally unsafe";
+  }
+
+  return "late fee risk: manageable";
+}
+
+function getClerkNote(stack) {
+  const firstFilm = stack[0];
+  const hasHorror = stack.some((film) => film.genre === "Horror");
+  const hasDrama = stack.some((film) => film.genre === "Drama");
+  const hasAction = stack.some((film) => film.genre === "Action");
+
+  if (hasHorror) {
+    return "Don't start the scary tape after midnight unless you're emotionally prepared.";
+  }
+
+  if (hasDrama && stack.length > 1) {
+    return "Excellent rainy-night stack. Keep the lights low and your phone across the room.";
+  }
+
+  if (hasAction) {
+    return "This lineup pairs well with cherry coke, loud speakers, and no early bedtime.";
+  }
+
+  return `${firstFilm.title} is a strong first pull. The clerk approves this shelf energy.`;
+}
+
 function updateWatchlistPanel() {
-  if (!watchlistCount || !watchlistRuntime || !watchlistRewatches || !watchlistMood || !watchlistVibes) {
+  if (
+    !watchlistCount ||
+    !watchlistRuntime ||
+    !watchlistRewatches ||
+    !watchlistMood ||
+    !watchlistVibes ||
+    !watchlistTapeStack ||
+    !watchlistTapeList ||
+    !shuffleTapeStack ||
+    !doubleFeaturePick
+  ) {
     return;
   }
 
@@ -829,6 +1027,72 @@ function updateWatchlistPanel() {
     bagSize === 0
       ? "Throw tapes into the bag to build a late-night watchlist with runtime, rewatches, and mood tags."
       : `Tonight feels like ${vibes.slice(0, 3).join(", ")}.`;
+  shuffleTapeStack.disabled = bagSize < 2;
+  doubleFeaturePick.textContent =
+    bagSize < 2
+      ? "Double Feature: add two tapes to pair the night."
+      : `Double Feature: ${rentalBag[0].title} + ${rentalBag[1].title}`;
+  watchlistTapeStack.innerHTML =
+    bagSize === 0
+      ? `<span class="stack-empty">No tapes on the counter yet.</span>`
+      : rentalBag
+          .map((film, index) => {
+            const stackIndex = Math.min(index, 5);
+            const rotationPattern = [-3, 2, -1, 3, -2, 1];
+
+            return `
+              <article
+                class="counter-vhs-tape"
+                draggable="true"
+                tabindex="0"
+                aria-label="${film.title}, tape ${index + 1} of ${bagSize}. Drag to reorder."
+                data-stack-index="${index}"
+                data-film-id="${film.id}"
+                style="--tape-order: ${index}; --tape-x: ${stackIndex * 2.25}rem; --tape-y: ${(index % 3) * 0.32}rem; --tape-rotate: ${
+                  rotationPattern[index % rotationPattern.length]
+                }deg; --tape-delay: ${index * 60}ms;"
+              >
+                <span class="counter-vhs-spine">${String(index + 1).padStart(2, "0")}</span>
+                <div class="counter-vhs-copy">
+                  <strong>${film.title}</strong>
+                  <small>${getAisleName(film.genre)} &middot; ${film.runtime || "??"} min</small>
+                </div>
+                <div class="counter-vhs-controls" aria-label="Tape controls">
+                  <button type="button" data-stack-move="left" data-stack-index="${index}" aria-label="Move ${film.title} earlier" ${
+                    index === 0 ? "disabled" : ""
+                  }>‹</button>
+                  <button type="button" data-stack-move="right" data-stack-index="${index}" aria-label="Move ${film.title} later" ${
+                    index === bagSize - 1 ? "disabled" : ""
+                  }>›</button>
+                  <button type="button" data-stack-remove="${film.id}" aria-label="Remove ${film.title} from counter stack">×</button>
+                </div>
+              </article>
+            `;
+          })
+          .join("");
+  watchlistTapeList.innerHTML =
+    bagSize === 0
+      ? ""
+      : rentalBag
+          .map(
+            (film, index) => `
+              <article class="playlist-tape-row" draggable="true" data-stack-index="${index}">
+                <span>${String(index + 1).padStart(2, "0")}</span>
+                <strong>${film.title}</strong>
+                <small>${getAisleName(film.genre)}</small>
+                <div>
+                  <button type="button" data-stack-move="left" data-stack-index="${index}" aria-label="Move ${film.title} earlier in playlist" ${
+                    index === 0 ? "disabled" : ""
+                  }>Earlier</button>
+                  <button type="button" data-stack-move="right" data-stack-index="${index}" aria-label="Move ${film.title} later in playlist" ${
+                    index === bagSize - 1 ? "disabled" : ""
+                  }>Later</button>
+                  <button type="button" data-stack-remove="${film.id}" aria-label="Remove ${film.title} from playlist">Remove</button>
+                </div>
+              </article>
+            `,
+          )
+          .join("");
   watchlistVibes.innerHTML = (vibes.length ? vibes : ["vhs glow", "staff picked", "11PM rental"])
     .map((vibe) => `<span>${vibe}</span>`)
     .join("");
@@ -907,6 +1171,8 @@ function toggleFlippedCard(card) {
     movieCard.classList.toggle("is-flipped", isFlipped);
     movieCard.setAttribute("aria-pressed", String(isFlipped));
   });
+
+  playInteractionSound("pull");
 }
 
 function openMovieDetail(film) {
@@ -920,7 +1186,7 @@ function openMovieDetail(film) {
         <span>${getAisleName(film.genre)}</span>
       </div>
       <div class="detail-vhs-front">
-        <img src="${film.poster}" alt="${film.title} expanded VHS front cover">
+        <img src="${film.poster}" alt="${film.title} expanded VHS front cover" width="500" height="750" decoding="async">
         <span class="detail-store-sticker">BLOCKBUSTER VIDEO</span>
         <span class="detail-release-sticker">${getShelfTag(film, film.id)}</span>
         <span class="detail-handwritten-sticker">${details.employee} recommends</span>
@@ -980,7 +1246,7 @@ function openMovieDetail(film) {
             data-film-id="${film.id}"
             aria-pressed="${isBagged}"
           >
-            ${isBagged ? "In The Bag" : "Throw In Bag"}
+            ${isBagged ? "In The Stack" : "Throw In Bag"}
           </button>
           <button class="btn btn-outline-light detail-close-box-button" type="button" data-close-detail>
             Close Box
@@ -1003,6 +1269,19 @@ function closeMovieDetail() {
 }
 
 function handleCardDetailOpen(event) {
+  const detailButton = event.target.closest("[data-open-detail]");
+
+  if (detailButton) {
+    const filmId = Number(detailButton.dataset.openDetail);
+    const film = films.find((movie) => movie.id === filmId);
+
+    if (film) {
+      openMovieDetail(film);
+    }
+
+    return;
+  }
+
   if (event.target.closest("button, a, input, select")) {
     return;
   }
@@ -1016,8 +1295,13 @@ function handleCardDetailOpen(event) {
   const filmId = Number(card.dataset.cardFilmId);
   const film = films.find((movie) => movie.id === filmId);
 
-  if (film) {
+  if (film && card.classList.contains("is-flipped")) {
     openMovieDetail(film);
+    return;
+  }
+
+  if (film) {
+    toggleFlippedCard(card);
   }
 }
 
@@ -1036,8 +1320,13 @@ function handleCardKeyboard(event) {
   const filmId = Number(card.dataset.cardFilmId);
   const film = films.find((movie) => movie.id === filmId);
 
-  if (film) {
+  if (film && card.classList.contains("is-flipped")) {
     openMovieDetail(film);
+    return;
+  }
+
+  if (film) {
+    toggleFlippedCard(card);
   }
 }
 
@@ -1106,6 +1395,10 @@ function toggleSound() {
 }
 
 function animateTinyVhs(button) {
+  if (!button || !rentalBagButton) {
+    return;
+  }
+
   const buttonRect = button.getBoundingClientRect();
   const bagRect = rentalBagButton.getBoundingClientRect();
   const tinyVhs = document.createElement("span");
@@ -1130,6 +1423,22 @@ function animateTinyVhs(button) {
   tinyVhs.addEventListener("animationend", () => tinyVhs.remove());
 }
 
+function animateTonightStackDrop(film) {
+  if (!tonightStackSection || !stackFlareMessage || !film) {
+    return;
+  }
+
+  tonightStackSection.classList.remove("is-stacking", "is-projecting");
+  stackFlareMessage.textContent = `Dropped ${film.title} on the counter.`;
+  window.requestAnimationFrame(() => {
+    tonightStackSection.classList.add("is-stacking");
+  });
+  window.setTimeout(() => {
+    tonightStackSection.classList.remove("is-stacking");
+    stackFlareMessage.textContent = "";
+  }, 1600);
+}
+
 function handleBagClick(event) {
   const button = event.target.closest(".bag-button, .detail-bag-button");
 
@@ -1137,48 +1446,8 @@ function handleBagClick(event) {
     return;
   }
 
-  const filmId = Number(button.dataset.filmId);
-  const film = films.find((movie) => movie.id === filmId);
-
-  if (!film || rentalBag.some((rental) => rental.id === filmId)) {
-    return;
-  }
-
-  rentalBag.push(film);
-  button.textContent = "In The Bag";
-  button.classList.remove("btn-warning");
-  button.classList.add("btn-light");
-  button.setAttribute("aria-pressed", "true");
-  const card = button.closest(".vhs-card");
-  if (card) {
-    card.querySelector(".bag-confirmation").classList.add("is-visible");
-    card.querySelector(".bagged-badge").classList.add("is-visible");
-  }
-  updateRentalBag();
-  if (films[featuredFilmIndex]?.id === film.id) {
-    updateProjectorBagButton(film);
-  }
-  syncFilmBagState(film);
-  prependActivity(film, `@you added ${film.title} to Tonight's Watchlist ${renderStars(getReview(film).stars)}`);
-  playInteractionSound("bag");
-  animateRentalBag();
-  animateTinyVhs(button);
-
-  if (button.classList.contains("detail-bag-button")) {
-    document
-      .querySelector(`.vhs-card[data-card-film-id="${filmId}"] .bagged-badge`)
-      ?.classList.add("is-visible");
-    document
-      .querySelector(`.vhs-card[data-card-film-id="${filmId}"] .bag-confirmation`)
-      ?.classList.add("is-visible");
-    const shelfButton = document.querySelector(`.bag-button[data-film-id="${filmId}"]`);
-    shelfButton?.classList.remove("btn-warning");
-    shelfButton?.classList.add("btn-light");
-    if (shelfButton) {
-      shelfButton.textContent = "In The Bag";
-      shelfButton.setAttribute("aria-pressed", "true");
-    }
-  }
+  const film = films.find((movie) => movie.id === Number(button.dataset.filmId));
+  addFilmToRentalBag(film, button);
 }
 
 function addFeaturedRentalToBag() {
@@ -1187,34 +1456,37 @@ function addFeaturedRentalToBag() {
   }
 
   const film = films[featuredFilmIndex];
+  addFilmToRentalBag(film, projectorBag);
+  updateProjectorBagButton(film);
+  updateScreeningBar(film);
+}
 
-  if (!film || rentalBag.some((rental) => rental.id === film.id)) {
-    updateProjectorBagButton(film);
+function addScreeningFilmToBag() {
+  const film = films[featuredFilmIndex];
+
+  if (!film) {
     return;
   }
 
-  rentalBag.push(film);
-  updateRentalBag();
+  addFilmToRentalBag(
+    film,
+    screeningBag,
+    `@you added ${film.title} from Tonight's Screening ${renderStars(getReview(film).stars)}`,
+  );
   updateProjectorBagButton(film);
-  syncFilmBagState(film);
-  prependActivity(film, `@you added ${film.title} to Tonight's Watchlist ${renderStars(getReview(film).stars)}`);
-  playInteractionSound("bag");
-  animateRentalBag();
-  animateTinyVhs(projectorBag);
+  updateScreeningBar(film);
+}
 
-  const shelfButton = document.querySelector(`.bag-button[data-film-id="${film.id}"]`);
-  shelfButton?.classList.remove("btn-warning");
-  shelfButton?.classList.add("btn-light");
-  if (shelfButton) {
-    shelfButton.textContent = "In The Bag";
-    shelfButton.setAttribute("aria-pressed", "true");
+function shuffleNight() {
+  if (!films.length) {
+    return;
   }
-  document
-    .querySelector(`.vhs-card[data-card-film-id="${film.id}"] .bagged-badge`)
-    ?.classList.add("is-visible");
-  document
-    .querySelector(`.vhs-card[data-card-film-id="${film.id}"] .bag-confirmation`)
-    ?.classList.add("is-visible");
+
+  const nextIndex = Math.floor(Math.random() * films.length);
+  screeningBar?.classList.add("is-shuffling");
+  renderProjectorFeature(nextIndex === featuredFilmIndex ? nextIndex + 1 : nextIndex);
+  startProjectorRotation();
+  playInteractionSound("pull");
 }
 
 function handleQuickFilterClick(event) {
@@ -1230,6 +1502,19 @@ function handleQuickFilterClick(event) {
 }
 
 function handleGridUtilityClick(event) {
+  const detailButton = event.target.closest("[data-open-detail]");
+
+  if (detailButton) {
+    const filmId = Number(detailButton.dataset.openDetail);
+    const film = films.find((movie) => movie.id === filmId);
+
+    if (film) {
+      openMovieDetail(film);
+    }
+
+    return;
+  }
+
   if (event.target.closest("#emptyReset")) {
     resetFilters();
   }
@@ -1242,11 +1527,21 @@ function updateCaseGlare(event) {
     return;
   }
 
-  const rect = card.getBoundingClientRect();
-  const x = ((event.clientX - rect.left) / rect.width) * 100;
-  const y = ((event.clientY - rect.top) / rect.height) * 100;
-  card.style.setProperty("--case-glare-x", `${Math.max(0, Math.min(100, x))}%`);
-  card.style.setProperty("--case-glare-y", `${Math.max(0, Math.min(100, y))}%`);
+  if (card.caseGlareFrame) {
+    card.caseGlareEvent = event;
+    return;
+  }
+
+  card.caseGlareEvent = event;
+  card.caseGlareFrame = window.requestAnimationFrame(() => {
+    const latestEvent = card.caseGlareEvent;
+    const rect = card.getBoundingClientRect();
+    const x = ((latestEvent.clientX - rect.left) / rect.width) * 100;
+    const y = ((latestEvent.clientY - rect.top) / rect.height) * 100;
+    card.style.setProperty("--case-glare-x", `${Math.max(0, Math.min(100, x))}%`);
+    card.style.setProperty("--case-glare-y", `${Math.max(0, Math.min(100, y))}%`);
+    card.caseGlareFrame = null;
+  });
 }
 
 function resetCaseGlare(event) {
@@ -1254,6 +1549,11 @@ function resetCaseGlare(event) {
 
   if (!card) {
     return;
+  }
+
+  if (card.caseGlareFrame) {
+    window.cancelAnimationFrame(card.caseGlareFrame);
+    card.caseGlareFrame = null;
   }
 
   card.style.setProperty("--case-glare-x", "38%");
@@ -1295,6 +1595,134 @@ function removeRental(filmId) {
   );
 }
 
+function moveRentalTape(fromIndex, toIndex) {
+  if (
+    fromIndex === toIndex ||
+    fromIndex < 0 ||
+    toIndex < 0 ||
+    fromIndex >= rentalBag.length ||
+    toIndex >= rentalBag.length
+  ) {
+    return;
+  }
+
+  const [movedFilm] = rentalBag.splice(fromIndex, 1);
+  rentalBag.splice(toIndex, 0, movedFilm);
+  updateRentalBag();
+  playInteractionSound("pull");
+}
+
+function shuffleRentalStack() {
+  if (rentalBag.length < 2) {
+    return;
+  }
+
+  for (let index = rentalBag.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(Math.random() * (index + 1));
+    [rentalBag[index], rentalBag[swapIndex]] = [rentalBag[swapIndex], rentalBag[index]];
+  }
+
+  updateRentalBag();
+  prependActivity(rentalBag[0], `@you shuffled Tonight's Watchlist into a new projector session`);
+  playInteractionSound("pull");
+}
+
+function startTonightStackScreening() {
+  if (rentalBag.length === 0) {
+    return;
+  }
+
+  const firstFilm = rentalBag[0];
+  const firstFilmIndex = films.findIndex((film) => film.id === firstFilm.id);
+
+  if (firstFilmIndex !== -1) {
+    renderProjectorFeature(firstFilmIndex);
+  } else {
+    updateScreeningBar(firstFilm);
+  }
+
+  stackFlareMessage.textContent = "Projector rolling...";
+  tonightStackSection?.classList.remove("is-stacking");
+  tonightStackSection?.classList.add("is-projecting");
+  prependActivity(firstFilm, `@you started a projector session with ${firstFilm.title}`);
+  playInteractionSound("click");
+
+  window.setTimeout(() => {
+    tonightStackSection?.classList.remove("is-projecting");
+    stackFlareMessage.textContent = "";
+  }, 1800);
+}
+
+function handleWatchlistStackClick(event) {
+  const removeButton = event.target.closest("button[data-stack-remove]");
+  const moveButton = event.target.closest("button[data-stack-move]");
+
+  if (removeButton) {
+    removeRental(Number(removeButton.dataset.stackRemove));
+    return;
+  }
+
+  if (!moveButton) {
+    return;
+  }
+
+  const currentIndex = Number(moveButton.dataset.stackIndex);
+  const direction = moveButton.dataset.stackMove === "left" ? -1 : 1;
+  moveRentalTape(currentIndex, currentIndex + direction);
+}
+
+function handleWatchlistDragStart(event) {
+  const tape = event.target.closest(".counter-vhs-tape, .playlist-tape-row");
+
+  if (!tape || event.target.closest("button")) {
+    return;
+  }
+
+  draggedTapeIndex = Number(tape.dataset.stackIndex);
+  tape.classList.add("is-dragging");
+  event.dataTransfer.effectAllowed = "move";
+  event.dataTransfer.setData("text/plain", String(draggedTapeIndex));
+}
+
+function handleWatchlistDragOver(event) {
+  const tape = event.target.closest(".counter-vhs-tape, .playlist-tape-row");
+
+  if (!tape || draggedTapeIndex === null) {
+    return;
+  }
+
+  event.preventDefault();
+  tape.classList.add("is-drop-target");
+  event.dataTransfer.dropEffect = "move";
+}
+
+function handleWatchlistDragLeave(event) {
+  event.target.closest(".counter-vhs-tape, .playlist-tape-row")?.classList.remove("is-drop-target");
+}
+
+function handleWatchlistDrop(event) {
+  const tape = event.target.closest(".counter-vhs-tape, .playlist-tape-row");
+
+  if (!tape || draggedTapeIndex === null) {
+    return;
+  }
+
+  event.preventDefault();
+  const targetIndex = Number(tape.dataset.stackIndex);
+  document.querySelectorAll(".counter-vhs-tape, .playlist-tape-row").forEach((stackTape) => {
+    stackTape.classList.remove("is-drop-target", "is-dragging");
+  });
+  moveRentalTape(draggedTapeIndex, targetIndex);
+  draggedTapeIndex = null;
+}
+
+function handleWatchlistDragEnd() {
+  draggedTapeIndex = null;
+  document.querySelectorAll(".counter-vhs-tape, .playlist-tape-row").forEach((tape) => {
+    tape.classList.remove("is-drop-target", "is-dragging");
+  });
+}
+
 function handleBagPanelClick(event) {
   const removeButton = event.target.closest("button[data-remove-id]");
 
@@ -1303,6 +1731,26 @@ function handleBagPanelClick(event) {
   }
 
   removeRental(Number(removeButton.dataset.removeId));
+}
+
+function checkoutRentalBag() {
+  if (rentalBag.length === 0) {
+    checkoutVhs.textContent = "Bag Is Empty";
+    window.setTimeout(updateRentalBag, 900);
+    return;
+  }
+
+  const receiptId = `BB-${String(Date.now()).slice(-5)}`;
+  const totalRuntime = rentalBag.reduce((total, film) => total + (film.runtime || 0), 0);
+  bagTotal.textContent = `${receiptId} • ${rentalBag.length} rental${rentalBag.length === 1 ? "" : "s"} • ${totalRuntime} min`;
+  checkoutVhs.textContent = "Receipt Printed";
+  checkoutVhs.disabled = true;
+  playInteractionSound("click");
+
+  window.setTimeout(() => {
+    checkoutVhs.disabled = false;
+    updateRentalBag();
+  }, 2200);
 }
 
 function handleDetailExpansionClick(event) {
@@ -1434,9 +1882,30 @@ reviewDrawer.addEventListener("click", handleReviewDrawerClick);
 projectorNext.addEventListener("click", showNextProjectorFilm);
 projectorInspect.addEventListener("click", inspectProjectorFilm);
 projectorBag.addEventListener("click", addFeaturedRentalToBag);
+screeningResume.addEventListener("click", inspectProjectorFilm);
+screeningNext.addEventListener("click", showNextProjectorFilm);
+screeningBag.addEventListener("click", addScreeningFilmToBag);
+screeningShuffle.addEventListener("click", shuffleNight);
 rentalBagButton.addEventListener("click", openRentalBag);
 closeBagPanel.addEventListener("click", closeRentalBag);
 bagItems.addEventListener("click", handleBagPanelClick);
+checkoutVhs.addEventListener("click", checkoutRentalBag);
+shuffleTapeStack.addEventListener("click", shuffleRentalStack);
+shuffleTonightStack.addEventListener("click", shuffleRentalStack);
+startStackScreening.addEventListener("click", startTonightStackScreening);
+watchlistTapeStack.addEventListener("click", handleWatchlistStackClick);
+watchlistTapeList.addEventListener("click", handleWatchlistStackClick);
+tonightQueueList.addEventListener("click", handleWatchlistStackClick);
+watchlistTapeStack.addEventListener("dragstart", handleWatchlistDragStart);
+watchlistTapeStack.addEventListener("dragover", handleWatchlistDragOver);
+watchlistTapeStack.addEventListener("dragleave", handleWatchlistDragLeave);
+watchlistTapeStack.addEventListener("drop", handleWatchlistDrop);
+watchlistTapeStack.addEventListener("dragend", handleWatchlistDragEnd);
+watchlistTapeList.addEventListener("dragstart", handleWatchlistDragStart);
+watchlistTapeList.addEventListener("dragover", handleWatchlistDragOver);
+watchlistTapeList.addEventListener("dragleave", handleWatchlistDragLeave);
+watchlistTapeList.addEventListener("drop", handleWatchlistDrop);
+watchlistTapeList.addEventListener("dragend", handleWatchlistDragEnd);
 movieDetailExpansion.addEventListener("click", handleDetailExpansionClick);
 secretVhsVault.addEventListener("click", handleSecretVaultClick);
 rewindSecretTapeButton.addEventListener("click", rewindSecretTape);
@@ -1445,6 +1914,20 @@ window.addEventListener("keydown", handleKonamiCode);
 vhsShelf.addEventListener("pointerdown", startShelfDrag);
 window.addEventListener("pointermove", moveShelfDrag);
 window.addEventListener("pointerup", endShelfDrag);
+
+document.addEventListener("visibilitychange", refreshProjectorRotation);
+
+const currentlyPlayingSection = document.querySelector(".currently-playing");
+if (currentlyPlayingSection && "IntersectionObserver" in window) {
+  const projectorObserver = new IntersectionObserver(
+    (entries) => {
+      projectorInView = entries[0].isIntersecting;
+      refreshProjectorRotation();
+    },
+    { threshold: 0.15 },
+  );
+  projectorObserver.observe(currentlyPlayingSection);
+}
 
 fetchFilms();
 updateRentalBag();

@@ -5,14 +5,18 @@ const homeMidnightWeather = document.querySelector("#midnightWeather");
 const homeMidnightNeed = document.querySelector("#midnightNeed");
 const homeMidnightIntensity = document.querySelector("#midnightIntensity");
 const homeMidnightIntensityLabel = document.querySelector("#midnightIntensityLabel");
+const homeMidnightSubmit = document.querySelector("#midnightSubmit");
+const homeEmotionWaveform = document.querySelector("#emotionWaveform");
 const homeMidnightResult = document.querySelector("#midnightResult");
 const homeMidnightCount = document.querySelector("#homeMidnightCount");
 const homeMidnightStack = document.querySelector("#homeMidnightStack");
+const homeMidnightMoodChips = document.querySelector(".midnight-mood-chips");
 
 let homeFilms = [];
 let homeNightBag = [];
 let currentHomeMidnightFilm = null;
 let homeFilmsReady = Promise.resolve();
+let livePreviewTimer = null;
 
 function escapeHomeHtml(value) {
   return String(value)
@@ -125,7 +129,7 @@ function getHomeClerkReason(film, context, profile) {
   return reasons.slice(0, 3);
 }
 
-function getHomeMidnightRecommendation(context) {
+function getHomeMidnightRecommendation(context, avoidCurrent = false) {
   const profile = getHomeNeedProfile(context.need);
   const rankedFilms = homeFilms
     .map((film) => {
@@ -153,7 +157,7 @@ function getHomeMidnightRecommendation(context) {
     .sort((a, b) => b.score - a.score);
 
   let pick = rankedFilms[0] || null;
-  if (currentHomeMidnightFilm && rankedFilms.length > 1) {
+  if (avoidCurrent && currentHomeMidnightFilm && rankedFilms.length > 1) {
     pick = rankedFilms.find(({ film }) => film.id !== currentHomeMidnightFilm.id) || rankedFilms[0];
   }
 
@@ -163,6 +167,16 @@ function getHomeMidnightRecommendation(context) {
     reasons: pick?.reasons?.length ? pick.reasons : ["the night clerk says the shelf is humming around this one"],
     clerkNote: profile.note,
     alternate: rankedFilms.find(({ film }) => film.id !== pick?.film.id)?.film || null,
+  };
+}
+
+function getHomeMidnightContext() {
+  return {
+    time: homeMidnightTime.value,
+    mood: homeMidnightMood.value,
+    weather: homeMidnightWeather.value,
+    need: homeMidnightNeed.value,
+    intensity: Number(homeMidnightIntensity.value),
   };
 }
 
@@ -224,11 +238,13 @@ function renderHomeMidnightRecommendation(recommendation, context) {
   currentHomeMidnightFilm = film;
   const isBagged = homeNightBag.some((rental) => rental.id === film.id);
   homeMidnightResult.classList.remove("is-visible");
+  homeMidnightResult.classList.remove("is-searching");
   homeMidnightResult.innerHTML = `
     <div class="midnight-result-card">
       <div class="midnight-vhs-feature">
+        <div class="midnight-projector-beam" aria-hidden="true"></div>
         <div class="midnight-vhs-spine"><span>${escapeHomeHtml(getHomeAisleName(film.genre))}</span></div>
-        <img src="${escapeHomeHtml(film.poster)}" alt="${escapeHomeHtml(film.title)} midnight VHS recommendation">
+        <img src="${escapeHomeHtml(film.poster)}" alt="${escapeHomeHtml(film.title)} midnight VHS recommendation" width="500" height="750" loading="lazy" decoding="async">
         <span class="midnight-rental-sticker">MIDNIGHT PICK</span>
         <span class="midnight-rewind-stamp">BE KIND REWIND</span>
         <h3>${escapeHomeHtml(film.title)}</h3>
@@ -240,6 +256,9 @@ function renderHomeMidnightRecommendation(recommendation, context) {
         <div class="midnight-match-panel">
           <div class="midnight-match-meter" style="--match-score: ${recommendation.matchScore}%">
             <span>${recommendation.matchScore}% emotional match</span>
+          </div>
+          <div class="midnight-audio-wave" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span>
           </div>
           <p>${escapeHomeHtml(recommendation.clerkNote)}</p>
         </div>
@@ -297,6 +316,40 @@ function renderHomeMidnightRecommendation(recommendation, context) {
   });
 }
 
+function renderHomeMidnightSearching() {
+  if (!homeMidnightResult) {
+    return;
+  }
+
+  homeMidnightResult.classList.remove("is-visible");
+  homeMidnightResult.classList.add("is-searching");
+  homeMidnightResult.innerHTML = `
+    <div class="midnight-empty midnight-searching">
+      <span>After Hours</span>
+      <p>Searching the after-hours shelf...</p>
+      <div class="midnight-empty-wave" aria-hidden="true">
+        <i></i><i></i><i></i><i></i><i></i>
+      </div>
+    </div>
+  `;
+}
+
+async function updateHomeMidnightLivePreview() {
+  await homeFilmsReady;
+
+  if (!homeFilms.length || !homeMidnightForm) {
+    return;
+  }
+
+  const context = getHomeMidnightContext();
+  renderHomeMidnightRecommendation(getHomeMidnightRecommendation(context), context);
+}
+
+function scheduleHomeMidnightLivePreview() {
+  window.clearTimeout(livePreviewTimer);
+  livePreviewTimer = window.setTimeout(updateHomeMidnightLivePreview, 180);
+}
+
 async function handleHomeMidnightSubmit(event) {
   event.preventDefault();
   await homeFilmsReady;
@@ -305,14 +358,11 @@ async function handleHomeMidnightSubmit(event) {
     return;
   }
 
-  const context = {
-    time: homeMidnightTime.value,
-    mood: homeMidnightMood.value,
-    weather: homeMidnightWeather.value,
-    need: homeMidnightNeed.value,
-    intensity: Number(homeMidnightIntensity.value),
-  };
-  renderHomeMidnightRecommendation(getHomeMidnightRecommendation(context), context);
+  const context = getHomeMidnightContext();
+  renderHomeMidnightSearching();
+  window.setTimeout(() => {
+    renderHomeMidnightRecommendation(getHomeMidnightRecommendation(context, true), context);
+  }, 620);
 }
 
 function handleHomeMidnightResultClick(event) {
@@ -344,13 +394,97 @@ function updateHomeIntensityLabel() {
   if (homeMidnightIntensityLabel && homeMidnightIntensity) {
     homeMidnightIntensityLabel.textContent = homeMidnightIntensity.value;
   }
+
+  if (homeEmotionWaveform && homeMidnightIntensity) {
+    homeEmotionWaveform.style.setProperty("--wave-intensity", homeMidnightIntensity.value);
+  }
 }
 
-async function loadHomeMidnightFilms() {
-  if (!homeMidnightForm || !homeMidnightResult) {
+function handleHomeMoodChipClick(event) {
+  const chip = event.target.closest("button[data-mood]");
+
+  if (!chip) {
     return;
   }
 
+  homeMidnightMood.value = chip.dataset.mood;
+  homeMidnightWeather.value = chip.dataset.weather;
+  homeMidnightNeed.value = chip.dataset.need;
+  homeMidnightMoodChips.querySelectorAll("button").forEach((button) => {
+    button.classList.toggle("is-active", button === chip);
+  });
+  scheduleHomeMidnightLivePreview();
+}
+
+function setHomeText(selector, value) {
+  const el = document.querySelector(selector);
+  if (el) {
+    el.textContent = value;
+  }
+}
+
+function homeShelfCard(film, index) {
+  return `
+    <article class="col-md-6 col-xl-3 home-vhs-slot">
+      <div class="card movie-card home-vhs-card h-100">
+        <div class="vhs-gloss" aria-hidden="true"></div>
+        <div class="home-vhs-spine"><span>${escapeHomeHtml(film.genre.toUpperCase())}</span></div>
+        <img
+          src="${escapeHomeHtml(film.poster)}"
+          class="card-img-top"
+          alt="${escapeHomeHtml(film.title)} VHS cover"
+          width="500"
+          height="750"
+          loading="lazy"
+          decoding="async"
+        />
+        <span class="home-vhs-sticker">BLOCKBUSTER VIDEO</span>
+        <span class="home-vhs-label">${index === 0 ? "Premium Pick" : "Staff Pick"}</span>
+        <span class="home-vhs-barcode">BB+ ${String(film.id).padStart(3, "0")}-${escapeHomeHtml(film.year)}</span>
+        <span class="home-vhs-wear">${escapeHomeHtml((film.cultureTags && film.cultureTags[0]) || "Most rented this weekend")}</span>
+        <span class="home-pull-badge">Pull from shelf</span>
+        <div class="card-body">
+          <p class="movie-kicker">${escapeHomeHtml(getHomeAisleName(film.genre))}</p>
+          <h3 class="card-title">${escapeHomeHtml(film.title)}</h3>
+          <p class="card-text">${escapeHomeHtml(film.description)}</p>
+        </div>
+      </div>
+    </article>
+  `;
+}
+
+function renderHomeStorefront() {
+  if (!homeFilms.length) {
+    return;
+  }
+
+  const ranked = [...homeFilms].sort((a, b) => (b.rating || 0) - (a.rating || 0));
+
+  const heroImage = document.querySelector("#heroFeaturedImage");
+  if (heroImage) {
+    const top = ranked[0];
+    heroImage.src = top.poster;
+    heroImage.alt = `${top.title} poster`;
+    setHomeText("#heroFeaturedTitle", top.title);
+    setHomeText("#heroFeaturedDescription", top.description);
+    const meta = document.querySelector("#heroFeaturedMeta");
+    if (meta) {
+      meta.innerHTML = [getHomeAisleName(top.genre), top.year, (top.rating || 0).toFixed(1)]
+        .map((value) => `<span>${escapeHomeHtml(value)}</span>`)
+        .join("");
+    }
+  }
+
+  const grid = document.querySelector("#homeTrendingGrid");
+  if (grid) {
+    grid.innerHTML = ranked
+      .slice(0, 4)
+      .map((film, index) => homeShelfCard(film, index))
+      .join("");
+  }
+}
+
+async function loadHomeMidnightFilms() {
   try {
     const response = await fetch("data/films.json");
     if (!response.ok) {
@@ -358,18 +492,38 @@ async function loadHomeMidnightFilms() {
     }
 
     homeFilms = await response.json();
+    renderHomeStorefront();
+    if (homeMidnightForm) {
+      const context = getHomeMidnightContext();
+      renderHomeMidnightRecommendation(getHomeMidnightRecommendation(context), context);
+    }
   } catch (error) {
-    homeMidnightResult.innerHTML = `
-      <div class="midnight-empty">
-        <span>Signal Lost</span>
-        <p>The night clerk could not reach the rental shelf. Try refreshing the page.</p>
-      </div>
-    `;
+    if (homeMidnightResult) {
+      homeMidnightResult.innerHTML = `
+        <div class="midnight-empty">
+          <span>Signal Lost</span>
+          <p>The night clerk could not reach the rental shelf. Try refreshing the page.</p>
+        </div>
+      `;
+    }
   }
 }
 
 homeMidnightForm?.addEventListener("submit", handleHomeMidnightSubmit);
+document.addEventListener("click", (event) => {
+  if (event.target.closest("#midnightSubmit")) {
+    handleHomeMidnightSubmit(event);
+  }
+});
 homeMidnightResult?.addEventListener("click", handleHomeMidnightResultClick);
-homeMidnightIntensity?.addEventListener("input", updateHomeIntensityLabel);
+homeMidnightMoodChips?.addEventListener("click", handleHomeMoodChipClick);
+homeMidnightTime?.addEventListener("change", scheduleHomeMidnightLivePreview);
+homeMidnightMood?.addEventListener("change", scheduleHomeMidnightLivePreview);
+homeMidnightWeather?.addEventListener("change", scheduleHomeMidnightLivePreview);
+homeMidnightNeed?.addEventListener("change", scheduleHomeMidnightLivePreview);
+homeMidnightIntensity?.addEventListener("input", () => {
+  updateHomeIntensityLabel();
+  scheduleHomeMidnightLivePreview();
+});
 updateHomeIntensityLabel();
 homeFilmsReady = loadHomeMidnightFilms();
