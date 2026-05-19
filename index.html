@@ -104,22 +104,54 @@
       </section>
 
       <section class="container pitch-feeling-section" aria-labelledby="feeling-heading">
+        <div class="feeling-aisle-silhouette" aria-hidden="true"></div>
+        <div class="feeling-media-detail feeling-label" aria-hidden="true">BE KIND REWIND</div>
+        <div class="feeling-media-detail feeling-barcode" aria-hidden="true">BB+ 11PM</div>
+        <div class="feeling-media-detail feeling-receipt" aria-hidden="true">
+          <span>Return before sunrise</span>
+          <strong>Tonight's ritual</strong>
+        </div>
         <div class="pitch-section-kicker">Section 1 — The Feeling</div>
         <div class="pitch-feeling-grid">
           <article class="pitch-feeling-copy">
             <h2 id="feeling-heading">Movie night meant something.</h2>
             <p>
-              You wandered aisles. You trusted the clerk. You argued over the
-              box art. You carried a plastic case home like the night had a
-              shape.
+              You wandered aisles. You trusted the clerk. You judged the cover,
+              flipped the box, argued over the rental, and carried the night home
+              in a plastic bag. Blockbuster+ brings that ritual back — rebuilt
+              for the streaming era.
             </p>
+            <div class="feeling-actions" aria-label="Movie night actions">
+              <a class="btn btn-warning" href="films.html">Build tonight's stack</a>
+              <a class="btn btn-outline-light" href="#midnightWatchlistHeading">Ask the Night Clerk</a>
+            </div>
           </article>
-          <div class="pitch-memory-strip" aria-label="Video store memories">
-            <span>Friday night rentals</span>
-            <span>Staff picks</span>
-            <span>Plastic VHS cases</span>
-            <span>Friends in the aisles</span>
-            <span>One last movie before sleep</span>
+          <div class="pitch-memory-strip" aria-label="Movie-night ritual steps">
+            <article>
+              <span>01</span>
+              <strong>Browse the aisles</strong>
+              <p>Walk the wall until a cover pulls you closer.</p>
+            </article>
+            <article>
+              <span>02</span>
+              <strong>Flip the box</strong>
+              <p>Read the back, scan the stickers, trust the shelf wear.</p>
+            </article>
+            <article>
+              <span>03</span>
+              <strong>Ask the clerk</strong>
+              <p>Human taste, late-night warnings, and handwritten picks.</p>
+            </article>
+            <article>
+              <span>04</span>
+              <strong>Build the stack</strong>
+              <p>Throw the tapes in the bag and let the night take shape.</p>
+            </article>
+            <article>
+              <span>05</span>
+              <strong>Start the screening</strong>
+              <p>Dim the room, hear the projector, press play with intention.</p>
+            </article>
           </div>
         </div>
       </section>
@@ -168,7 +200,11 @@
             <span>Horror Vault</span>
             <span>127 min</span>
           </div>
-          <div class="projector-playback-panel" aria-label="Tonight's projector session">
+          <div class="projector-playback-panel" aria-label="Tonight's projector session" aria-live="polite">
+            <div class="projector-session-badge" aria-hidden="true">
+              <span>Front-wall projector</span>
+              <span>Store signal live</span>
+            </div>
             <div class="projector-session-row">
               <span class="projector-live-dot" aria-hidden="true"></span>
               <p id="homeProjectorStatus">Currently projecting from the front-store wall</p>
@@ -212,6 +248,7 @@
           </div>
         </div>
         <article class="featured-vhs-display" aria-label="Currently playing VHS display">
+          <div class="projector-room-glow" aria-hidden="true"></div>
           <div class="projection-beam" aria-hidden="true"></div>
           <div class="projector-haze" aria-hidden="true"></div>
           <div class="projector-dust" aria-hidden="true"></div>
@@ -362,14 +399,32 @@
           <p class="eyebrow">The Midnight Shelf</p>
           <h2 id="midnightWatchlistHeading">An after-hours movie ritual for insomniacs.</h2>
           <p>
-            Tell the night what shape you are in. A clerk behind the counter
-            will listen for the weather, the hour, and the feeling you cannot
+            Tell the night what shape you are in. The clerk behind the counter
+            will listen for the hour, the weather, and the feeling you cannot
             quite name, then pull one tape from the after-hours shelf.
           </p>
+          <div class="midnight-ritual-meta" aria-label="Midnight Shelf atmosphere">
+            <span>Overnight clerk on duty</span>
+            <span>After-hours shelf open</span>
+          </div>
           <span class="home-midnight-count" id="homeMidnightCount">Night Bag: 0 tapes</span>
         </div>
 
         <form class="midnight-form" id="midnightForm" aria-label="Midnight Shelf recommendation ritual">
+          <div class="midnight-freetext-field">
+            <label class="form-label" for="midnightFreeText">
+              Tell the night clerk how you feel
+              <span class="midnight-freetext-hint">in your own words</span>
+            </label>
+            <textarea
+              class="form-control"
+              id="midnightFreeText"
+              rows="2"
+              maxlength="280"
+              placeholder="e.g. heartbroken, it's raining, I want something beautiful that wrecks me gently"
+              autocomplete="off"
+            ></textarea>
+          </div>
           <div>
             <label class="form-label" for="midnightTime">What hour is your heart keeping?</label>
             <select class="form-select form-select-lg" id="midnightTime">
@@ -432,8 +487,8 @@
               <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
             </div>
             <div class="frequency-labels" aria-hidden="true">
-              <span>Low signal</span>
-              <span>High voltage</span>
+              <span>LOW SIGNAL</span>
+              <span>HIGH VOLTAGE</span>
             </div>
             <input
               class="form-range"
@@ -474,7 +529,7 @@
             <h3 id="midnightBagStackHeading">Night Bag</h3>
           </div>
           <ol id="homeMidnightStack">
-            <li>No tapes selected yet.</li>
+            <li>No tapes selected yet. Ask the Night Clerk or throw a tape in the bag.</li>
           </ol>
         </aside>
       </section>
@@ -505,9 +560,11 @@
         </aside>
         <div class="friday-shelf-stage">
           <div class="friday-projector-beam" aria-hidden="true"></div>
+          <div class="friday-shelf-haze" aria-hidden="true"></div>
           <div class="home-shelf-rail home-shelf-rail-top" aria-hidden="true"></div>
           <div class="home-trending-grid" id="homeTrendingGrid" aria-label="Horizontal Friday Night Picks shelf"></div>
           <div class="home-shelf-rail home-shelf-rail-bottom" aria-hidden="true"></div>
+          <div class="friday-shelf-floor" aria-hidden="true"></div>
         </div>
       </section>
 
@@ -530,6 +587,31 @@
         <a href="films.html">Start browsing</a>
       </div>
     </footer>
+
+    <aside class="tonights-screening-bar" aria-label="Tonight's Screening projector session">
+      <div class="screening-now">
+        <span class="screening-live-dot" aria-hidden="true"></span>
+        <div>
+          <p>Tonight's Screening</p>
+          <strong>Now projecting: <span id="screeningNowTitle">Blade Runner 2049</span></strong>
+        </div>
+      </div>
+      <div class="screening-detail">
+        <span>Viewing mood</span>
+        <strong id="screeningMood">dream logic / chrome rain / existential sci-fi</strong>
+      </div>
+      <div class="screening-detail">
+        <span>Projected for</span>
+        <strong id="screeningRuntime">2h 44m</strong>
+      </div>
+      <div class="screening-detail">
+        <span>Watching with</span>
+        <strong id="screeningRenters">14 night renters</strong>
+      </div>
+      <div class="screening-mini-wave" aria-hidden="true">
+        <i></i><i></i><i></i><i></i><i></i>
+      </div>
+    </aside>
 
     <script src="js/camera.js"></script>
     <script src="js/home.js"></script>

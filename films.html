@@ -234,6 +234,9 @@
           </p>
         </div>
         <div class="vhs-shelf">
+          <div class="aisle-projector-beam" aria-hidden="true"></div>
+          <div class="aisle-dust-layer" aria-hidden="true"></div>
+          <div class="aisle-floor-reflection" aria-hidden="true"></div>
           <div class="shelf-rail shelf-rail-top" aria-hidden="true"></div>
           <div class="row g-4" id="movieGrid" aria-live="polite"></div>
           <div class="shelf-rail shelf-rail-bottom" aria-hidden="true"></div>
@@ -386,12 +389,16 @@
       </div>
     </aside>
 
+    <div class="rental-bag-case-stack" id="rentalBagCaseStack" aria-label="Movie cases stacked beside the rental bag"></div>
+
     <button class="floating-rental-bag" id="rentalBagButton" type="button" aria-label="Open rental bag">
       <span class="bag-handle" aria-hidden="true"></span>
       <span class="bag-logo">BLOCKBUSTER<span>+</span></span>
       <span class="bag-caption">Rental Bag</span>
       <span class="bag-counter" id="bagCounter">0</span>
     </button>
+
+    <div class="bag-drop-toast" id="bagDropToast" role="status" aria-live="polite"></div>
 
     <button class="sound-toggle" id="soundToggle" type="button" aria-pressed="false">
       Sound Off

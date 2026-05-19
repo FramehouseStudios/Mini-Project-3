@@ -652,3 +652,53 @@
   }
 }
 
+/* Free-text mood input — the lead signal of the Midnight engine. */
+.midnight-freetext-field {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+}
+
+.midnight-freetext-hint {
+  margin-left: 0.5rem;
+  color: rgba(147, 197, 253, 0.7);
+  font-size: 0.66rem;
+  font-weight: 700;
+  font-style: italic;
+  letter-spacing: 0.02em;
+  text-transform: none;
+}
+
+.midnight-form textarea#midnightFreeText {
+  width: 100%;
+  min-height: 58px;
+  resize: vertical;
+  border: 1px solid rgba(147, 197, 253, 0.28);
+  border-radius: 16px;
+  padding: 0.62rem 0.8rem;
+  color: var(--cream);
+  background:
+    radial-gradient(circle at 12% 0, rgba(255, 213, 0, 0.08), transparent 10rem),
+    rgba(2, 6, 23, 0.62);
+  font: inherit;
+  font-size: 0.95rem;
+  line-height: 1.45;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.midnight-form textarea#midnightFreeText::placeholder {
+  color: rgba(203, 213, 225, 0.55);
+  font-style: italic;
+}
+
+.midnight-form textarea#midnightFreeText:focus-visible {
+  outline: none;
+  border-color: rgba(255, 213, 0, 0.55);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 0 0 3px rgba(255, 213, 0, 0.16);
+}
+

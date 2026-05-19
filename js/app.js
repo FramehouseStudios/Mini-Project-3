@@ -5,6 +5,8 @@ const resultsCount = document.querySelector("#resultsCount");
 const bagCountLabel = document.querySelector("#bagCountLabel");
 const bagCounter = document.querySelector("#bagCounter");
 const rentalBagButton = document.querySelector("#rentalBagButton");
+const rentalBagCaseStack = document.querySelector("#rentalBagCaseStack");
+const bagDropToast = document.querySelector("#bagDropToast");
 const rentalBagPanel = document.querySelector("#rentalBagPanel");
 const closeBagPanel = document.querySelector("#closeBagPanel");
 const bagItems = document.querySelector("#bagItems");
@@ -257,7 +259,7 @@ function updateProjectorBagButton(film) {
   }
 
   const isBagged = rentalBag.some((rental) => rental.id === film.id);
-  projectorBag.textContent = isBagged ? "In The Stack" : "Throw In Bag";
+  projectorBag.textContent = isBagged ? "In The Bag" : "Throw In Bag";
   projectorBag.classList.toggle("btn-light", isBagged);
   projectorBag.classList.toggle("btn-warning", !isBagged);
   projectorBag.setAttribute("aria-pressed", String(isBagged));
@@ -288,6 +290,11 @@ function renderLiveWatchingStrip(film, index = 0) {
       <span class="live-dot" aria-hidden="true"></span>
       <strong>${count}</strong>
       <span>streaming right now</span>
+      <span class="live-mini-eq" aria-hidden="true">
+        <i></i>
+        <i></i>
+        <i></i>
+      </span>
     </div>
   `;
 }
@@ -347,7 +354,7 @@ function renderFilms(movieList) {
               <span class="barcode-label">${barcodeLabel}</span>
               <span class="fingerprint-smudge" aria-hidden="true"></span>
               <span class="scratch-map" aria-hidden="true"></span>
-              <span class="pull-tab">Flip case</span>
+              <span class="pull-tab">Click case to flip</span>
               <span class="bagged-badge ${isBagged ? "is-visible" : ""}">Bagged</span>
             </div>
             ${renderLiveWatchingStrip(film, index)}
@@ -364,7 +371,7 @@ function renderFilms(movieList) {
                 data-film-id="${film.id}"
                 aria-pressed="${isBagged}"
               >
-                ${isBagged ? "In The Stack" : "Throw In Bag"}
+                ${isBagged ? "In The Bag" : "Throw In Bag"}
               </button>
               <p class="bag-confirmation ${isBagged ? "is-visible" : ""}">
                 Dropped into your rental bag
@@ -379,6 +386,9 @@ function renderFilms(movieList) {
             <div class="back-cover-content">
               <p class="back-label">Back Cover</p>
               <h3>${film.title}</h3>
+              <button class="flip-front-button" type="button" data-flip-front="${film.id}">
+                Flip Front
+              </button>
               <div class="back-detail-grid">
                 <span>Director</span>
                 <strong>${film.director}</strong>
@@ -413,7 +423,7 @@ function renderFilms(movieList) {
                 <p>${film.favoriteScene || "Ask the counter clerk for the scene everyone talks about."}</p>
               </div>
               <div class="back-barcode" aria-hidden="true"></div>
-              <p class="back-hint">Click the back cover again, or use Open Full Box, for full rental details.</p>
+              <p class="back-hint">Click the back cover again to flip front, or open the full rental box.</p>
             </div>
           </div>
         </div>
@@ -609,7 +619,7 @@ function renderSwipeCard() {
   swipeSkip.disabled = false;
   swipeBag.disabled = false;
   swipeReviews.disabled = false;
-  swipeBag.textContent = isBagged ? "In The Stack" : "Throw In Bag";
+  swipeBag.textContent = isBagged ? "In The Bag" : "Throw In Bag";
   swipeBag.classList.toggle("btn-light", isBagged);
   swipeBag.classList.toggle("btn-warning", !isBagged);
 
@@ -667,6 +677,9 @@ function addFilmToRentalBag(film, sourceButton, activityMessage) {
     return false;
   }
 
+  if (sourceButton) {
+    animateTinyVhs(sourceButton, film);
+  }
   rentalBag.push(film);
   updateRentalBag();
   if (films[featuredFilmIndex]?.id === film.id) {
@@ -676,14 +689,50 @@ function addFilmToRentalBag(film, sourceButton, activityMessage) {
   prependActivity(
     film,
     activityMessage ||
-      `@you added ${film.title} to the rental bag ${renderStars(getReview(film).stars)}`,
+      `@you dropped ${film.title} into the rental bag`,
   );
   animateRentalBag();
+  showBagDropToast("Dropped into the rental bag");
   playInteractionSound("bag");
-  if (sourceButton) {
-    animateTinyVhs(sourceButton);
-  }
   return true;
+}
+
+function shouldLeadToCheckout(sourceButton) {
+  return Boolean(
+    sourceButton?.closest("#movieGrid") ||
+      sourceButton?.closest(".movie-detail-expansion")
+  );
+}
+
+function leadShelfRentalToCheckout(film, sourceButton, alreadyInBag = false) {
+  if (!tonightStackSection || !shouldLeadToCheckout(sourceButton)) {
+    return;
+  }
+
+  if (stackFlareMessage) {
+    stackFlareMessage.textContent = alreadyInBag
+      ? `${film.title} is already waiting at checkout.`
+      : `${film.title} is waiting beside the register.`;
+  }
+
+  window.setTimeout(() => {
+    if (sourceButton.closest(".movie-detail-expansion")) {
+      closeMovieDetail();
+    }
+
+    tonightStackSection.scrollIntoView({
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+      block: "start",
+    });
+    tonightStackSection.classList.remove("is-guiding");
+    window.requestAnimationFrame(() => {
+      tonightStackSection.classList.add("is-guiding");
+    });
+  }, alreadyInBag ? 120 : 780);
+
+  window.setTimeout(() => {
+    tonightStackSection.classList.remove("is-guiding");
+  }, 2300);
 }
 
 function handleSwipeBag() {
@@ -710,7 +759,7 @@ function syncFilmBagState(film) {
       if (button.classList.contains("midnight-queue-button")) {
         button.textContent = isBagged ? "Saved To Night Bag" : "Save To Night Bag";
       } else {
-        button.textContent = isBagged ? "In The Stack" : "Throw In Bag";
+        button.textContent = isBagged ? "In The Bag" : "Throw In Bag";
       }
     }
   });
@@ -871,6 +920,7 @@ function updateRentalBag() {
   bagCountLabel.textContent = label;
   bagCounter.textContent = bagSize;
   bagTotal.textContent = `Total rentals: ${bagSize}`;
+  renderFloatingRentalStack();
   checkoutVhs.textContent = bagSize === 0 ? "Add a Tape First" : "Checkout VHS";
   checkoutVhs.disabled = bagSize === 0;
   updateWatchlistPanel();
@@ -905,6 +955,42 @@ function updateRentalBag() {
       </button>
     `;
     bagItems.appendChild(item);
+  });
+}
+
+function renderFloatingRentalStack() {
+  if (!rentalBagCaseStack) {
+    return;
+  }
+
+  const visibleFilms = rentalBag.slice(-5);
+  const hiddenCount = Math.max(0, rentalBag.length - visibleFilms.length);
+
+  rentalBagCaseStack.innerHTML = visibleFilms
+    .map((film, index) => {
+      const order = visibleFilms.length - index - 1;
+      return `
+        <article
+          class="bag-stack-case"
+          aria-label="${film.title} stacked in the rental bag"
+          style="--bag-case-order: ${order}; --bag-case-tilt: ${[-5, 4, -2, 3, -4][index % 5]}deg;"
+        >
+          <span class="bag-stack-spine" aria-hidden="true"></span>
+          <img src="${film.poster}" alt="" width="80" height="120" loading="lazy" decoding="async">
+          <strong>${film.title}</strong>
+        </article>
+      `;
+    })
+    .join("");
+
+  if (hiddenCount > 0) {
+    rentalBagCaseStack.insertAdjacentHTML("beforeend", `<span class="bag-stack-more">+${hiddenCount} more</span>`);
+  }
+
+  rentalBagCaseStack.classList.toggle("is-empty", rentalBag.length === 0);
+  rentalBagCaseStack.classList.remove("is-stacking");
+  window.requestAnimationFrame(() => {
+    rentalBagCaseStack.classList.add("is-stacking");
   });
 }
 
@@ -1308,7 +1394,7 @@ function prependActivity(film, message) {
   item.className = "feed-item is-new";
   item.innerHTML = `
     <span class="feed-avatar">${getReview(film).avatar}</span>
-    <p><strong>counter update</strong> ${message}<small>live from checkout</small></p>
+    <p><strong>@you</strong> ${message.replace(/^@you\s+/, "")}<small>${renderStars(getReview(film).stars)} • live from checkout</small></p>
     <span>JUST NOW</span>
   `;
   recentActivity.prepend(item);
@@ -1362,77 +1448,103 @@ function openMovieDetail(film) {
   const isBagged = rentalBag.some((rental) => rental.id === film.id);
 
   detailExpansionContent.innerHTML = `
-    <div class="detail-vhs-case" aria-label="${film.title} expanded VHS rental box">
-      <div class="detail-vhs-spine">
-        <span>${getAisleName(film.genre)}</span>
-      </div>
-      <div class="detail-vhs-front">
-        <img src="${film.poster}" alt="${film.title} expanded VHS front cover" width="500" height="750" decoding="async">
-        <span class="detail-store-sticker">BLOCKBUSTER VIDEO</span>
-        <span class="detail-release-sticker">${getShelfTag(film, film.id)}</span>
-        <span class="detail-handwritten-sticker">${details.employee} recommends</span>
-        <span class="detail-barcode-sticker">${getBarcodeLabel(film)}</span>
-        <span class="detail-condition-sticker">${getCaseCondition(film, film.id)}</span>
-        <h2 id="detailExpansionTitle">${film.title}</h2>
-      </div>
-      <div class="detail-vhs-back">
-        <p class="back-label">Backside of the box</p>
-        <h3>${film.title}</h3>
-        <p class="detail-director">Directed by ${film.director}</p>
-        <div class="detail-back-stickers" aria-label="Rental box labels">
-          <span>Rental Label</span>
-          <span>Return by Monday</span>
-          <span>Be Kind Rewind</span>
-          <span>${getBarcodeLabel(film)}</span>
-        </div>
-        <div class="detail-info-grid">
-          <span>Aisle</span>
-          <strong>${getAisleName(film.genre)}</strong>
-          <span>Year</span>
-          <strong>${film.year}</strong>
-          <span>Runtime</span>
-          <strong>${details.runtime}</strong>
-          <span>Critic Rating</span>
-          <strong>${details.criticRating}</strong>
-        </div>
-        <div class="detail-copy-block detail-synopsis-block">
-          <span>Rental Synopsis</span>
-          <p>${details.synopsis}</p>
-        </div>
-        <div class="detail-copy-block">
-          <span>Cast</span>
-          <p>${details.cast.join(" · ")}</p>
-        </div>
-        <div class="detail-social-block">
-          <span class="detail-section-label">Community Review</span>
-          <div class="mini-review detail-review">
-            <span class="review-avatar">${getReview(film).avatar}</span>
-            <div>
-              <p class="review-stars">${renderStars(getReview(film).stars)}</p>
-              <blockquote>“${getReview(film).quote}”</blockquote>
-              <cite>— @${getReview(film).username}</cite>
+    <div class="detail-view-controls" aria-label="VHS inspection view controls">
+      <button class="detail-view-button" type="button" data-detail-view="front">
+        View Front
+      </button>
+      <button class="detail-view-button is-active" type="button" data-detail-view="back">
+        View Back
+      </button>
+    </div>
+    <div class="detail-vhs-case is-view-back" data-detail-case aria-label="${film.title} expanded VHS rental box">
+      <div class="detail-vhs-object">
+        <section class="detail-vhs-side detail-vhs-front-side" aria-label="${film.title} front cover">
+          <div class="detail-vhs-spine">
+            <span>${getAisleName(film.genre)}</span>
+          </div>
+          <div class="detail-vhs-front">
+            <img src="${film.poster}" alt="${film.title} expanded VHS front cover" width="500" height="750" decoding="async">
+            <span class="detail-store-sticker">BLOCKBUSTER VIDEO</span>
+            <span class="detail-release-sticker">${getShelfTag(film, film.id)}</span>
+            <span class="detail-handwritten-sticker">${details.employee} recommends</span>
+            <span class="detail-barcode-sticker">${getBarcodeLabel(film)}</span>
+            <span class="detail-condition-sticker">${getCaseCondition(film, film.id)}</span>
+            <span class="detail-rental-copy-sticker">Rental Copy</span>
+            <h2 id="detailExpansionTitle">${film.title}</h2>
+          </div>
+        </section>
+        <section class="detail-vhs-side detail-vhs-back-side" aria-label="${film.title} back cover">
+          <div class="detail-back-cover-art" aria-hidden="true">
+            <div class="detail-vhs-spine detail-vhs-spine-back">
+              <span>${getAisleName(film.genre)}</span>
+            </div>
+            <img src="${film.poster}" alt="" width="500" height="750" decoding="async">
+            <span>Rental Box</span>
+          </div>
+          <div class="detail-vhs-back">
+            <p class="back-label">Backside of the box</p>
+            <h3>${film.title}</h3>
+            <p class="detail-director">Directed by ${film.director}</p>
+            <div class="detail-back-stickers" aria-label="Rental box labels">
+              <span>Rental Label</span>
+              <span>Return by Monday</span>
+              <span>Be Kind Rewind</span>
+              <span>Staff Pick</span>
+              <span>Rental Copy</span>
+              <span>Store #0427</span>
+              <span>Late fee risk</span>
+              <span>${getBarcodeLabel(film)}</span>
+            </div>
+            <div class="detail-info-grid">
+              <span>Aisle</span>
+              <strong>${getAisleName(film.genre)}</strong>
+              <span>Year</span>
+              <strong>${film.year}</strong>
+              <span>Runtime</span>
+              <strong>${details.runtime}</strong>
+              <span>Critic Rating</span>
+              <strong>${details.criticRating}</strong>
+            </div>
+            <div class="detail-copy-block detail-synopsis-block">
+              <span>Rental Synopsis</span>
+              <p>${details.synopsis}</p>
+            </div>
+            <div class="detail-copy-block">
+              <span>Cast</span>
+              <p>${details.cast.join(" · ")}</p>
+            </div>
+            <div class="detail-social-block">
+              <span class="detail-section-label">Community Review</span>
+              <div class="mini-review detail-review">
+                <span class="review-avatar">${getReview(film).avatar}</span>
+                <div>
+                  <p class="review-stars">${renderStars(getReview(film).stars)}</p>
+                  <blockquote>“${getReview(film).quote}”</blockquote>
+                  <cite>— @${getReview(film).username}</cite>
+                </div>
+              </div>
+            </div>
+            <div class="employee-recommendation">
+              <span>${details.employee}'s Employee Recommendation</span>
+              <strong>${details.staffTag}</strong>
+              <p>${details.employeeRecommendation}</p>
+              <em>${details.staffNote}</em>
+            </div>
+            <div class="detail-action-row">
+              <button
+                class="btn ${isBagged ? "btn-light" : "btn-warning"} detail-bag-button"
+                type="button"
+                data-film-id="${film.id}"
+                aria-pressed="${isBagged}"
+              >
+                ${isBagged ? "In The Bag" : "Throw In Bag"}
+              </button>
+              <button class="btn btn-outline-light detail-close-box-button" type="button" data-close-detail>
+                Close Box
+              </button>
             </div>
           </div>
-        </div>
-        <div class="employee-recommendation">
-          <span>${details.employee}'s Employee Recommendation</span>
-          <strong>${details.staffTag}</strong>
-          <p>${details.employeeRecommendation}</p>
-          <em>${details.staffNote}</em>
-        </div>
-        <div class="detail-action-row">
-          <button
-            class="btn ${isBagged ? "btn-light" : "btn-warning"} detail-bag-button"
-            type="button"
-            data-film-id="${film.id}"
-            aria-pressed="${isBagged}"
-          >
-            ${isBagged ? "In The Stack" : "Throw In Bag"}
-          </button>
-          <button class="btn btn-outline-light detail-close-box-button" type="button" data-close-detail>
-            Close Box
-          </button>
-        </div>
+        </section>
       </div>
     </div>
   `;
@@ -1441,6 +1553,24 @@ function openMovieDetail(film) {
   movieDetailExpansion.setAttribute("aria-hidden", "false");
   document.body.classList.add("detail-open");
   detailCloseButton.focus();
+}
+
+function setDetailVhsView(view) {
+  const detailCase = detailExpansionContent.querySelector("[data-detail-case]");
+
+  if (!detailCase) {
+    return;
+  }
+
+  const nextView = view === "front" ? "front" : "back";
+  detailCase.classList.toggle("is-view-front", nextView === "front");
+  detailCase.classList.toggle("is-view-back", nextView === "back");
+  detailExpansionContent.querySelectorAll("[data-detail-view]").forEach((button) => {
+    const isActive = button.dataset.detailView === nextView;
+    button.classList.toggle("is-active", isActive);
+    button.setAttribute("aria-pressed", String(isActive));
+  });
+  playInteractionSound("pull");
 }
 
 function closeMovieDetail() {
@@ -1469,6 +1599,20 @@ function handleDetailButtonClick(event) {
 }
 
 function handleCardDetailOpen(event) {
+  const flipFrontButton = event.target.closest("[data-flip-front]");
+
+  if (flipFrontButton) {
+    event.preventDefault();
+    event.stopPropagation();
+    const card = flipFrontButton.closest(".vhs-card");
+
+    if (card) {
+      toggleFlippedCard(card);
+    }
+
+    return;
+  }
+
   const detailButton = event.target.closest("[data-open-detail]");
 
   if (detailButton) {
@@ -1573,7 +1717,22 @@ function applyLateNightMode() {
   document.body.classList.toggle("late-night-mode", hour >= 22 || hour <= 5);
 }
 
-function animateTinyVhs(button) {
+function showBagDropToast(message) {
+  if (!bagDropToast) {
+    return;
+  }
+
+  bagDropToast.textContent = message;
+  bagDropToast.classList.remove("is-visible");
+  window.requestAnimationFrame(() => {
+    bagDropToast.classList.add("is-visible");
+  });
+  window.setTimeout(() => {
+    bagDropToast.classList.remove("is-visible");
+  }, 1500);
+}
+
+function animateTinyVhs(button, film) {
   if (!button || !rentalBagButton) {
     return;
   }
@@ -1587,7 +1746,11 @@ function animateTinyVhs(button) {
   const endY = bagRect.top + bagRect.height / 2;
 
   tinyVhs.className = "tiny-vhs-flight";
-  tinyVhs.innerHTML = "<span>VHS</span>";
+  tinyVhs.innerHTML = `
+    <span class="tiny-vhs-spine" aria-hidden="true"></span>
+    <img src="${film?.poster || ""}" alt="" width="80" height="120" decoding="async">
+    <strong>${film?.title ? film.title.slice(0, 18) : "VHS"}</strong>
+  `;
   tinyVhs.style.left = `${startX}px`;
   tinyVhs.style.top = `${startY}px`;
   tinyVhs.style.setProperty("--fly-x", `${endX - startX}px`);
@@ -1630,7 +1793,11 @@ function handleBagClick(event) {
   }
 
   const film = films.find((movie) => movie.id === Number(button.dataset.filmId));
-  addFilmToRentalBag(film, button);
+  const added = addFilmToRentalBag(film, button);
+
+  if (film) {
+    leadShelfRentalToCheckout(film, button, !added);
+  }
 }
 
 function addFeaturedRentalToBag() {
@@ -1968,6 +2135,14 @@ function checkoutRentalBag() {
 }
 
 function handleDetailExpansionClick(event) {
+  const viewButton = event.target.closest("[data-detail-view]");
+
+  if (viewButton) {
+    event.preventDefault();
+    setDetailVhsView(viewButton.dataset.detailView);
+    return;
+  }
+
   if (
     event.target === detailExpansionBackdrop ||
     event.target === detailCloseButton ||
