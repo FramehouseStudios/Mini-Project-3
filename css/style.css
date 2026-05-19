@@ -14911,6 +14911,30 @@ body.theater-open .sound-toggle {
   margin-top: 1rem;
 }
 
+.moodboard-board-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 0.9rem;
+}
+
+.moodboard-board-meta span {
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  border-radius: 999px;
+  padding: 0.34rem 0.62rem;
+  color: rgba(226, 232, 240, 0.78);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.018)),
+    rgba(2, 6, 23, 0.38);
+  font-size: 0.66rem;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.07),
+    0 10px 22px rgba(0, 0, 0, 0.16);
+}
+
 .moodboard-ritual-strip span {
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 18px;
@@ -14996,74 +15020,184 @@ body.theater-open .sound-toggle {
 }
 
 .social-storefront .watchlist-tape-stack {
-  min-height: 255px;
+  display: flex;
+  min-height: 315px;
+  gap: clamp(0.38rem, 1vw, 0.8rem);
+  align-items: flex-end;
+  padding: clamp(1.05rem, 2vw, 1.45rem) clamp(0.82rem, 2vw, 1.25rem) 2.1rem;
   margin-top: 1.15rem;
-  overflow: visible;
+  overflow-x: auto;
+  overflow-y: visible;
   border-color: rgba(255, 255, 255, 0.08);
   border-radius: 28px;
   background:
-    radial-gradient(ellipse at 54% 96%, rgba(0, 0, 0, 0.42), transparent 54%),
+    linear-gradient(90deg, rgba(255, 213, 0, 0.06), transparent 8%, transparent 92%, rgba(59, 130, 246, 0.07)),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.025) 0 1px, transparent 1px 34px),
+    radial-gradient(ellipse at 54% 96%, rgba(0, 0, 0, 0.48), transparent 54%),
     radial-gradient(ellipse at 45% 20%, rgba(255, 213, 0, 0.14), transparent 24rem),
     linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.018)),
     rgba(2, 6, 23, 0.28);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.075),
     inset 0 -52px 80px rgba(0, 0, 0, 0.26);
+  perspective: 950px;
+  scroll-snap-type: x proximity;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 213, 0, 0.42) rgba(2, 6, 23, 0.42);
 }
 
 .social-storefront .watchlist-tape-stack::before {
-  right: -0.5rem;
-  bottom: 1.2rem;
-  left: -0.5rem;
-  height: 3px;
-  background: linear-gradient(90deg, transparent, rgba(255, 213, 0, 0.62), rgba(59, 130, 246, 0.26), transparent);
-  filter: blur(1px);
-  opacity: 0.75;
+  right: 0.9rem;
+  bottom: 1.28rem;
+  left: 0.9rem;
+  height: 12px;
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.46), rgba(255, 255, 255, 0.05) 42%, rgba(0, 0, 0, 0.44)),
+    linear-gradient(90deg, transparent, rgba(255, 213, 0, 0.7), rgba(59, 130, 246, 0.36), transparent);
+  box-shadow:
+    0 0 24px rgba(255, 213, 0, 0.28),
+    0 0 48px rgba(59, 130, 246, 0.18),
+    0 12px 28px rgba(0, 0, 0, 0.5);
+  filter: none;
+  opacity: 0.9;
 }
 
 .social-storefront .watchlist-tape-stack::after {
-  height: 54px;
-  opacity: 0.85;
+  content: "checkout bookshelf · arrange tonight's cases";
+  position: absolute;
+  top: 0.78rem;
+  right: 1rem;
+  left: 1rem;
+  height: 9px;
+  border-radius: 999px;
+  color: rgba(255, 213, 0, 0.36);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.42), rgba(255, 255, 255, 0.04) 45%, rgba(0, 0, 0, 0.44)),
+    linear-gradient(90deg, transparent, rgba(255, 213, 0, 0.62), rgba(147, 197, 253, 0.34), transparent);
+  box-shadow:
+    0 0 18px rgba(255, 213, 0, 0.2),
+    0 0 40px rgba(37, 99, 235, 0.16),
+    0 18px 44px rgba(0, 0, 0, 0.38);
+  font-family: var(--font-heading);
+  font-size: 0.56rem;
+  font-weight: 950;
+  letter-spacing: 0.14em;
+  line-height: 3.4rem;
+  text-align: center;
+  text-transform: uppercase;
+  opacity: 0.95;
 }
 
-.social-storefront .counter-vhs-tape {
-  grid-template-columns: 34px 46px minmax(0, 1fr);
-  width: min(335px, calc(100% - 1.4rem));
-  min-height: 82px;
-  bottom: clamp(1.35rem, 3vw, 2.05rem);
-  left: clamp(0.8rem, 2vw, 1.25rem);
-  border-radius: 16px;
+.social-storefront .counter-vhs-tape.dvd-bookshelf-case {
+  position: relative;
+  inset: auto;
+  flex: 0 0 clamp(132px, 16vw, 176px);
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr);
+  grid-template-rows: minmax(150px, 1fr) auto;
+  width: auto;
+  min-height: clamp(235px, 25vw, 286px);
+  overflow: hidden;
+  border: 1px solid rgba(255, 213, 0, 0.2);
+  border-radius: 16px 12px 12px 16px;
+  background:
+    linear-gradient(110deg, rgba(255, 255, 255, 0.16), transparent 20%, transparent 72%, rgba(255, 255, 255, 0.06)),
+    linear-gradient(180deg, rgba(15, 23, 42, 0.94), rgba(2, 6, 23, 0.98));
+  box-shadow:
+    16px 22px 34px rgba(0, 0, 0, 0.44),
+    -8px 0 0 rgba(0, 0, 0, 0.28),
+    0 0 26px rgba(37, 99, 235, 0.12),
+    inset 1px 0 0 rgba(255, 255, 255, 0.14),
+    inset -16px 0 22px rgba(0, 0, 0, 0.18);
   transform:
-    translateX(calc(var(--tape-x) * 1.18))
-    translateY(calc(-1 * var(--tape-y) - (var(--tape-order) * 0.12rem)))
+    translateY(calc(-1 * var(--tape-y)))
     rotate(var(--tape-rotate))
-    perspective(720px)
-    rotateX(4deg);
+    rotateY(calc((var(--shelf-col) - 3) * -0.7deg));
+  transform-origin: 50% 100%;
+  scroll-snap-align: center;
+  animation: bookshelfCaseArrive 0.62s cubic-bezier(0.18, 0.9, 0.22, 1) both;
+  animation-delay: var(--tape-delay);
 }
 
-.social-storefront .counter-vhs-tape:hover,
-.social-storefront .counter-vhs-tape:focus-visible,
-.social-storefront .counter-vhs-tape.is-drop-target {
+.social-storefront .counter-vhs-tape.dvd-bookshelf-case:hover,
+.social-storefront .counter-vhs-tape.dvd-bookshelf-case:focus-visible,
+.social-storefront .counter-vhs-tape.dvd-bookshelf-case.is-drop-target {
   transform:
-    translateX(calc(var(--tape-x) * 1.18 + 0.3rem))
-    translateY(calc(-1 * var(--tape-y) - (var(--tape-order) * 0.12rem) - 14px))
-    rotate(calc(var(--tape-rotate) * 0.62))
-    perspective(720px)
-    rotateX(1deg)
+    translateY(calc(-1 * var(--tape-y) - 16px))
+    translateZ(34px)
+    rotate(calc(var(--tape-rotate) * 0.42))
+    rotateY(-5deg)
     scale(1.035);
+  border-color: rgba(255, 213, 0, 0.5);
+  box-shadow:
+    24px 34px 54px rgba(0, 0, 0, 0.56),
+    -10px 0 0 rgba(0, 0, 0, 0.28),
+    0 0 36px rgba(255, 213, 0, 0.16),
+    0 0 42px rgba(59, 130, 246, 0.16),
+    inset 1px 0 0 rgba(255, 255, 255, 0.18),
+    inset -16px 0 22px rgba(0, 0, 0, 0.18);
 }
 
-.counter-vhs-poster {
+.social-storefront .counter-vhs-tape.dvd-bookshelf-case::before {
+  background:
+    linear-gradient(112deg, transparent 0 12%, rgba(255, 255, 255, 0.2) 22%, transparent 34%),
+    radial-gradient(circle at 75% 18%, rgba(255, 255, 255, 0.18), transparent 15%),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.025) 0 1px, transparent 1px 6px);
+  opacity: 0.62;
+}
+
+.social-storefront .counter-vhs-tape.dvd-bookshelf-case::after {
+  content: "";
+  position: absolute;
+  right: 0.42rem;
+  bottom: 3.55rem;
+  width: 2.25rem;
+  height: 0.8rem;
+  border: 1px solid rgba(2, 6, 23, 0.22);
+  border-radius: 0.2rem;
+  background:
+    repeating-linear-gradient(90deg, #111827 0 2px, transparent 2px 4px),
+    rgba(255, 255, 255, 0.86);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.24);
+  transform: rotate(-2deg);
+}
+
+.social-storefront .dvd-bookshelf-case .counter-vhs-spine {
+  grid-row: 1 / -1;
+  width: 22px;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 0.56rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.dvd-case-edge {
+  position: absolute;
+  inset: 0 auto 0 22px;
+  z-index: 2;
+  width: 8px;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.38), rgba(255, 255, 255, 0.08), transparent),
+    rgba(255, 213, 0, 0.08);
+  pointer-events: none;
+}
+
+.social-storefront .dvd-bookshelf-case .counter-vhs-poster {
   position: relative;
   z-index: 1;
   display: block;
-  width: 40px;
-  height: 58px;
+  grid-column: 2;
+  grid-row: 1;
+  width: calc(100% - 0.8rem);
+  height: clamp(126px, 15vw, 174px);
+  margin: 0.62rem 0.48rem 0;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 6px;
+  border-radius: 10px;
   box-shadow:
-    0 10px 18px rgba(0, 0, 0, 0.28),
+    0 14px 24px rgba(0, 0, 0, 0.36),
     inset 0 1px 0 rgba(255, 255, 255, 0.16);
 }
 
@@ -15073,16 +15207,122 @@ body.theater-open .sound-toggle {
   object-fit: cover;
 }
 
-.social-storefront .counter-vhs-copy {
-  padding-right: 4.9rem;
+.dvd-case-label {
+  position: absolute;
+  top: 0.78rem;
+  left: 2.25rem;
+  z-index: 3;
+  border-radius: 999px;
+  padding: 0.18rem 0.44rem;
+  color: #111827;
+  background: linear-gradient(180deg, #fff8c7, var(--yellow));
+  font-size: 0.48rem;
+  font-weight: 950;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  box-shadow: 0 7px 15px rgba(0, 0, 0, 0.28);
+  transform: rotate(-1.5deg);
 }
 
-.social-storefront .counter-vhs-copy strong {
-  font-size: 0.95rem;
+.social-storefront .counter-vhs-tape.dvd-bookshelf-case .counter-vhs-copy {
+  grid-column: 2;
+  grid-row: 2;
+  padding: 0.62rem 0.72rem 2.1rem;
 }
 
-.social-storefront .counter-vhs-copy small {
+.social-storefront .counter-vhs-tape.dvd-bookshelf-case .counter-vhs-copy strong {
+  display: -webkit-box;
+  color: var(--yellow);
+  font-family: var(--font-heading);
+  font-size: clamp(1rem, 1.6vw, 1.35rem);
+  line-height: 0.95;
   white-space: normal;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.social-storefront .counter-vhs-tape.dvd-bookshelf-case .counter-vhs-copy small {
+  margin-top: 0.35rem;
+  color: rgba(226, 232, 240, 0.74);
+  font-size: 0.6rem;
+  letter-spacing: 0.02em;
+  white-space: normal;
+}
+
+.social-storefront .counter-vhs-copy em {
+  display: block;
+  margin-top: 0.32rem;
+  overflow: hidden;
+  color: rgba(147, 197, 253, 0.8);
+  font-size: 0.58rem;
+  font-style: normal;
+  font-weight: 950;
+  text-overflow: ellipsis;
+  text-transform: lowercase;
+  white-space: nowrap;
+}
+
+.dvd-case-live {
+  position: absolute;
+  right: 0.58rem;
+  bottom: 0.58rem;
+  left: 2.2rem;
+  z-index: 3;
+  display: flex;
+  gap: 0.32rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  padding: 0.27rem 0.4rem;
+  color: rgba(248, 250, 252, 0.82);
+  background: rgba(2, 6, 23, 0.58);
+  font-size: 0.58rem;
+  font-weight: 950;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 8px 18px rgba(0, 0, 0, 0.24);
+}
+
+.dvd-case-live span {
+  width: 0.36rem;
+  height: 0.36rem;
+  border-radius: 999px;
+  background: #54f0a2;
+  box-shadow: 0 0 11px rgba(84, 240, 162, 0.62);
+}
+
+@keyframes bookshelfCaseArrive {
+  from {
+    opacity: 0;
+    transform:
+      translateY(-22px)
+      rotate(calc(var(--tape-rotate) - 7deg))
+      rotateY(12deg)
+      scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      translateY(calc(-1 * var(--tape-y)))
+      rotate(var(--tape-rotate))
+      rotateY(calc((var(--shelf-col) - 3) * -0.7deg))
+      scale(1);
+  }
+}
+
+.social-storefront .counter-vhs-tape.dvd-bookshelf-case .counter-vhs-controls {
+  top: 0.55rem;
+  right: 0.48rem;
+  opacity: 0;
+  transform: translateY(-4px);
+}
+
+.social-storefront .counter-vhs-tape.dvd-bookshelf-case:hover .counter-vhs-controls,
+.social-storefront .counter-vhs-tape.dvd-bookshelf-case:focus-within .counter-vhs-controls {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .social-storefront .watchlist-tape-list {
@@ -15142,6 +15382,10 @@ body.theater-open .sound-toggle {
   .social-storefront .watchlist-tape-list {
     grid-template-columns: 1fr;
   }
+
+  .social-storefront .watchlist-tape-stack {
+    min-height: 292px;
+  }
 }
 
 @media (max-width: 575px) {
@@ -15158,13 +15402,18 @@ body.theater-open .sound-toggle {
     transform: none;
   }
 
-  .social-storefront .counter-vhs-tape {
-    grid-template-columns: 30px minmax(0, 1fr);
-    width: calc(100% - 1rem);
+  .social-storefront .counter-vhs-tape.dvd-bookshelf-case {
+    flex-basis: 132px;
+    min-height: 238px;
   }
 
-  .counter-vhs-poster {
-    display: none;
+  .social-storefront .dvd-bookshelf-case .counter-vhs-poster {
+    display: block;
+    height: 130px;
+  }
+
+  .dvd-case-live {
+    font-size: 0.52rem;
   }
 }
 

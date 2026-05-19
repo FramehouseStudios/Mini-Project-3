@@ -1191,18 +1191,18 @@ function getMoodboardPairing(stack) {
   }
 
   if (stack.length === 1) {
-    return `Pair ${stack[0].title} with something that changes the weather.`;
+    return `Start with ${stack[0].title}, then let the shelf argue back.`;
   }
 
-  return `Double feature: ${stack[0].title} + ${stack[1].title}`;
+  return `Double-feature spine: ${stack[0].title} + ${stack[1].title}`;
 }
 
 function getMoodboardNotes(stack) {
   if (stack.length === 0) {
     return [
-      "Pull a tape from the aisle.",
-      "Build a beautiful mess.",
-      "Maximum emotional damage optional.",
+      "Pull a case from the aisle.",
+      "Build a beautiful shelf mess.",
+      "Emotional damage gets a late-fee waiver.",
     ];
   }
 
@@ -1257,8 +1257,8 @@ function updateWatchlistPanel() {
   watchlistRewatches.textContent = `${totalRewatches.toLocaleString()} rewatches`;
   watchlistMood.textContent =
     bagSize === 0
-      ? "Toss tapes into the bag to build a late-night rental stack with runtime, rewatches, and mood tags."
-      : `${getMoodboardEnergy(rentalBag)} ${vibes.length ? `The counter is giving ${vibes.slice(0, 3).join(", ")}.` : ""}`;
+      ? "Pull cases from the aisles and build a tactile movie-night shelf with runtime, rewatches, clerk notes, and emotional pairings."
+      : `${getMoodboardEnergy(rentalBag)} ${vibes.length ? `The shelf is giving ${vibes.slice(0, 3).join(", ")}.` : ""}`;
   if (moodboardEnergy) {
     moodboardEnergy.textContent = getMoodboardEnergy(rentalBag);
   }
@@ -1268,32 +1268,38 @@ function updateWatchlistPanel() {
   renderMoodboardNotes(rentalBag);
   watchlistTapeStack.innerHTML =
     bagSize === 0
-      ? `<span class="stack-empty">The counter is empty. Pull a VHS from the aisles.</span>`
+      ? `<span class="stack-empty">The bookshelf is empty. Pull a DVD or VHS case from the aisles.</span>`
       : rentalBag
           .map((film, index) => {
             const stackIndex = Math.min(index, 5);
-            const rotationPattern = [-3, 2, -1, 3, -2, 1];
+            const rotationPattern = [-2.4, 1.5, -0.8, 2.1, -1.6, 0.8];
+            const shelfColumn = (index % 6) + 1;
+            const liveCount = getLiveViewerCount(film);
 
             return `
               <article
-                class="counter-vhs-tape"
+                class="counter-vhs-tape dvd-bookshelf-case"
                 draggable="true"
                 tabindex="0"
-                aria-label="${film.title}, tape ${index + 1} of ${bagSize}. Drag to reorder."
+                aria-label="${film.title}, shelf case ${index + 1} of ${bagSize}. Drag to reorder."
                 data-stack-index="${index}"
                 data-film-id="${film.id}"
                 style="--tape-order: ${index}; --tape-x: ${stackIndex * 2.25}rem; --tape-y: ${(index % 3) * 0.32}rem; --tape-rotate: ${
                   rotationPattern[index % rotationPattern.length]
-                }deg; --tape-delay: ${index * 60}ms;"
+                }deg; --tape-delay: ${index * 60}ms; --shelf-col: ${shelfColumn};"
               >
                 <span class="counter-vhs-spine">${String(index + 1).padStart(2, "0")}</span>
+                <span class="dvd-case-edge" aria-hidden="true"></span>
                 <span class="counter-vhs-poster" aria-hidden="true">
                   <img src="${film.poster}" alt="" width="80" height="120" loading="lazy" decoding="async">
                 </span>
+                <span class="dvd-case-label">BB+ shelf copy</span>
                 <div class="counter-vhs-copy">
                   <strong>${film.title}</strong>
-                  <small>${getAisleName(film.genre)} &middot; ${film.runtime || "??"} min &middot; ${film.vibeTags?.[0] || "counter pick"}</small>
+                  <small>${getAisleName(film.genre)} &middot; ${film.runtime || "??"} min</small>
+                  <em>${film.vibeTags?.[0] || "counter pick"}</em>
                 </div>
+                <span class="dvd-case-live"><span></span>${liveCount} watching</span>
                 <div class="counter-vhs-controls" aria-label="Tape controls">
                   <button type="button" data-stack-move="left" data-stack-index="${index}" aria-label="Move ${film.title} earlier" ${
                     index === 0 ? "disabled" : ""
