@@ -825,8 +825,8 @@ function homeShelfCard(film, index) {
   const isActive = index === 0;
 
   return `
-    <article class="home-vhs-slot ${isActive ? "is-active" : ""}" data-shelf-index="${index}" style="--shelf-order: ${index};">
-      <div class="card movie-card home-vhs-card h-100" tabindex="0" aria-label="${escapeHomeHtml(film.title)} Friday Night Pick VHS tape">
+    <article class="home-vhs-slot ${isActive ? "is-active" : ""}" data-shelf-index="${index}" data-home-trailer-id="${film.id}" style="--shelf-order: ${index};">
+      <div class="card movie-card home-vhs-card h-100" tabindex="0" role="button" aria-label="Play the ${escapeHomeHtml(film.title)} trailer">
         <div class="vhs-gloss" aria-hidden="true"></div>
         <div class="home-vhs-edge-wear" aria-hidden="true"></div>
         <div class="home-vhs-spine"><span>${escapeHomeHtml(getHomeAisleName(film.genre))}</span></div>
@@ -959,6 +959,89 @@ async function loadHomeMidnightFilms() {
   }
 }
 
+// --- Poster trailer projector (home page) -------------------------------
+const homeProjectorTheater = document.querySelector("#projectorTheater");
+const homeProjectorBackdrop = document.querySelector("#projectorTheaterBackdrop");
+const homeProjectorClose = document.querySelector("#projectorTheaterClose");
+const homeProjectorFrame = document.querySelector("#projectorTrailerFrame");
+const homeProjectorTitle = document.querySelector("#projectorTheaterTitle");
+const homeProjectorTheaterMeta = document.querySelector("#projectorTheaterMeta");
+
+function openHomeProjector(film) {
+  if (!homeProjectorTheater || !homeProjectorFrame || !film || !film.trailer) {
+    return;
+  }
+
+  homeProjectorFrame.src = `${film.trailer}?autoplay=1&rel=0&modestbranding=1&playsinline=1`;
+  if (homeProjectorTitle) {
+    homeProjectorTitle.textContent = film.title;
+  }
+  if (homeProjectorTheaterMeta) {
+    const runtime = film.runtime ? `${film.runtime} min` : "feature length";
+    homeProjectorTheaterMeta.textContent = `${film.genre} · ${film.year} · ${runtime}`;
+  }
+  homeProjectorTheater.classList.add("is-open");
+  homeProjectorTheater.setAttribute("aria-hidden", "false");
+  document.body.classList.add("theater-open");
+  homeProjectorClose?.focus();
+}
+
+function closeHomeProjector() {
+  if (!homeProjectorTheater || !homeProjectorTheater.classList.contains("is-open")) {
+    return;
+  }
+
+  // Clearing src fully stops YouTube playback.
+  if (homeProjectorFrame) {
+    homeProjectorFrame.src = "";
+  }
+  homeProjectorTheater.classList.remove("is-open");
+  homeProjectorTheater.setAttribute("aria-hidden", "true");
+  document.body.classList.remove("theater-open");
+}
+
+function findHomeFilmByTitle(title) {
+  if (!title) {
+    return null;
+  }
+  const norm = (s) => String(s).toLowerCase().replace(/[^a-z0-9]/g, "");
+  const t = norm(title);
+  return (
+    homeFilms.find((f) => norm(f.title) === t) ||
+    homeFilms.find((f) => norm(f.title).includes(t) || t.includes(norm(f.title))) ||
+    null
+  );
+}
+
+function resolveHomePosterFilm(target) {
+  const slot = target.closest("[data-home-trailer-id]");
+  if (slot) {
+    return homeFilms.find((f) => String(f.id) === slot.dataset.homeTrailerId) || null;
+  }
+  if (target.closest("#heroFeatured")) {
+    return [...homeFilms].sort((a, b) => (b.rating || 0) - (a.rating || 0))[0] || null;
+  }
+  const stripItem = target.closest(".dashboard-staff-strip article");
+  if (stripItem) {
+    const label =
+      stripItem.querySelector("span")?.textContent ||
+      stripItem.querySelector("img")?.getAttribute("alt")?.replace(/\s*poster$/i, "");
+    return findHomeFilmByTitle(label);
+  }
+  return null;
+}
+
+function handleHomePosterActivate(event) {
+  if (event.target.closest("a, button, input, textarea, select")) {
+    return;
+  }
+  const film = resolveHomePosterFilm(event.target);
+  if (film && film.trailer) {
+    event.preventDefault();
+    openHomeProjector(film);
+  }
+}
+
 homeMidnightForm?.addEventListener("submit", handleHomeMidnightSubmit);
 document.addEventListener("click", (event) => {
   if (event.target.closest("#midnightSubmit")) {
@@ -1011,3 +1094,27 @@ homeMidnightIntensity?.addEventListener("input", () => {
 updateHomeIntensityLabel();
 homeFilmsReady = loadHomeMidnightFilms();
 initializeHomeLateNightMode();
+
+// Click (or keyboard-activate) any poster cover -> cinematic trailer popup.
+document.addEventListener("click", handleHomePosterActivate);
+homeProjectorClose?.addEventListener("click", closeHomeProjector);
+homeProjectorBackdrop?.addEventListener("click", closeHomeProjector);
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && homeProjectorTheater?.classList.contains("is-open")) {
+    closeHomeProjector();
+  }
+});
+homeTrendingGrid?.addEventListener("keydown", (event) => {
+  if (event.key !== "Enter" && event.key !== " ") {
+    return;
+  }
+  const slot = event.target.closest("[data-home-trailer-id]");
+  if (!slot) {
+    return;
+  }
+  const film = homeFilms.find((f) => String(f.id) === slot.dataset.homeTrailerId);
+  if (film && film.trailer) {
+    event.preventDefault();
+    openHomeProjector(film);
+  }
+});

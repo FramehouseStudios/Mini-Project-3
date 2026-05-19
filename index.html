@@ -581,6 +581,55 @@
       </section>
     </main>
 
+    <section
+      class="projector-theater"
+      id="projectorTheater"
+      aria-labelledby="projectorTheaterTitle"
+      aria-hidden="true"
+    >
+      <button
+        class="projector-theater-backdrop"
+        id="projectorTheaterBackdrop"
+        type="button"
+        aria-label="Stop screening and close projector"
+      ></button>
+      <div class="projector-grain" aria-hidden="true"></div>
+      <div class="projector-houselight" aria-hidden="true"></div>
+      <article class="projector-theater-stage" role="dialog" aria-modal="true">
+        <header class="projector-theater-head">
+          <div>
+            <span class="projector-theater-kicker">Now Screening</span>
+            <h2 id="projectorTheaterTitle">Tonight's Tape</h2>
+            <p id="projectorTheaterMeta">Loading reel…</p>
+          </div>
+          <button
+            class="projector-theater-close"
+            id="projectorTheaterClose"
+            type="button"
+          >
+            Pause Screening
+          </button>
+        </header>
+        <div class="projector-screen">
+          <div class="projector-beam" aria-hidden="true"></div>
+          <div class="projector-screen-glow" aria-hidden="true"></div>
+          <div class="projector-frame">
+            <iframe
+              id="projectorTrailerFrame"
+              title="Movie trailer"
+              allow="autoplay; encrypted-media; picture-in-picture"
+              allowfullscreen
+              loading="lazy"
+              referrerpolicy="strict-origin-when-cross-origin"
+            ></iframe>
+            <div class="projector-screen-noise" aria-hidden="true"></div>
+            <div class="projector-screen-vignette" aria-hidden="true"></div>
+          </div>
+          <span class="projector-screen-label">BLOCKBUSTER<span>+</span> PROJECTOR</span>
+        </div>
+      </article>
+    </section>
+
     <footer class="site-footer">
       <div class="container footer-content">
         <p>© 2026 Blockbuster+ | The Video Store Lives On.</p>

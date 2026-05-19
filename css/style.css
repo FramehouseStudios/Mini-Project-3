@@ -18466,3 +18466,10 @@ body.theater-open .sound-toggle {
     transform: none;
   }
 }
+
+/* Poster covers are clickable — they open the cinematic trailer projector. */
+.home-vhs-card,
+.hero-staff-pick-panel .hero-staff-pick-art,
+.dashboard-staff-strip article {
+  cursor: pointer;
+}
