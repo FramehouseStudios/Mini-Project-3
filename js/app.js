@@ -1990,21 +1990,24 @@ function startTonightStackScreening() {
     return;
   }
 
-  const firstFilm = rentalBag[0];
-  activeProjectionIndex = 0;
+  // Play whatever reel the Checkout Stack is currently cued to, so the trailer
+  // always matches the "Currently Projecting" panel and the highlighted tape
+  // (fresh state: activeProjectionIndex is 0 -> plays the top of the stack).
+  activeProjectionIndex = Math.min(Math.max(activeProjectionIndex, 0), rentalBag.length - 1);
+  const selectedFilm = rentalBag[activeProjectionIndex];
   projectorSessionPaused = false;
-  const firstFilmIndex = films.findIndex((film) => film.id === firstFilm.id);
+  const selectedFilmIndex = films.findIndex((film) => film.id === selectedFilm.id);
 
-  if (firstFilmIndex !== -1) {
-    renderProjectorFeature(firstFilmIndex);
+  if (selectedFilmIndex !== -1) {
+    renderProjectorFeature(selectedFilmIndex);
   }
 
   tonightStackSection?.classList.remove("is-stacking");
   updateProjectorSession();
-  prependActivity(firstFilm, `@you started projecting ${firstFilm.title} from tonight's stack`);
+  prependActivity(selectedFilm, `@you started projecting ${selectedFilm.title} from tonight's stack`);
   playInteractionSound("click");
   showStackFlare("Projector rolling...");
-  openProjectorTheater(firstFilm);
+  openProjectorTheater(selectedFilm);
 }
 
 function playNextStackReel() {
