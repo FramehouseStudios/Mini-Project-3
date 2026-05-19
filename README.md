@@ -68,7 +68,7 @@ any HTML/CSS**:
 
   ```bash
   node scripts/validate-films.mjs              # offline structural check
-  node scripts/validate-films.mjs --check-urls # also verifies poster URLs
+  node scripts/validate-films.mjs --check-urls # also verifies poster URLs + trailer embeds
   ```
 
   Exit code `0` = valid, `1` = errors (with a per-field report).

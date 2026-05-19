@@ -3,7 +3,7 @@
  * Blockbuster+ film catalog validator — zero dependencies.
  *
  *   node scripts/validate-films.mjs            # offline structural validation
- *   node scripts/validate-films.mjs --check-urls   # also HEAD-checks every poster
+ *   node scripts/validate-films.mjs --check-urls   # also checks poster URLs + YouTube trailer embeddability
  *   node scripts/validate-films.mjs --quiet        # only print on failure
  *
  * Exit code 0 = valid, 1 = one or more errors (CI-friendly).
@@ -168,6 +168,28 @@ async function headOk(url, timeoutMs = 8000) {
   }
 }
 
+// A YouTube embed URL is "reachable" only if the video exists AND is
+// embeddable — oembed returns 200 for public/embeddable videos, 401/404 for
+// private/removed/embedding-disabled ones (a plain HEAD would miss those).
+async function oembedOk(embedUrl, timeoutMs = 8000) {
+  const id = (embedUrl.match(/\/embed\/([\w-]+)/) || [])[1];
+  if (!id) return false;
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), timeoutMs);
+  try {
+    const watchUrl = encodeURIComponent(`https://www.youtube.com/watch?v=${id}`);
+    const res = await fetch(
+      `https://www.youtube.com/oembed?format=json&url=${watchUrl}`,
+      { signal: ctrl.signal },
+    );
+    return res.ok;
+  } catch {
+    return false;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
 async function main() {
   let raw;
   try {
@@ -192,9 +214,11 @@ async function main() {
 
   const seenIds = new Set();
   const posters = [];
+  const trailers = [];
   films.forEach((film, i) => {
     const p = validateFilm(film, i, seenIds);
     if (p) posters.push(p);
+    if (typeof film.trailer === "string") trailers.push(film.trailer);
   });
 
   if (CHECK_URLS && errors.length === 0) {
@@ -204,6 +228,14 @@ async function main() {
     );
     for (const { u, ok } of results) {
       if (!ok) err("poster-url", `unreachable: ${u}`);
+    }
+
+    const uniqueTrailers = [...new Set(trailers)];
+    const trailerResults = await Promise.all(
+      uniqueTrailers.map(async (u) => ({ u, ok: await oembedOk(u) })),
+    );
+    for (const { u, ok } of trailerResults) {
+      if (!ok) err("trailer-url", `not embeddable / unreachable: ${u}`);
     }
   }
 
@@ -221,7 +253,9 @@ async function main() {
   if (!QUIET) {
     console.log(
       `OK: ${films.length} films valid` +
-        (CHECK_URLS ? `, ${new Set(posters).size} poster URLs reachable` : "") +
+        (CHECK_URLS
+          ? `, ${new Set(posters).size} poster URLs reachable, ${new Set(trailers).size} trailers embeddable`
+          : "") +
         (warnings.length ? ` (${warnings.length} warning(s))` : ""),
     );
   }
