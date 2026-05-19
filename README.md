@@ -92,3 +92,21 @@ with no build step. Further breaking up the large `03-components-core.css`
 should be done one component at a time, re-running the build and diffing the
 output to keep it byte-stable.
 
+### Auditing CSS size
+
+```bash
+node scripts/audit-css.mjs          # dead-rule + size summary (read-only)
+node scripts/audit-css.mjs --list   # also print every dead-candidate selector
+```
+
+Conservative, zero-dependency, **read-only**. A rule is only reported dead when
+*every* class/id base-name in its whole selector list appears nowhere in any
+HTML/JS string (element/`*`/attribute selectors are never flagged), so anything
+it lists is safe to delete. Reality check from this tool: the bulk of the
+stylesheet is **live, referenced** CSS, not dead code (~0.6%) or duplication
+(~1.7%). Meaningful size reduction therefore requires a deliberate,
+browser-verified design-system consolidation (shared tokens/utilities for the
+repeated gradient/shadow/glass recipes) done per partial with the byte-stable
+build as the safety net — not a mechanical purge. Keep defensive utilities
+(`.visually-hidden`, the `.col-*` grid shim) even if currently unreferenced.
+
