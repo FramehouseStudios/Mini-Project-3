@@ -702,3 +702,121 @@
     0 0 0 3px rgba(255, 213, 0, 0.16);
 }
 
+/* ===== MIDNIGHT RESULT — SLEEK PASS ======================================
+ * Calmer palette, hairline match meter, filled tags, restrained motion,
+ * and clearance so the fixed Tonight's-Screening bar stops occluding content.
+ * Scoped to the home Midnight result card only. ========================== */
+
+/* Page clearance: reserve space under the fixed .tonights-screening-bar. */
+body.pitch-home {
+  padding-bottom: clamp(7rem, 13vh, 9.5rem);
+}
+
+/* One calm surface — drop nested borders, single soft elevation.
+ * body.pitch-home prefix outranks the later pitch-home polish layer. */
+body.pitch-home .home-midnight-watchlist .midnight-match-panel,
+body.pitch-home .home-midnight-watchlist .midnight-pairings article {
+  border-color: transparent;
+  background: rgba(255, 255, 255, 0.025);
+  box-shadow: none;
+}
+
+body.pitch-home .home-midnight-watchlist .midnight-match-panel::after {
+  display: none;
+}
+
+.home-midnight-watchlist .midnight-result-card {
+  border-color: transparent;
+  background: rgba(255, 255, 255, 0.02);
+  box-shadow: 0 24px 60px -24px rgba(0, 0, 0, 0.6);
+}
+
+/* Match meter -> big quiet number + 2px gradient hairline (no chunky bar). */
+body.pitch-home .home-midnight-watchlist .midnight-match-meter {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  height: auto;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  box-shadow: none;
+}
+
+/* Kill the old fill-bar pseudo-element from the pitch-home layer. */
+body.pitch-home .home-midnight-watchlist .midnight-match-meter::before {
+  display: none;
+}
+
+body.pitch-home .home-midnight-watchlist .midnight-match-meter span {
+  position: static;
+  color: var(--cream);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  text-shadow: none;
+}
+
+body.pitch-home .home-midnight-watchlist .midnight-match-meter::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(
+    90deg,
+    var(--yellow) 0,
+    var(--yellow) var(--match-score, 0%),
+    rgba(255, 255, 255, 0.1) var(--match-score, 0%)
+  );
+}
+
+/* Tone down the equalizer kitsch. */
+.home-midnight-watchlist .midnight-audio-wave {
+  min-height: 12px;
+  opacity: 0.28;
+}
+
+/* Outline chips -> soft filled tags (no stroke). */
+.home-midnight-watchlist .midnight-reasons span {
+  border: 0;
+  color: rgba(248, 250, 252, 0.78);
+  background: rgba(255, 255, 255, 0.05);
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* Tiny quiet labels; keep yellow only for the section labels + CTA. */
+.home-midnight-watchlist .midnight-context {
+  color: rgba(203, 213, 225, 0.6);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.home-midnight-watchlist .midnight-clerk-id {
+  color: rgba(203, 213, 225, 0.7);
+}
+
+.home-midnight-watchlist .midnight-pairings article {
+  min-height: 0;
+}
+
+/* Smooth, restrained reveal (reduced-motion users get it instantly). */
+@media (prefers-reduced-motion: no-preference) {
+  .home-midnight-watchlist .midnight-result .midnight-result-card {
+    opacity: 0;
+    transform: translateY(14px);
+    transition:
+      opacity 260ms var(--ease-smooth, ease),
+      transform 260ms var(--ease-smooth, ease);
+  }
+
+  .home-midnight-watchlist .midnight-result.is-visible .midnight-result-card {
+    opacity: 1;
+    transform: none;
+  }
+}
+
