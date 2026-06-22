@@ -47,7 +47,7 @@ function Layout() {
                 to={item.to}
                 sx={{
                   "&.active": {
-                    bgcolor: "rgba(255,255,255,0.16)",
+                    bgcolor: "rgba(255,250,246,0.2)",
                   },
                 }}
               >
@@ -73,7 +73,7 @@ function Layout() {
         sx={{
           display: { xs: "block", sm: "none" },
           bgcolor: "background.paper",
-          borderBottom: "1px solid #dce7e2",
+          borderBottom: "1px solid #efc8b4",
         }}
         aria-label="Mobile navigation"
       >

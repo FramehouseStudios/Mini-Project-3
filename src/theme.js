@@ -4,19 +4,19 @@ const theme = createTheme({
   palette: {
     mode: "light",
     primary: {
-      main: "#2f5b52",
-      dark: "#203f39",
+      main: "#e24b3d",
+      dark: "#b9362d",
     },
     secondary: {
-      main: "#b9845f",
+      main: "#c9835b",
     },
     background: {
-      default: "#f2f7f4",
-      paper: "#ffffff",
+      default: "#f9ddc8",
+      paper: "#fffaf6",
     },
     text: {
-      primary: "#17231f",
-      secondary: "#66756f",
+      primary: "#261715",
+      secondary: "#7a6259",
     },
   },
   shape: {
@@ -58,8 +58,8 @@ const theme = createTheme({
     MuiCard: {
       styleOverrides: {
         root: {
-          border: "1px solid #dce7e2",
-          boxShadow: "0 16px 36px rgba(30, 66, 56, 0.07)",
+          border: "1px solid #efc8b4",
+          boxShadow: "0 18px 42px rgba(154, 65, 46, 0.12)",
         },
       },
     },
@@ -70,9 +70,16 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           "&:focus-visible": {
-            outline: "3px solid rgba(185, 132, 95, 0.45)",
+            outline: "3px solid rgba(226, 75, 61, 0.35)",
             outlineOffset: "2px",
           },
+        },
+      },
+    },
+    MuiChip: {
+      styleOverrides: {
+        root: {
+          fontWeight: 700,
         },
       },
     },
