@@ -61,6 +61,16 @@ See [docs/DESIGN.md](docs/DESIGN.md) for requirements, wireframes, routes, compo
 
 This is the second major coding project designed to consolidate everything learned in Modules 5 - 7: Back-end Development, Node.js, APIs, React, Router, Hooks, External UI Libraries, and API integration.
 
+## Tools & AI Use
+
+In the interest of academic honesty, here is how this project was built and where AI assistance was used:
+
+- **React application (`src/`)** — written by me (Joshua Ojeda): the components, pages, React Router setup, the custom `useProducts` hook, Context, and all state/filter/sort logic.
+- **AI assistance (Claude / Claude Code)** was used for two specific things:
+  - **Code review** — auditing the app, running `npm run lint` / `npm run build`, and flagging improvements (e.g., that `useProducts` refetches on each page).
+  - **Wireframes** — generating the diagrams in `docs/wireframes/`, `docs/wireframes.svg`, and `docs/wireframes-lofi/` from my existing app and design plan.
+- I reviewed every AI-generated artifact and can explain the design decisions and code during the presentation.
+
 ## Overview
 
 This project is designed to consolidate your knowledge of modern Front-End development using **React**. You will build a Single Page Application (SPA) that demonstrates your ability to manage component-based architecture, client-side routing, and complex state management.
