@@ -17,6 +17,11 @@ a {
   object-fit: contain;
   padding: 24px;
   background: #ffffff;
+  transition: transform 180ms ease;
+}
+
+.MuiCard-root:hover .product-image {
+  transform: scale(1.02);
 }
 
 .detail-image {

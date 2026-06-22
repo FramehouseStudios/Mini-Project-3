@@ -59,13 +59,21 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           border: "1px solid #dce7e2",
-          boxShadow: "0 18px 40px rgba(30, 66, 56, 0.08)",
+          boxShadow: "0 16px 36px rgba(30, 66, 56, 0.07)",
         },
       },
     },
     MuiButton: {
       defaultProps: {
         disableElevation: true,
+      },
+      styleOverrides: {
+        root: {
+          "&:focus-visible": {
+            outline: "3px solid rgba(185, 132, 95, 0.45)",
+            outlineOffset: "2px",
+          },
+        },
       },
     },
   },

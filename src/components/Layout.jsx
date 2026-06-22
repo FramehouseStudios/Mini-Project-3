@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
 import Toolbar from "@mui/material/Toolbar";
+import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import { useAppContext } from "../context/AppContext.jsx";
@@ -35,6 +36,7 @@ function Layout() {
             direction="row"
             spacing={1}
             component="nav"
+            aria-label="Primary navigation"
             sx={{ display: { xs: "none", sm: "flex" } }}
           >
             {navItems.map((item) => (
@@ -54,9 +56,15 @@ function Layout() {
             ))}
           </Stack>
 
-          <Badge badgeContent={savedCount} color="secondary">
-            <ShoppingBagOutlinedIcon />
-          </Badge>
+          <Tooltip title={`${savedCount} saved product${savedCount === 1 ? "" : "s"}`}>
+            <Badge
+              badgeContent={savedCount}
+              color="secondary"
+              aria-label={`${savedCount} saved products`}
+            >
+              <ShoppingBagOutlinedIcon />
+            </Badge>
+          </Tooltip>
         </Toolbar>
       </AppBar>
 
@@ -67,6 +75,7 @@ function Layout() {
           bgcolor: "background.paper",
           borderBottom: "1px solid #dce7e2",
         }}
+        aria-label="Mobile navigation"
       >
         <Container>
           <Stack direction="row" spacing={1} sx={{ py: 1, overflowX: "auto" }}>
