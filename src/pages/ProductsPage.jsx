@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import PageHeader from "../components/PageHeader.jsx";
@@ -12,8 +13,10 @@ import useProducts from "../hooks/useProducts.js";
 function ProductsPage() {
   const { products, categories, loading, error } = useProducts();
   const { savedCount } = useAppContext();
+  const [searchParams] = useSearchParams();
+  const initialCategory = searchParams.get("category") || "all";
   const [query, setQuery] = useState("");
-  const [category, setCategory] = useState("all");
+  const [category, setCategory] = useState(initialCategory);
   const [sortMode, setSortMode] = useState("featured");
 
   const resetFilters = () => {

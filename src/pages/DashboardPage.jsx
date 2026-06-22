@@ -4,6 +4,7 @@ import BookmarkAddedOutlinedIcon from "@mui/icons-material/BookmarkAddedOutlined
 import DataObjectOutlinedIcon from "@mui/icons-material/DataObjectOutlined";
 import RouteOutlinedIcon from "@mui/icons-material/RouteOutlined";
 import Box from "@mui/material/Box";
+import ButtonBase from "@mui/material/ButtonBase";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -50,6 +51,24 @@ function DashboardPage() {
     "MUI",
     "dynamic routes",
   ];
+  const categoryLabels = {
+    electronics: "Electronics",
+    jewelery: "Jewelry",
+    "men's clothing": "Men",
+    "women's clothing": "Women",
+  };
+  const categoryRailItems = categories.map((categoryName) => {
+    const categoryProduct = products.find(
+      (product) => product.category === categoryName,
+    );
+
+    return {
+      category: categoryName,
+      label: categoryLabels[categoryName] || categoryName,
+      image: categoryProduct?.image,
+      count: products.filter((product) => product.category === categoryName).length,
+    };
+  });
 
   return (
     <>
@@ -237,6 +256,90 @@ function DashboardPage() {
               </Stack>
             </CardContent>
           </Card>
+
+          <Stack spacing={2}>
+            <Stack
+              direction={{ xs: "column", sm: "row" }}
+              justifyContent="space-between"
+              alignItems={{ xs: "flex-start", sm: "center" }}
+              spacing={1.5}
+            >
+              <Stack spacing={0.5}>
+                <Typography variant="h4" component="h2">
+                  Shop by category
+                </Typography>
+                <Typography color="text.secondary">
+                  Circle links pass category state through the URL and open a
+                  filtered Products page.
+                </Typography>
+              </Stack>
+              <Chip label={`${categories.length} API categories`} color="secondary" />
+            </Stack>
+
+            <Card>
+              <CardContent>
+                <Stack
+                  direction="row"
+                  spacing={{ xs: 2, md: 4 }}
+                  sx={{
+                    overflowX: "auto",
+                    pb: 1,
+                    scrollbarWidth: "thin",
+                  }}
+                >
+                  {categoryRailItems.map((item) => (
+                    <ButtonBase
+                      key={item.category}
+                      component={RouterLink}
+                      to={`/products?category=${encodeURIComponent(item.category)}`}
+                      sx={{
+                        minWidth: 132,
+                        borderRadius: 4,
+                        p: 1,
+                        transition: "transform 180ms ease",
+                        "&:hover": { transform: "translateY(-3px)" },
+                      }}
+                    >
+                      <Stack spacing={1.25} alignItems="center">
+                        <Box
+                          sx={{
+                            width: { xs: 104, md: 132 },
+                            height: { xs: 104, md: 132 },
+                            borderRadius: "50%",
+                            bgcolor: "#fff3eb",
+                            border: "1px solid #efc8b4",
+                            boxShadow: "0 18px 36px rgba(154, 65, 46, 0.12)",
+                            display: "grid",
+                            placeItems: "center",
+                            overflow: "hidden",
+                          }}
+                        >
+                          <Box
+                            component="img"
+                            src={item.image}
+                            alt={`${item.label} category`}
+                            sx={{
+                              width: "76%",
+                              height: "76%",
+                              objectFit: "contain",
+                            }}
+                          />
+                        </Box>
+                        <Stack spacing={0.2} alignItems="center">
+                          <Typography variant="h6" component="p" textAlign="center">
+                            {item.label}
+                          </Typography>
+                          <Typography variant="body2" color="text.secondary">
+                            {item.count} products
+                          </Typography>
+                        </Stack>
+                      </Stack>
+                    </ButtonBase>
+                  ))}
+                </Stack>
+              </CardContent>
+            </Card>
+          </Stack>
 
           <Stack spacing={2}>
             <Stack
