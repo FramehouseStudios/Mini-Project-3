@@ -6,6 +6,7 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Chip from "@mui/material/Chip";
+import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Rating from "@mui/material/Rating";
 import Stack from "@mui/material/Stack";
@@ -27,7 +28,7 @@ function ProductCard({ product }) {
         transition: "transform 180ms ease, box-shadow 180ms ease",
         "&:hover": {
           transform: "translateY(-3px)",
-          boxShadow: "0 22px 46px rgba(30, 66, 56, 0.12)",
+          boxShadow: "0 24px 52px rgba(154, 65, 46, 0.16)",
         },
       }}
     >
@@ -39,7 +40,10 @@ function ProductCard({ product }) {
       />
       <CardContent sx={{ flexGrow: 1 }}>
         <Stack direction="row" justifyContent="space-between" spacing={2} mb={2}>
-          <Chip label={product.category} size="small" />
+          <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+            <Chip label={product.category} size="small" />
+            {saved && <Chip label="Saved" size="small" color="primary" />}
+          </Stack>
           <Typography fontWeight={800}>${product.price.toFixed(2)}</Typography>
         </Stack>
         <Typography variant="h6" component="h2" gutterBottom>
@@ -60,6 +64,10 @@ function ProductCard({ product }) {
             {product.rating.rate.toFixed(1)} ({product.rating.count})
           </Typography>
         </Stack>
+        <Divider sx={{ my: 2 }} />
+        <Typography variant="body2" color="text.secondary">
+          Product ID #{product.id} from live API data
+        </Typography>
       </CardContent>
       <CardActions sx={{ justifyContent: "space-between", px: 2, pb: 2 }}>
         <Button component={RouterLink} to={`/products/${product.id}`}>

@@ -1,5 +1,8 @@
+import SearchIcon from "@mui/icons-material/Search";
+import Chip from "@mui/material/Chip";
 import FormControl from "@mui/material/FormControl";
 import Grid from "@mui/material/Grid";
+import InputAdornment from "@mui/material/InputAdornment";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
@@ -19,6 +22,7 @@ function ProductControls({
   visibleCount,
   totalCount,
   onReset,
+  activeFilters,
 }) {
   return (
     <Stack spacing={2.5} sx={{ mb: 3 }}>
@@ -29,6 +33,15 @@ function ProductControls({
             label="Search products"
             value={query}
             onChange={(event) => onQueryChange(event.target.value)}
+            slotProps={{
+              input: {
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon fontSize="small" />
+                  </InputAdornment>
+                ),
+              },
+            }}
           />
         </Grid>
         <Grid size={{ xs: 12, md: 3.5 }}>
@@ -71,10 +84,23 @@ function ProductControls({
         alignItems={{ xs: "flex-start", sm: "center" }}
         spacing={1.5}
       >
-        <Typography color="text.secondary">
-          Showing {visibleCount} of {totalCount} products
-        </Typography>
-        <Button variant="outlined" onClick={onReset}>
+        <Stack spacing={1}>
+          <Typography color="text.secondary">
+            Showing {visibleCount} of {totalCount} products
+          </Typography>
+          {!!activeFilters.length && (
+            <Stack direction="row" flexWrap="wrap" gap={1}>
+              {activeFilters.map((filter) => (
+                <Chip key={filter} label={filter} size="small" variant="outlined" />
+              ))}
+            </Stack>
+          )}
+        </Stack>
+        <Button
+          variant="outlined"
+          onClick={onReset}
+          disabled={!activeFilters.length}
+        >
           Reset filters
         </Button>
       </Stack>
