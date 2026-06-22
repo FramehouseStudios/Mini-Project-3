@@ -48,7 +48,7 @@ npm run build
 
 ## Presentation Quick Script
 
-1. Start with `docs/DESIGN.md` to show planning, wireframe, routes, and component hierarchy.
+1. Start with `docs/DESIGN.md` and `docs/wireframes/README.md` to show planning, separate page wireframes, routes, and component hierarchy.
 2. Open the Dashboard and explain the app purpose: product discovery with live API data.
 3. Go to Products and demonstrate search, category filter, sorting, reset filters, and saved products.
 4. Open a Product Detail page to show dynamic routing with `products/:productId`.
@@ -57,7 +57,16 @@ npm run build
 
 ## Project Planning
 
-See [docs/DESIGN.md](docs/DESIGN.md) for requirements, wireframes, routes, component hierarchy, and presentation notes.
+See [docs/DESIGN.md](docs/DESIGN.md) for requirements, routes, component hierarchy, and presentation notes.
+
+Separate page wireframes are available here:
+
+- [Wireframe index](docs/wireframes/README.md)
+- [Dashboard wireframe](docs/wireframes/dashboard.md)
+- [Products wireframe](docs/wireframes/products.md)
+- [Product Detail wireframe](docs/wireframes/product-detail.md)
+- [Planner wireframe](docs/wireframes/planner.md)
+- [About wireframe](docs/wireframes/about.md)
 
 This is the second major coding project designed to consolidate everything learned in Modules 5 - 7: Back-end Development, Node.js, APIs, React, Router, Hooks, External UI Libraries, and API integration.
 

@@ -40,7 +40,19 @@ The app fetches product objects with:
 - `/planner` - Saved product shortlist using global context state.
 - `/about` - Presentation notes and architecture summary.
 
-## Wireframe
+## Wireframes
+
+Each route has its own wireframe for easier review:
+
+- [Dashboard wireframe](wireframes/dashboard.md)
+- [Products wireframe](wireframes/products.md)
+- [Product Detail wireframe](wireframes/product-detail.md)
+- [Planner wireframe](wireframes/planner.md)
+- [About wireframe](wireframes/about.md)
+
+The original combined planning sketch is kept below as a quick overview.
+
+## Combined Wireframe Overview
 
 See [`wireframes.svg`](wireframes.svg) for full page-by-page wireframes (Dashboard, Products, Product Detail, Planner, About) plus a wireframe key and component hierarchy. Low-fidelity ASCII version below:
 
@@ -114,13 +126,13 @@ App
 
 ## UI Direction
 
-Minimal, polished, dashboard-like interface:
+Minimal, polished, commerce-inspired interface:
 
 - MUI AppBar and cards
-- Quiet green/neutral palette
+- Warm coral and peach palette
 - Responsive product grid
 - Clear empty, loading, and error states
-- Small but useful interactions: save/unsave, filter, sort, detail navigation
+- Small but useful interactions: save/unsave, filter, sort, detail navigation, category links, and product reviews
 
 ## Presentation Outline
 
