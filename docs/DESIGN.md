@@ -42,6 +42,8 @@ The app fetches product objects with:
 
 ## Wireframe
 
+See [`wireframes.svg`](wireframes.svg) for full page-by-page wireframes (Dashboard, Products, Product Detail, Planner, About) plus a wireframe key and component hierarchy. Low-fidelity ASCII version below:
+
 ```text
 +--------------------------------------------------+
 | MarketFlow                         nav links     |
