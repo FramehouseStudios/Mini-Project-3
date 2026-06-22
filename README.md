@@ -24,6 +24,27 @@ npm run dev
 
 Then open the local Vite URL, usually `http://localhost:5173`.
 
+Useful checks:
+
+```bash
+npm run lint
+npm run build
+```
+
+## MVP Checklist
+
+- [x] Design plan in `docs/DESIGN.md`
+- [x] Functional React app created with Vite
+- [x] At least three routes using React Router
+- [x] `useState` for search, filters, sorting, and saved products
+- [x] `useEffect` for API calls
+- [x] MUI component library
+- [x] External API data displayed dynamically
+- [x] Dynamic product detail route
+- [x] Global state with Context
+- [x] Custom hook for product fetching
+- [x] Presentation notes in app and design doc
+
 ## Project Planning
 
 See [docs/DESIGN.md](docs/DESIGN.md) for requirements, wireframes, routes, component hierarchy, and presentation notes.
