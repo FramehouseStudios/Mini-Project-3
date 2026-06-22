@@ -11,6 +11,12 @@ function ProductsPage() {
   const [category, setCategory] = useState("all");
   const [sortMode, setSortMode] = useState("featured");
 
+  const resetFilters = () => {
+    setQuery("");
+    setCategory("all");
+    setSortMode("featured");
+  };
+
   const visibleProducts = useMemo(() => {
     const searchTerm = query.trim().toLowerCase();
     let nextProducts = [...products];
@@ -55,6 +61,9 @@ function ProductsPage() {
             onQueryChange={setQuery}
             sortMode={sortMode}
             onSortModeChange={setSortMode}
+            visibleCount={visibleProducts.length}
+            totalCount={products.length}
+            onReset={resetFilters}
           />
           <ProductGrid products={visibleProducts} />
         </>

@@ -43,7 +43,17 @@ npm run build
 - [x] Dynamic product detail route
 - [x] Global state with Context
 - [x] Custom hook for product fetching
+- [x] Saved-product persistence with `localStorage`
 - [x] Presentation notes in app and design doc
+
+## Presentation Quick Script
+
+1. Start with `docs/DESIGN.md` to show planning, wireframe, routes, and component hierarchy.
+2. Open the Dashboard and explain the app purpose: product discovery with live API data.
+3. Go to Products and demonstrate search, category filter, sorting, reset filters, and saved products.
+4. Open a Product Detail page to show dynamic routing with `products/:productId`.
+5. Go to Planner to show global context state and saved products persisting after refresh.
+6. Finish on About to summarize hooks, architecture, tools, and future improvements.
 
 ## Project Planning
 
