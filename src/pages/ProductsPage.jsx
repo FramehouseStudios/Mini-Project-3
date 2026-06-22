@@ -15,9 +15,10 @@ function ProductsPage() {
   const { savedCount } = useAppContext();
   const [searchParams] = useSearchParams();
   const initialCategory = searchParams.get("category") || "all";
+  const initialSort = searchParams.get("sort") || "featured";
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState(initialCategory);
-  const [sortMode, setSortMode] = useState("featured");
+  const [sortMode, setSortMode] = useState(initialSort);
 
   const resetFilters = () => {
     setQuery("");
@@ -40,6 +41,7 @@ function ProductsPage() {
     }
 
     nextProducts.sort((a, b) => {
+      if (sortMode === "newest") return b.id - a.id;
       if (sortMode === "price-low") return a.price - b.price;
       if (sortMode === "price-high") return b.price - a.price;
       if (sortMode === "rating-high") return b.rating.rate - a.rating.rate;
@@ -52,7 +54,7 @@ function ProductsPage() {
     query.trim() ? `Search: ${query.trim()}` : "",
     category !== "all" ? `Category: ${category}` : "",
     sortMode !== "featured"
-      ? `Sort: ${sortMode.replace("-", " ").replace("-", " ")}`
+      ? `Sort: ${sortMode.replaceAll("-", " ")}`
       : "",
   ].filter(Boolean);
   const averageVisiblePrice = visibleProducts.length

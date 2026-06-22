@@ -69,6 +69,27 @@ function DashboardPage() {
       count: products.filter((product) => product.category === categoryName).length,
     };
   });
+  const newestProduct = products.at(-1);
+  const discoveryRailItems = [
+    ...categoryRailItems.map((item) => ({
+      ...item,
+      to: `/products?category=${encodeURIComponent(item.category)}`,
+    })),
+    {
+      category: "new-arrivals",
+      label: "New Arrivals",
+      image: newestProduct?.image,
+      count: products.length,
+      to: "/products?sort=newest",
+    },
+    {
+      category: "top-rated",
+      label: "Top Rated",
+      image: topRatedProduct?.image,
+      count: featuredProducts.length,
+      to: "/products?sort=rating-high",
+    },
+  ];
 
   return (
     <>
@@ -273,7 +294,10 @@ function DashboardPage() {
                   filtered Products page.
                 </Typography>
               </Stack>
-              <Chip label={`${categories.length} API categories`} color="secondary" />
+              <Chip
+                label={`${discoveryRailItems.length} discovery links`}
+                color="secondary"
+              />
             </Stack>
 
             <Card>
@@ -287,11 +311,11 @@ function DashboardPage() {
                     scrollbarWidth: "thin",
                   }}
                 >
-                  {categoryRailItems.map((item) => (
+                  {discoveryRailItems.map((item) => (
                     <ButtonBase
                       key={item.category}
                       component={RouterLink}
-                      to={`/products?category=${encodeURIComponent(item.category)}`}
+                      to={item.to}
                       sx={{
                         minWidth: 132,
                         borderRadius: 4,

@@ -70,6 +70,7 @@ function ProductControls({
               onChange={(event) => onSortModeChange(event.target.value)}
             >
               <MenuItem value="featured">Featured</MenuItem>
+              <MenuItem value="newest">Newest arrivals</MenuItem>
               <MenuItem value="price-low">Price: low to high</MenuItem>
               <MenuItem value="price-high">Price: high to low</MenuItem>
               <MenuItem value="rating-high">Rating: high to low</MenuItem>
