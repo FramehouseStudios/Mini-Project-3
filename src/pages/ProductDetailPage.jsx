@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { Link as RouterLink, useParams } from "react-router-dom";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import Alert from "@mui/material/Alert";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -9,10 +11,106 @@ import Chip from "@mui/material/Chip";
 import Grid from "@mui/material/Grid";
 import Rating from "@mui/material/Rating";
 import Stack from "@mui/material/Stack";
+import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import StatusPanel from "../components/StatusPanel.jsx";
 import { useAppContext } from "../context/AppContext.jsx";
 import useProducts from "../hooks/useProducts.js";
+
+const REVIEW_KEY = "marketflow:product-reviews";
+
+function getSavedReviews() {
+  try {
+    const savedValue = window.localStorage.getItem(REVIEW_KEY);
+    return savedValue ? JSON.parse(savedValue) : {};
+  } catch {
+    return {};
+  }
+}
+
+function ProductReviewForm({ product }) {
+  const initialReview = getSavedReviews()[product.id] || null;
+  const [reviewRating, setReviewRating] = useState(initialReview?.rating || 0);
+  const [reviewNote, setReviewNote] = useState(initialReview?.note || "");
+  const [submittedReview, setSubmittedReview] = useState(initialReview);
+
+  const handleReviewSubmit = (event) => {
+    event.preventDefault();
+
+    if (!reviewRating) return;
+
+    const nextReview = {
+      rating: reviewRating,
+      note: reviewNote.trim(),
+      updatedAt: new Date().toLocaleDateString(),
+    };
+    const savedReviews = getSavedReviews();
+
+    window.localStorage.setItem(
+      REVIEW_KEY,
+      JSON.stringify({ ...savedReviews, [product.id]: nextReview }),
+    );
+    setSubmittedReview(nextReview);
+  };
+
+  return (
+    <Card>
+      <CardContent>
+        <Grid container spacing={3} alignItems="center">
+          <Grid size={{ xs: 12, md: 5 }}>
+            <Stack spacing={1}>
+              <Chip label="Interactive review" sx={{ alignSelf: "start" }} />
+              <Typography variant="h4" component="h2">
+                Leave your review
+              </Typography>
+              <Typography color="text.secondary">
+                This rating is user-controlled with React state and saved in
+                localStorage, separate from the fetched API rating above.
+              </Typography>
+            </Stack>
+          </Grid>
+          <Grid size={{ xs: 12, md: 7 }}>
+            <Stack component="form" spacing={2} onSubmit={handleReviewSubmit}>
+              <Stack spacing={0.75}>
+                <Typography fontWeight={800}>Your rating</Typography>
+                <Rating
+                  name={`review-rating-${product.id}`}
+                  value={reviewRating}
+                  onChange={(_, nextValue) => setReviewRating(nextValue || 0)}
+                  size="large"
+                />
+              </Stack>
+              <TextField
+                label="Review note"
+                value={reviewNote}
+                onChange={(event) => setReviewNote(event.target.value)}
+                placeholder="What stood out about this product?"
+                multiline
+                minRows={3}
+              />
+              <Button
+                type="submit"
+                variant="contained"
+                disabled={!reviewRating}
+                sx={{ alignSelf: "start" }}
+              >
+                Save review
+              </Button>
+              {submittedReview && (
+                <Alert severity="success">
+                  Review saved: {submittedReview.rating} star
+                  {submittedReview.rating === 1 ? "" : "s"}
+                  {submittedReview.note ? ` - "${submittedReview.note}"` : ""}{" "}
+                  ({submittedReview.updatedAt})
+                </Alert>
+              )}
+            </Stack>
+          </Grid>
+        </Grid>
+      </CardContent>
+    </Card>
+  );
+}
 
 function ProductDetailPage() {
   const { productId } = useParams();
@@ -83,6 +181,8 @@ function ProductDetailPage() {
           </Grid>
         </CardContent>
       </Card>
+
+      <ProductReviewForm key={product.id} product={product} />
     </Stack>
   );
 }
