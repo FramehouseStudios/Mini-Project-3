@@ -1,36 +1,36 @@
 <svg viewBox="0 0 580 540" width="580" height="540" xmlns="http://www.w3.org/2000/svg" font-family="Arial, Helvetica, sans-serif">
-  <rect x="0" y="0" width="580" height="540" fill="#ffffff"/>
+  <rect x="0" y="0" width="580" height="540" fill="#f9ddc8"/>
   <text x="20" y="34" font-size="16" font-weight="800" fill="#222">2 · Products  (/products)</text>
   <g transform="translate(20,50)">
-    <rect x="0" y="0" width="540" height="470" fill="#ffffff" stroke="#2b2b2b" stroke-width="1.5"/>
+    <rect x="0" y="0" width="540" height="470" fill="#f9ddc8" stroke="#7a3b30" stroke-width="1.5"/>
     <rect x="1.5" y="1.5" width="537" height="24" fill="#e8e8e8"/>
     <circle cx="16" cy="13" r="4" fill="#c0c0c0"/><circle cx="30" cy="13" r="4" fill="#c0c0c0"/><circle cx="44" cy="13" r="4" fill="#c0c0c0"/>
-    <rect x="66" y="6" width="330" height="14" rx="7" fill="#fff" stroke="#c8c8c8"/>
-    <text x="76" y="16" font-size="9" fill="#888">marketflow.app/products?category=…&amp;sort=…</text>
-    <rect x="1.5" y="25.5" width="537" height="30" fill="#3a3a3a"/>
-    <text x="14" y="46" font-size="13" font-weight="700" fill="#fff">▢ MarketFlow</text>
-    <text x="250" y="45" font-size="10" fill="#cfcfcf">Dashboard · Products · Planner · About</text>
-    <circle cx="518" cy="41" r="9" fill="#5a5a5a"/><text x="518" y="45" font-size="9" fill="#fff" text-anchor="middle">2</text>
+    <rect x="66" y="6" width="330" height="14" rx="7" fill="#fffaf6" stroke="#c8c8c8"/>
+    <text x="76" y="16" font-size="9" fill="#7a6259">marketflow.app/products?category=…&amp;sort=…</text>
+    <rect x="1.5" y="25.5" width="537" height="30" fill="#e24b3d"/>
+    <text x="14" y="46" font-size="13" font-weight="700" fill="#fffaf6">▢ MarketFlow</text>
+    <text x="250" y="45" font-size="10" fill="#ffe1d7">Dashboard · Products · Planner · About</text>
+    <circle cx="518" cy="41" r="9" fill="#b9362d"/><text x="518" y="45" font-size="9" fill="#fffaf6" text-anchor="middle">2</text>
 
-    <text x="14" y="80" font-size="16" font-weight="800" fill="#333">Products</text>
-    <text x="14" y="96" font-size="9" fill="#888">search · category filter · sort · save  (page state via useState; data via useProducts)</text>
+    <text x="14" y="80" font-size="16" font-weight="800" fill="#261715">Products</text>
+    <text x="14" y="96" font-size="9" fill="#7a6259">search · category filter · sort · save  (page state via useState; data via useProducts)</text>
 
-    <rect x="14" y="106" width="250" height="32" rx="4" fill="#fff" stroke="#9a9a9a"/><text x="26" y="126" font-size="9" fill="#777">🔍  Search products</text>
-    <rect x="274" y="106" width="120" height="32" rx="4" fill="#fff" stroke="#9a9a9a"/><text x="286" y="126" font-size="9" fill="#777">Category ▼</text>
-    <rect x="402" y="106" width="124" height="32" rx="4" fill="#fff" stroke="#9a9a9a"/><text x="414" y="126" font-size="9" fill="#777">Sort ▼</text>
-    <text x="14" y="158" font-size="9" fill="#888">Showing 12 of 20 products   [chips: Search · Category · Sort]</text>
-    <rect x="440" y="146" width="86" height="22" rx="4" fill="#fff" stroke="#7a7a7a"/><text x="483" y="161" font-size="9" fill="#4a4a4a" text-anchor="middle">Reset filters</text>
+    <rect x="14" y="106" width="250" height="32" rx="4" fill="#fffaf6" stroke="#c29a86"/><text x="26" y="126" font-size="9" fill="#7a6259">🔍  Search products</text>
+    <rect x="274" y="106" width="120" height="32" rx="4" fill="#fffaf6" stroke="#c29a86"/><text x="286" y="126" font-size="9" fill="#7a6259">Category ▼</text>
+    <rect x="402" y="106" width="124" height="32" rx="4" fill="#fffaf6" stroke="#c29a86"/><text x="414" y="126" font-size="9" fill="#7a6259">Sort ▼</text>
+    <text x="14" y="158" font-size="9" fill="#7a6259">Showing 12 of 20 products   [chips: Search · Category · Sort]</text>
+    <rect x="440" y="146" width="86" height="22" rx="4" fill="#fffaf6" stroke="#e24b3d"/><text x="483" y="161" font-size="9" fill="#e24b3d" text-anchor="middle">Reset filters</text>
 
-    <rect x="14" y="176" width="164" height="44" rx="5" fill="#f5f5f5" stroke="#cccccc"/><text x="24" y="192" font-size="8" fill="#888">Visible results</text><text x="24" y="211" font-size="14" font-weight="800" fill="#333">12</text>
-    <rect x="190" y="176" width="160" height="44" rx="5" fill="#f5f5f5" stroke="#cccccc"/><text x="200" y="192" font-size="8" fill="#888">Avg visible price</text><text x="200" y="211" font-size="14" font-weight="800" fill="#333">$54.20</text>
-    <rect x="362" y="176" width="164" height="44" rx="5" fill="#f5f5f5" stroke="#cccccc"/><text x="372" y="192" font-size="8" fill="#888">Saved shortlist</text><text x="372" y="211" font-size="14" font-weight="800" fill="#333">2</text>
+    <rect x="14" y="176" width="164" height="44" rx="5" fill="#fffaf6" stroke="#efc8b4"/><text x="24" y="192" font-size="8" fill="#7a6259">Visible results</text><text x="24" y="211" font-size="14" font-weight="800" fill="#261715">12</text>
+    <rect x="190" y="176" width="160" height="44" rx="5" fill="#fffaf6" stroke="#efc8b4"/><text x="200" y="192" font-size="8" fill="#7a6259">Avg visible price</text><text x="200" y="211" font-size="14" font-weight="800" fill="#261715">$54.20</text>
+    <rect x="362" y="176" width="164" height="44" rx="5" fill="#fffaf6" stroke="#efc8b4"/><text x="372" y="192" font-size="8" fill="#7a6259">Saved shortlist</text><text x="372" y="211" font-size="14" font-weight="800" fill="#261715">2</text>
 
-    <text x="14" y="240" font-size="10" font-weight="700" fill="#555">ProductGrid → ProductCard ✕ N  (responsive 1 / 2 / 3 columns)</text>
-    <rect x="14" y="248" width="164" height="100" rx="5" fill="#fff" stroke="#cccccc"/><rect x="22" y="256" width="148" height="40" rx="3" fill="#efefef" stroke="#b5b5b5" stroke-dasharray="5 3"/><text x="96" y="280" font-size="8" fill="#999" text-anchor="middle">IMG</text><rect x="22" y="302" width="120" height="8" rx="3" fill="#dcdcdc"/><text x="22" y="326" font-size="9" font-weight="700" fill="#444">$  ★★★★  ♡</text><text x="118" y="342" font-size="8" fill="#888">View ▸</text>
-    <rect x="190" y="248" width="160" height="100" rx="5" fill="#fff" stroke="#cccccc"/><rect x="198" y="256" width="144" height="40" rx="3" fill="#efefef" stroke="#b5b5b5" stroke-dasharray="5 3"/><text x="270" y="280" font-size="8" fill="#999" text-anchor="middle">IMG</text><rect x="198" y="302" width="120" height="8" rx="3" fill="#dcdcdc"/><text x="198" y="326" font-size="9" font-weight="700" fill="#444">$  ★★★★  ♡</text><text x="292" y="342" font-size="8" fill="#888">View ▸</text>
-    <rect x="362" y="248" width="164" height="100" rx="5" fill="#fff" stroke="#cccccc"/><rect x="370" y="256" width="148" height="40" rx="3" fill="#efefef" stroke="#b5b5b5" stroke-dasharray="5 3"/><text x="444" y="280" font-size="8" fill="#999" text-anchor="middle">IMG</text><rect x="370" y="302" width="120" height="8" rx="3" fill="#dcdcdc"/><text x="370" y="326" font-size="9" font-weight="700" fill="#444">$  ★★★★  ♡</text><text x="466" y="342" font-size="8" fill="#888">View ▸</text>
-    <rect x="14" y="356" width="164" height="100" rx="5" fill="#fff" stroke="#cccccc"/><rect x="22" y="364" width="148" height="40" rx="3" fill="#efefef" stroke="#b5b5b5" stroke-dasharray="5 3"/><text x="96" y="388" font-size="8" fill="#999" text-anchor="middle">IMG</text><rect x="22" y="410" width="120" height="8" rx="3" fill="#dcdcdc"/><text x="22" y="434" font-size="9" font-weight="700" fill="#444">$  ★★★★  ♡</text><text x="118" y="450" font-size="8" fill="#888">View ▸</text>
-    <rect x="190" y="356" width="160" height="100" rx="5" fill="#fff" stroke="#cccccc"/><rect x="198" y="364" width="144" height="40" rx="3" fill="#efefef" stroke="#b5b5b5" stroke-dasharray="5 3"/><text x="270" y="388" font-size="8" fill="#999" text-anchor="middle">IMG</text><rect x="198" y="410" width="120" height="8" rx="3" fill="#dcdcdc"/><text x="198" y="434" font-size="9" font-weight="700" fill="#444">$  ★★★★  ♡</text><text x="292" y="450" font-size="8" fill="#888">View ▸</text>
-    <rect x="362" y="356" width="164" height="100" rx="5" fill="#fff" stroke="#cccccc"/><rect x="370" y="364" width="148" height="40" rx="3" fill="#efefef" stroke="#b5b5b5" stroke-dasharray="5 3"/><text x="444" y="388" font-size="8" fill="#999" text-anchor="middle">IMG</text><rect x="370" y="410" width="120" height="8" rx="3" fill="#dcdcdc"/><text x="370" y="434" font-size="9" font-weight="700" fill="#444">$  ★★★★  ♡</text><text x="466" y="450" font-size="8" fill="#888">View ▸</text>
+    <text x="14" y="240" font-size="10" font-weight="700" fill="#7a6259">ProductGrid → ProductCard ✕ N  (responsive 1 / 2 / 3 columns)</text>
+    <rect x="14" y="248" width="164" height="100" rx="5" fill="#fffaf6" stroke="#efc8b4"/><rect x="22" y="256" width="148" height="40" rx="3" fill="#fff3eb" stroke="#e6c3ad" stroke-dasharray="5 3"/><text x="96" y="280" font-size="8" fill="#b08a76" text-anchor="middle">IMG</text><rect x="22" y="302" width="120" height="8" rx="3" fill="#f1d8c6"/><text x="22" y="326" font-size="9" font-weight="700" fill="#4a3a34">$  ★★★★  ♡</text><text x="118" y="342" font-size="8" fill="#7a6259">View ▸</text>
+    <rect x="190" y="248" width="160" height="100" rx="5" fill="#fffaf6" stroke="#efc8b4"/><rect x="198" y="256" width="144" height="40" rx="3" fill="#fff3eb" stroke="#e6c3ad" stroke-dasharray="5 3"/><text x="270" y="280" font-size="8" fill="#b08a76" text-anchor="middle">IMG</text><rect x="198" y="302" width="120" height="8" rx="3" fill="#f1d8c6"/><text x="198" y="326" font-size="9" font-weight="700" fill="#4a3a34">$  ★★★★  ♡</text><text x="292" y="342" font-size="8" fill="#7a6259">View ▸</text>
+    <rect x="362" y="248" width="164" height="100" rx="5" fill="#fffaf6" stroke="#efc8b4"/><rect x="370" y="256" width="148" height="40" rx="3" fill="#fff3eb" stroke="#e6c3ad" stroke-dasharray="5 3"/><text x="444" y="280" font-size="8" fill="#b08a76" text-anchor="middle">IMG</text><rect x="370" y="302" width="120" height="8" rx="3" fill="#f1d8c6"/><text x="370" y="326" font-size="9" font-weight="700" fill="#4a3a34">$  ★★★★  ♡</text><text x="466" y="342" font-size="8" fill="#7a6259">View ▸</text>
+    <rect x="14" y="356" width="164" height="100" rx="5" fill="#fffaf6" stroke="#efc8b4"/><rect x="22" y="364" width="148" height="40" rx="3" fill="#fff3eb" stroke="#e6c3ad" stroke-dasharray="5 3"/><text x="96" y="388" font-size="8" fill="#b08a76" text-anchor="middle">IMG</text><rect x="22" y="410" width="120" height="8" rx="3" fill="#f1d8c6"/><text x="22" y="434" font-size="9" font-weight="700" fill="#4a3a34">$  ★★★★  ♡</text><text x="118" y="450" font-size="8" fill="#7a6259">View ▸</text>
+    <rect x="190" y="356" width="160" height="100" rx="5" fill="#fffaf6" stroke="#efc8b4"/><rect x="198" y="364" width="144" height="40" rx="3" fill="#fff3eb" stroke="#e6c3ad" stroke-dasharray="5 3"/><text x="270" y="388" font-size="8" fill="#b08a76" text-anchor="middle">IMG</text><rect x="198" y="410" width="120" height="8" rx="3" fill="#f1d8c6"/><text x="198" y="434" font-size="9" font-weight="700" fill="#4a3a34">$  ★★★★  ♡</text><text x="292" y="450" font-size="8" fill="#7a6259">View ▸</text>
+    <rect x="362" y="356" width="164" height="100" rx="5" fill="#fffaf6" stroke="#efc8b4"/><rect x="370" y="364" width="148" height="40" rx="3" fill="#fff3eb" stroke="#e6c3ad" stroke-dasharray="5 3"/><text x="444" y="388" font-size="8" fill="#b08a76" text-anchor="middle">IMG</text><rect x="370" y="410" width="120" height="8" rx="3" fill="#f1d8c6"/><text x="370" y="434" font-size="9" font-weight="700" fill="#4a3a34">$  ★★★★  ♡</text><text x="466" y="450" font-size="8" fill="#7a6259">View ▸</text>
   </g>
 </svg>
