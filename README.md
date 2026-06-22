@@ -1,5 +1,33 @@
 # Mini-Project-2
 
+Submitted by Joshua Ojeda.
+
+## Project Concept
+
+**MarketFlow** is a React product discovery dashboard for browsing products from the Fake Store API, viewing product details, saving favorites, and planning a small shopping shortlist. It is intentionally focused: the app demonstrates React Router, hooks, API integration, reusable components, MUI, and global state without becoming too large to present clearly.
+
+## Planned Tech Stack
+
+- React functional components with Vite
+- React Router for multi-page navigation
+- Material UI for layout, cards, forms, loading states, and navigation
+- Axios for external API requests
+- React hooks: `useState`, `useEffect`, `useContext`, and a custom `useProducts` hook
+- External API: `https://fakestoreapi.com/products`
+
+## How to Run
+
+```bash
+npm install
+npm run dev
+```
+
+Then open the local Vite URL, usually `http://localhost:5173`.
+
+## Project Planning
+
+See [docs/DESIGN.md](docs/DESIGN.md) for requirements, wireframes, routes, component hierarchy, and presentation notes.
+
 This is the second major coding project designed to consolidate everything learned in Modules 5 - 7: Back-end Development, Node.js, APIs, React, Router, Hooks, External UI Libraries, and API integration.
 
 ## Overview
