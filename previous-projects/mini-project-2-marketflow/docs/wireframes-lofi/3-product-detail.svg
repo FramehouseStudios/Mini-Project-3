@@ -1,0 +1,41 @@
+<svg viewBox="0 0 580 540" width="580" height="540" xmlns="http://www.w3.org/2000/svg" font-family="Arial, Helvetica, sans-serif">
+  <rect x="0" y="0" width="580" height="540" fill="#ffffff"/>
+  <text x="20" y="34" font-size="16" font-weight="800" fill="#222">3 · Product Detail  (/products/:productId)</text>
+  <g transform="translate(20,50)">
+    <rect x="0" y="0" width="540" height="470" fill="#ffffff" stroke="#2b2b2b" stroke-width="1.5"/>
+    <rect x="1.5" y="1.5" width="537" height="24" fill="#e8e8e8"/>
+    <circle cx="16" cy="13" r="4" fill="#c0c0c0"/><circle cx="30" cy="13" r="4" fill="#c0c0c0"/><circle cx="44" cy="13" r="4" fill="#c0c0c0"/>
+    <rect x="66" y="6" width="330" height="14" rx="7" fill="#fff" stroke="#c8c8c8"/>
+    <text x="76" y="16" font-size="9" fill="#888">marketflow.app/products/7   ← dynamic route param</text>
+    <rect x="1.5" y="25.5" width="537" height="30" fill="#3a3a3a"/>
+    <text x="14" y="46" font-size="13" font-weight="700" fill="#fff">▢ MarketFlow</text>
+    <text x="250" y="45" font-size="10" fill="#cfcfcf">Dashboard · Products · Planner · About</text>
+    <circle cx="518" cy="41" r="9" fill="#5a5a5a"/><text x="518" y="45" font-size="9" fill="#fff" text-anchor="middle">2</text>
+
+    <rect x="14" y="66" width="140" height="24" rx="4" fill="#fff" stroke="#7a7a7a"/><text x="84" y="82" font-size="9" fill="#4a4a4a" text-anchor="middle">← Back to products</text>
+
+    <rect x="14" y="100" width="512" height="150" rx="5" fill="#fff" stroke="#cccccc"/>
+    <rect x="26" y="112" width="180" height="126" rx="4" fill="#efefef" stroke="#b5b5b5" stroke-dasharray="5 3"/>
+    <line x1="26" y1="112" x2="206" y2="238" stroke="#d2d2d2"/><line x1="206" y1="112" x2="26" y2="238" stroke="#d2d2d2"/>
+    <text x="116" y="178" font-size="9" fill="#999" text-anchor="middle">PRODUCT IMG</text>
+    <rect x="222" y="116" width="74" height="16" rx="8" fill="#e6e6e6"/><text x="259" y="127" font-size="8" fill="#666" text-anchor="middle">category</text>
+    <rect x="222" y="140" width="270" height="12" rx="3" fill="#dcdcdc"/><rect x="222" y="156" width="190" height="12" rx="3" fill="#dcdcdc"/>
+    <text x="222" y="186" font-size="10" fill="#777">★★★★☆  4.1 from 259 reviews</text>
+    <text x="222" y="208" font-size="16" font-weight="800" fill="#333">$109.95</text>
+    <rect x="222" y="216" width="270" height="7" rx="3" fill="#ececec"/>
+    <rect x="222" y="224" width="200" height="20" rx="4" fill="#4a4a4a"/><text x="322" y="238" font-size="9" fill="#fff" text-anchor="middle">▢ Save to planner</text>
+
+    <rect x="14" y="262" width="512" height="190" rx="5" fill="#fafafa" stroke="#cccccc"/>
+    <rect x="26" y="274" width="120" height="16" rx="8" fill="#e6e6e6"/><text x="86" y="285" font-size="8" fill="#666" text-anchor="middle">Interactive review</text>
+    <text x="26" y="312" font-size="13" font-weight="700" fill="#333">Leave your review</text>
+    <text x="26" y="330" font-size="8" fill="#888">user-controlled with</text>
+    <text x="26" y="343" font-size="8" fill="#888">React state, saved to</text>
+    <text x="26" y="356" font-size="8" fill="#888">localStorage (separate</text>
+    <text x="26" y="369" font-size="8" fill="#888">from the API rating).</text>
+    <text x="240" y="298" font-size="9" font-weight="700" fill="#444">Your rating</text>
+    <text x="240" y="318" font-size="18" fill="#9a9a9a">★ ★ ★ ★ ★</text>
+    <rect x="240" y="330" width="270" height="56" rx="4" fill="#fff" stroke="#9a9a9a"/><text x="250" y="348" font-size="9" fill="#777">Review note (multiline)…</text>
+    <rect x="240" y="396" width="110" height="24" rx="4" fill="#4a4a4a"/><text x="295" y="412" font-size="9" fill="#fff" text-anchor="middle">Save review</text>
+    <text x="240" y="440" font-size="8" fill="#2e7d32">✓ Alert: "Review saved: 4 stars …"</text>
+  </g>
+</svg>

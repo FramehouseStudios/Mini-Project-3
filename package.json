@@ -4,12 +4,16 @@
   "description": "A full-stack MVC film discovery and rental-planning application",
   "main": "server.js",
   "type": "commonjs",
+  "workspaces": [
+    "previous-projects/mini-project-2-marketflow"
+  ],
   "scripts": {
     "start": "node server.js",
     "dev": "node --watch server.js",
     "seed": "node scripts/seed-database.js",
     "test": "NODE_ENV=test node --test test/*.test.js",
-    "check": "npm run lint && npm run test && npm run validate:data && npm run check:css",
+    "check": "npm run lint && npm run test && npm run validate:data && npm run check:css && npm run check:mini2",
+    "check:mini2": "npm run lint --workspace mini-project-2-marketflow && npm run build --workspace mini-project-2-marketflow",
     "lint": "eslint . --max-warnings 0",
     "validate:data": "node scripts/validate-films.mjs",
     "check:css": "node scripts/build-css.mjs --check",

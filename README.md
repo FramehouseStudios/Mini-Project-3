@@ -4,7 +4,7 @@ Submitted by Joshua Ojeda
 
 Blockbuster+ is a full-stack reimagining of the neighborhood video store. It combines a polished, responsive film-discovery frontend with an Express MVC API, a normalized SQLite database, startup data from an external film API, and complete CRUD operations.
 
-This repository is the unified submission for Mini Project 3 and continues the product developed in the earlier mini projects.
+This repository is the unified submission for Mini Project 3 and continues the work developed in the earlier mini projects. It includes Mini Project 2's complete Git history and an independently runnable MarketFlow React workspace for transparent project continuity.
 
 ## Quick Start
 
@@ -23,6 +23,22 @@ Then open:
 - API health: <http://localhost:3000/health>
 
 Use `npm start` for this version of the project. Live Server can still display the static fallback, but it does not run Express or SQLite.
+
+## Included Mini Project 2
+
+The completed Mini Project 2 application is preserved at:
+
+```text
+previous-projects/mini-project-2-marketflow/
+```
+
+It remains a standalone React/Vite application with React Router, hooks, Context, Material UI, Axios, Fake Store API data, and separate page wireframes. Run it independently with:
+
+```bash
+npm run dev --workspace mini-project-2-marketflow
+```
+
+Its lint and production build are also included in the root `npm run check` quality gate. See [Mini Project 2 integration](docs/MINI_PROJECT_2_INTEGRATION.md) for the exact lineage and feature mapping.
 
 ## Assignment Requirements
 
@@ -99,6 +115,7 @@ This command runs:
 - API and full CRUD integration tests
 - Film catalog validation
 - Generated CSS synchronization checks
+- Mini Project 2 React lint and production build
 
 ## Project Structure
 
@@ -116,6 +133,8 @@ blockbuster-plus/
 |-- about.html                      # Project view
 |-- js/blockbuster-api.js           # Shared browser API client and fallback
 |-- data/films.json                 # Original curated fallback catalog
+|-- previous-projects/
+|   `-- mini-project-2-marketflow/  # Runnable React/Vite Mini Project 2 workspace
 |-- docs/                           # Rubric, API, schema, and presentation docs
 |-- test/                           # Unit and integration tests
 `-- scripts/                        # Seed, validation, and CSS scripts
@@ -126,6 +145,7 @@ blockbuster-plus/
 - [Submission checklist](SUBMISSION.md)
 - [Requirements and design](docs/REQUIREMENTS.md)
 - [Architecture](docs/ARCHITECTURE.md)
+- [Mini Project 2 integration](docs/MINI_PROJECT_2_INTEGRATION.md)
 - [Database schema](docs/data-schema.md)
 - [API reference](docs/API_REFERENCE.md)
 - [Presentation script](docs/PRESENTATION_SCRIPT.md)

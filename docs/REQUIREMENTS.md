@@ -2,7 +2,7 @@
 
 ## Product Goal
 
-Continue the Blockbuster+ concept from earlier mini projects and turn it into one full-stack application that demonstrates Modules 8 and 9: relational data design, an MVC backend, external API integration, and REST API development.
+Continue Blockbuster+ as the primary product while preserving the completed Mini Project 2 React work, then deliver one repository that demonstrates the progression from frontend application design into Modules 8 and 9: relational data design, an MVC backend, external API integration, and REST API development.
 
 ## Audience
 
