@@ -1,5 +1,27 @@
 # Mini-Project #3: Database & Backend API Integration
 
+## Completed Submission
+
+Submitted by Joshua Ojeda. This repository now includes a complete backend MVC product API using SQLite and startup seeding from Fake Store API.
+
+Quick commands:
+
+    npm install
+    npm start
+    npm test
+
+Review helpers:
+
+- [Submission summary](SUBMISSION.md)
+- [Requirements and design notes](docs/REQUIREMENTS.md)
+- [API reference](docs/API_REFERENCE.md)
+- [Postman collection](docs/postman_collection.json)
+- [Presentation script](docs/PRESENTATION_SCRIPT.md)
+
+Main endpoint: GET /api/products
+
+---
+
 ## Overview
 
 This project is designed to consolidate the material learned in **Modules 8 and 9** regarding the use of databases. The primary goal is to create a real-time database that functions by fetching data externally via an API.

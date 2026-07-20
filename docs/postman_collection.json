@@ -1,0 +1,67 @@
+{
+  "info": {
+    "name": "Mini Project 3 MarketFlow Product API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "url": "http://localhost:3000/health"
+      }
+    },
+    {
+      "name": "List Products",
+      "request": {
+        "method": "GET",
+        "url": "http://localhost:3000/api/products?sort=rating-high"
+      }
+    },
+    {
+      "name": "Create Product",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Studio Tote Bag\",\n  \"price\": 36,\n  \"description\": \"A clean tote bag added through the local API.\",\n  \"category\": \"accessories\",\n  \"image\": \"https://example.com/tote.jpg\",\n  \"rating\": { \"rate\": 4.6, \"count\": 12 }\n}"
+        },
+        "url": "http://localhost:3000/api/products"
+      }
+    },
+    {
+      "name": "Update Product",
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"price\": 40\n}"
+        },
+        "url": "http://localhost:3000/api/products/1"
+      }
+    },
+    {
+      "name": "Delete Product",
+      "request": {
+        "method": "DELETE",
+        "url": "http://localhost:3000/api/products/1"
+      }
+    },
+    {
+      "name": "Stats",
+      "request": {
+        "method": "GET",
+        "url": "http://localhost:3000/api/products/stats"
+      }
+    },
+    {
+      "name": "Reseed",
+      "request": {
+        "method": "POST",
+        "url": "http://localhost:3000/api/products/seed"
+      }
+    }
+  ]
+}
