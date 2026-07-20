@@ -31,8 +31,14 @@ const screeningNowTitle = document.querySelector("#screeningNowTitle");
 const screeningMood = document.querySelector("#screeningMood");
 const screeningRuntime = document.querySelector("#screeningRuntime");
 const screeningRenters = document.querySelector("#screeningRenters");
+const dashboardShelfPrev = document.querySelector("#dashboardShelfPrev");
+const dashboardShelfNext = document.querySelector("#dashboardShelfNext");
 const fridayShelfPrev = document.querySelector("#fridayShelfPrev");
 const fridayShelfNext = document.querySelector("#fridayShelfNext");
+const dashboardStaffStrip = document.querySelector(".dashboard-staff-strip");
+const watchConceptButton = document.querySelector("#watchConceptButton");
+const conceptCloseButton = document.querySelector("#conceptCloseButton");
+const homeNowPlayingSection = document.querySelector(".home-now-playing");
 
 let homeFilms = [];
 let homeNightBag = [];
@@ -40,6 +46,78 @@ let currentHomeMidnightFilm = null;
 let homeProjectorIndex = 0;
 let homeFilmsReady = Promise.resolve();
 let livePreviewTimer = null;
+const homeReducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+const homeFinePointerQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
+const homeSharedLogic = window.BlockbusterLogic || {};
+const HOME_FOCUSABLE_SELECTOR =
+  'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), iframe, [tabindex]:not([tabindex="-1"])';
+let homeActiveFocusTrap = null;
+
+function getHomeFocusableElements(container) {
+  return [...(container?.querySelectorAll(HOME_FOCUSABLE_SELECTOR) || [])].filter(
+    (element) => !element.hasAttribute("disabled") && element.getAttribute("aria-hidden") !== "true",
+  );
+}
+
+function activateHomeFocusTrap(container, preferredFocus) {
+  if (!container) {
+    return;
+  }
+
+  homeActiveFocusTrap = {
+    container,
+    previousFocus: document.activeElement instanceof HTMLElement ? document.activeElement : null,
+  };
+
+  window.requestAnimationFrame(() => {
+    const firstFocusable = getHomeFocusableElements(container)[0];
+    (preferredFocus || firstFocusable || container).focus?.({ preventScroll: true });
+  });
+}
+
+function releaseHomeFocusTrap(container, fallbackFocus) {
+  if (!homeActiveFocusTrap || homeActiveFocusTrap.container !== container) {
+    return;
+  }
+
+  const previousFocus = homeActiveFocusTrap.previousFocus;
+  homeActiveFocusTrap = null;
+  (fallbackFocus || previousFocus)?.focus?.({ preventScroll: true });
+}
+
+function trapHomeFocus(event) {
+  if (event.key !== "Tab" || !homeActiveFocusTrap) {
+    return false;
+  }
+
+  const focusable = getHomeFocusableElements(homeActiveFocusTrap.container);
+  if (!focusable.length) {
+    event.preventDefault();
+    homeActiveFocusTrap.container.focus?.({ preventScroll: true });
+    return true;
+  }
+
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
+
+  if (event.shiftKey && document.activeElement === first) {
+    event.preventDefault();
+    last.focus();
+    return true;
+  }
+
+  if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault();
+    first.focus();
+    return true;
+  }
+
+  return false;
+}
+
+function homeScrollBehavior() {
+  return homeReducedMotionQuery.matches ? "auto" : "smooth";
+}
 
 function initializeHomeLateNightMode() {
   const hour = new Date().getHours();
@@ -277,6 +355,10 @@ const HOME_STOPWORDS = new Set(
 );
 
 function parseHomeMoodText(rawText) {
+  if (homeSharedLogic.parseMoodText) {
+    return homeSharedLogic.parseMoodText(rawText);
+  }
+
   const text = String(rawText || "").toLowerCase();
   if (!text.trim()) {
     return { raw: "", moods: [], weathers: [], need: null, tokens: [], hasText: false };
@@ -305,6 +387,10 @@ function parseHomeMoodText(rawText) {
 }
 
 function scoreHomeFreeText(film, signals) {
+  if (homeSharedLogic.scoreFreeText) {
+    return homeSharedLogic.scoreFreeText(film, signals);
+  }
+
   if (!signals.hasText) {
     return { score: 0, reasons: [] };
   }
@@ -798,17 +884,85 @@ function getHomeLiveViewerCount(film, index = 0) {
   return 18 + ((film.id * 19 + index * 7) % 86);
 }
 
+const LIVE_SIGNAL_POOL = [
+  "trending tonight",
+  "most replayed this week",
+  "popular in LA",
+  "loved by film students",
+  "late-night favorite",
+  "rented 5 min ago",
+  "queued by 14 tonight",
+  "rewatched 3x today",
+];
+
+function pickLiveSignal(film) {
+  const idx = ((film.id * 37) + (film.rewatches || 0)) % LIVE_SIGNAL_POOL.length;
+  return LIVE_SIGNAL_POOL[idx];
+}
+
 function renderHomeLiveWatchingStrip(film, index = 0) {
   const count = getHomeLiveViewerCount(film, index);
+  const signal = pickLiveSignal(film);
   const label = count === 1 ? "person" : "people";
 
   return `
-    <div class="live-watch-strip home-live-watch-strip" aria-label="${count} ${label} streaming ${escapeHomeHtml(film.title)} right now">
+    <div class="live-watch-strip home-live-watch-strip" aria-label="${count} ${label} watching ${escapeHomeHtml(film.title)} right now · ${escapeHomeHtml(signal)}">
       <span class="live-dot" aria-hidden="true"></span>
       <strong>${count}</strong>
-      <span>streaming right now</span>
+      <span>watching now</span>
+      <em>· ${escapeHomeHtml(signal)}</em>
     </div>
   `;
+}
+
+function renderHomeSocialMeta(film) {
+  // Old-YouTube-style social line: ★ rating · Nk rentals · NNN comments.
+  const stars = ((film.rating || 0) / 2).toFixed(1);
+  const rentals = Math.max(1, Math.round((film.rewatches || 800) / 1000));
+  const comments = ((film.id * 73 + (film.rewatches || 0)) % 780) + 24;
+  return `
+    <p class="home-vhs-meta" aria-label="${stars} stars, ${rentals}k rentals, ${comments} comments">
+      <span><b>★ ${stars}</b></span>
+      <span>${rentals}k rentals</span>
+      <span>${comments} comments</span>
+    </p>
+  `;
+}
+
+const TICKER_USERS = [
+  "@mia",
+  "@chris",
+  "@raincityvhs",
+  "@filmnerd99",
+  "@afterhourskid",
+  "@bluehourfilm",
+  "@stairwellcinema",
+  "@neonmusical",
+  "@bagelverse",
+  "@videostorekid",
+];
+const TICKER_VERBS = [
+  "rented",
+  "started",
+  "queued",
+  "added",
+  "just finished",
+  "saved",
+  "double-featured",
+];
+
+function renderLiveRentalTicker() {
+  const track = document.querySelector("#liveRentalTicker .ticker-track");
+  if (!track || !homeFilms.length) {
+    return;
+  }
+  const items = homeFilms.slice(0, 12).map((film, i) => {
+    const user = TICKER_USERS[(film.id * 11 + i) % TICKER_USERS.length];
+    const verb = TICKER_VERBS[(film.id * 13 + i) % TICKER_VERBS.length];
+    return `<span class="ticker-item"><i class="ticker-dot" aria-hidden="true"></i> ${escapeHomeHtml(user)} ${escapeHomeHtml(verb)} <strong>${escapeHomeHtml(film.title)}</strong></span>`;
+  });
+  // duplicate for a seamless CSS marquee loop
+  track.innerHTML = items.concat(items).join("");
 }
 
 function homeShelfCard(film, index) {
@@ -826,7 +980,7 @@ function homeShelfCard(film, index) {
 
   return `
     <article class="home-vhs-slot ${isActive ? "is-active" : ""}" data-shelf-index="${index}" data-home-trailer-id="${film.id}" style="--shelf-order: ${index};">
-      <div class="card movie-card home-vhs-card h-100" tabindex="0" role="button" aria-label="Play the ${escapeHomeHtml(film.title)} trailer">
+      <div class="card movie-card home-vhs-card h-100" tabindex="0" role="button">
         <div class="vhs-gloss" aria-hidden="true"></div>
         <div class="home-vhs-edge-wear" aria-hidden="true"></div>
         <div class="home-vhs-spine"><span>${escapeHomeHtml(getHomeAisleName(film.genre))}</span></div>
@@ -853,6 +1007,7 @@ function homeShelfCard(film, index) {
         <div class="card-body">
           <p class="movie-kicker">${escapeHomeHtml(getHomeAisleName(film.genre))}</p>
           <h3 class="card-title">${escapeHomeHtml(film.title)}</h3>
+          ${renderHomeSocialMeta(film)}
           <p class="card-text">${escapeHomeHtml(film.emotionalSynopsis || film.description)}</p>
           <div class="home-social-reaction">
             <span>${escapeHomeHtml(reactionUsers[index % reactionUsers.length])}</span>
@@ -921,6 +1076,8 @@ function renderHomeStorefront() {
       .join("");
     updateFridayShelfActive();
   }
+
+  renderLiveRentalTicker();
 }
 
 function scrollFridayShelf(direction) {
@@ -930,7 +1087,36 @@ function scrollFridayShelf(direction) {
   }
 
   const distance = Math.max(280, Math.round(grid.clientWidth * 0.72));
-  grid.scrollBy({ left: direction * distance, behavior: "smooth" });
+  grid.scrollBy({ left: direction * distance, behavior: homeScrollBehavior() });
+}
+
+function scrollDashboardShelf(direction) {
+  if (!dashboardStaffStrip) {
+    return;
+  }
+
+  const distance = Math.max(180, Math.round(dashboardStaffStrip.clientWidth * 0.62));
+  dashboardStaffStrip.scrollBy({ left: direction * distance, behavior: homeScrollBehavior() });
+}
+
+function setConceptMode(isOpen) {
+  document.body.classList.toggle("is-concept-expanded", isOpen);
+  watchConceptButton?.setAttribute("aria-expanded", String(isOpen));
+
+  if (isOpen) {
+    homeNowPlayingSection?.setAttribute("tabindex", "-1");
+    window.setTimeout(() => {
+      homeNowPlayingSection?.focus({ preventScroll: true });
+    }, homeReducedMotionQuery.matches ? 0 : 520);
+  } else {
+    homeNowPlayingSection?.removeAttribute("tabindex");
+    watchConceptButton?.focus({ preventScroll: true });
+  }
+}
+
+function handleWatchConcept(event) {
+  event.preventDefault();
+  setConceptMode(true);
 }
 
 async function loadHomeMidnightFilms() {
@@ -972,7 +1158,9 @@ function openHomeProjector(film) {
     return;
   }
 
-  homeProjectorFrame.src = `${film.trailer}?autoplay=1&rel=0&modestbranding=1&playsinline=1`;
+  homeProjectorFrame.src = homeSharedLogic.buildTrailerEmbedSrc
+    ? homeSharedLogic.buildTrailerEmbedSrc(film.trailer)
+    : `${film.trailer}?autoplay=1&rel=0&modestbranding=1&playsinline=1`;
   if (homeProjectorTitle) {
     homeProjectorTitle.textContent = film.title;
   }
@@ -983,7 +1171,7 @@ function openHomeProjector(film) {
   homeProjectorTheater.classList.add("is-open");
   homeProjectorTheater.setAttribute("aria-hidden", "false");
   document.body.classList.add("theater-open");
-  homeProjectorClose?.focus();
+  activateHomeFocusTrap(homeProjectorTheater, homeProjectorClose);
 }
 
 function closeHomeProjector() {
@@ -998,6 +1186,7 @@ function closeHomeProjector() {
   homeProjectorTheater.classList.remove("is-open");
   homeProjectorTheater.setAttribute("aria-hidden", "true");
   document.body.classList.remove("theater-open");
+  releaseHomeFocusTrap(homeProjectorTheater);
 }
 
 function findHomeFilmByTitle(title) {
@@ -1053,8 +1242,26 @@ homeMidnightMoodChips?.addEventListener("click", handleHomeMoodChipClick);
 homeProjectorBag?.addEventListener("click", handleHomeProjectorBag);
 homeProjectorNext?.addEventListener("click", handleHomeProjectorNext);
 homeProjectorInspect?.addEventListener("click", handleHomeProjectorInspect);
+dashboardShelfPrev?.addEventListener("click", () => scrollDashboardShelf(-1));
+dashboardShelfNext?.addEventListener("click", () => scrollDashboardShelf(1));
 fridayShelfPrev?.addEventListener("click", () => scrollFridayShelf(-1));
 fridayShelfNext?.addEventListener("click", () => scrollFridayShelf(1));
+watchConceptButton?.addEventListener("click", handleWatchConcept);
+conceptCloseButton?.addEventListener("click", () => setConceptMode(false));
+
+document.addEventListener("keydown", (event) => {
+  if (event.defaultPrevented) {
+    return;
+  }
+
+  if (trapHomeFocus(event)) {
+    return;
+  }
+
+  if (event.key === "Escape" && document.body.classList.contains("is-concept-expanded")) {
+    setConceptMode(false);
+  }
+});
 
 const homeTrendingGrid = document.querySelector("#homeTrendingGrid");
 let fridayShelfScrollFrame = null;
@@ -1069,12 +1276,14 @@ homeTrendingGrid?.addEventListener("scroll", () => {
   });
 });
 
-homeTrendingGrid?.addEventListener("pointerover", (event) => {
-  const slot = event.target.closest(".home-vhs-slot");
-  if (slot && homeTrendingGrid.contains(slot)) {
-    updateFridayShelfActive(slot);
-  }
-});
+if (homeFinePointerQuery.matches && !homeReducedMotionQuery.matches) {
+  homeTrendingGrid?.addEventListener("pointerover", (event) => {
+    const slot = event.target.closest(".home-vhs-slot");
+    if (slot && homeTrendingGrid.contains(slot)) {
+      updateFridayShelfActive(slot);
+    }
+  });
+}
 
 homeTrendingGrid?.addEventListener("focusin", (event) => {
   const slot = event.target.closest(".home-vhs-slot");
@@ -1100,6 +1309,14 @@ document.addEventListener("click", handleHomePosterActivate);
 homeProjectorClose?.addEventListener("click", closeHomeProjector);
 homeProjectorBackdrop?.addEventListener("click", closeHomeProjector);
 document.addEventListener("keydown", (event) => {
+  if (event.defaultPrevented) {
+    return;
+  }
+
+  if (trapHomeFocus(event)) {
+    return;
+  }
+
   if (event.key === "Escape" && homeProjectorTheater?.classList.contains("is-open")) {
     closeHomeProjector();
   }
@@ -1112,7 +1329,9 @@ homeTrendingGrid?.addEventListener("keydown", (event) => {
   if (!slot) {
     return;
   }
-  const film = homeFilms.find((f) => String(f.id) === slot.dataset.homeTrailerId);
+  const film = homeSharedLogic.resolveTrailerFilmById
+    ? homeSharedLogic.resolveTrailerFilmById(homeFilms, slot.dataset.homeTrailerId)
+    : homeFilms.find((f) => String(f.id) === slot.dataset.homeTrailerId);
   if (film && film.trailer) {
     event.preventDefault();
     openHomeProjector(film);

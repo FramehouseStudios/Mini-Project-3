@@ -73,6 +73,18 @@ any HTML/CSS**:
 
   Exit code `0` = valid, `1` = errors (with a per-field report).
 
+## Logic Tests
+
+Core frontend logic is covered with Node's built-in test runner:
+
+```bash
+node --test
+```
+
+The suite locks the natural-language mood parser/scorer, rental bag
+persist/hydrate helpers, and trailer embed mapping so interaction logic can
+change safely without silently breaking the presentation flow.
+
 ## Styles (`css/style.css` is generated)
 
 `css/style.css` is a **build artifact** — do not edit it directly. The source
@@ -109,4 +121,3 @@ browser-verified design-system consolidation (shared tokens/utilities for the
 repeated gradient/shadow/glass recipes) done per partial with the byte-stable
 build as the safety net — not a mechanical purge. Keep defensive utilities
 (`.visually-hidden`, the `.col-*` grid shim) even if currently unreferenced.
-

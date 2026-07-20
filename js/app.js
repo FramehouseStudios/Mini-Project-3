@@ -23,6 +23,9 @@ const moodboardEnergy = document.querySelector("#moodboardEnergy");
 const moodboardPairing = document.querySelector("#moodboardPairing");
 const moodboardClerkNotes = document.querySelector(".moodboard-clerk-notes");
 const recentActivity = document.querySelector("#recentActivity");
+const activityTabs = document.querySelector("#activityTabs");
+const activityRailPrev = document.querySelector("#activityRailPrev");
+const activityRailNext = document.querySelector("#activityRailNext");
 const tonightStackSection = document.querySelector("#tonightStackSection");
 const tonightQueueList = document.querySelector("#tonightQueueList");
 const receiptList = document.querySelector("#receiptList");
@@ -72,6 +75,11 @@ const projectorBag = document.querySelector("#projectorBag");
 const quickFilters = document.querySelector(".quick-filters");
 const resetFiltersButton = document.querySelector("#resetFilters");
 const vhsShelf = document.querySelector(".vhs-shelf");
+const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+const finePointerQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
+const sharedLogic = window.BlockbusterLogic || {};
+const FOCUSABLE_SELECTOR =
+  'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), iframe, [tabindex]:not([tabindex="-1"])';
 
 let films = [];
 const rentalBag = [];
@@ -105,6 +113,82 @@ let konamiProgress = [];
 
 const RENTAL_BAG_STORAGE_KEY = "blockbusterRentalBag";
 let bagHydrated = false;
+let activeFocusTrap = null;
+let activityItems = [];
+let activeActivityFilter = "all";
+let activityPulseIndex = 0;
+let activityPulseTimer = null;
+
+function getFocusableElements(container) {
+  return [...(container?.querySelectorAll(FOCUSABLE_SELECTOR) || [])].filter(
+    (element) => !element.hasAttribute("disabled") && element.getAttribute("aria-hidden") !== "true",
+  );
+}
+
+function activateFocusTrap(container, preferredFocus) {
+  if (!container) {
+    return;
+  }
+
+  activeFocusTrap = {
+    container,
+    previousFocus: document.activeElement instanceof HTMLElement ? document.activeElement : null,
+  };
+
+  window.requestAnimationFrame(() => {
+    const firstFocusable = getFocusableElements(container)[0];
+    (preferredFocus || firstFocusable || container).focus?.({ preventScroll: true });
+  });
+}
+
+function releaseFocusTrap(container, fallbackFocus) {
+  if (!activeFocusTrap || activeFocusTrap.container !== container) {
+    return;
+  }
+
+  const previousFocus = activeFocusTrap.previousFocus;
+  activeFocusTrap = null;
+  (fallbackFocus || previousFocus)?.focus?.({ preventScroll: true });
+}
+
+function trapFocus(event) {
+  if (event.key !== "Tab" || !activeFocusTrap) {
+    return false;
+  }
+
+  const focusable = getFocusableElements(activeFocusTrap.container);
+  if (!focusable.length) {
+    event.preventDefault();
+    activeFocusTrap.container.focus?.({ preventScroll: true });
+    return true;
+  }
+
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
+
+  if (event.shiftKey && document.activeElement === first) {
+    event.preventDefault();
+    last.focus();
+    return true;
+  }
+
+  if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault();
+    first.focus();
+    return true;
+  }
+
+  return false;
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
 
 const vhsDetails = {
   "The Dark Knight": {
@@ -232,7 +316,13 @@ function startProjectorRotation() {
 
   // Don't burn timers/animations while the tab is hidden or the
   // projector section is scrolled out of view.
-  if (document.hidden || !projectorInView || !films.length || !projectorDescription) {
+  if (
+    document.hidden ||
+    reducedMotionQuery.matches ||
+    !projectorInView ||
+    !films.length ||
+    !projectorDescription
+  ) {
     return;
   }
 
@@ -354,7 +444,7 @@ function renderFilms(movieList) {
               <span class="barcode-label">${barcodeLabel}</span>
               <span class="fingerprint-smudge" aria-hidden="true"></span>
               <span class="scratch-map" aria-hidden="true"></span>
-              <span class="pull-tab">Click case to flip</span>
+              <span class="pull-tab">Click to flip</span>
               <span class="bagged-badge ${isBagged ? "is-visible" : ""}">Bagged</span>
             </div>
             ${renderLiveWatchingStrip(film, index)}
@@ -384,7 +474,7 @@ function renderFilms(movieList) {
               <span>${getAisleName(film.genre)}</span>
             </div>
             <div class="back-cover-content">
-              <p class="back-label">Back Cover</p>
+              <p class="back-label">Rental Back Cover</p>
               <h3>${film.title}</h3>
               <button class="flip-front-button" type="button" data-flip-front="${film.id}">
                 Flip Front
@@ -423,7 +513,7 @@ function renderFilms(movieList) {
                 <p>${film.favoriteScene || "Ask the counter clerk for the scene everyone talks about."}</p>
               </div>
               <div class="back-barcode" aria-hidden="true"></div>
-              <p class="back-hint">Click the back cover again to flip front, or open the full rental box.</p>
+              <p class="back-hint">Click case to flip front, or open the full rental box.</p>
             </div>
           </div>
         </div>
@@ -801,12 +891,13 @@ function openSwipeReviews() {
     .join("");
   reviewDrawer.classList.add("is-open");
   reviewDrawer.setAttribute("aria-hidden", "false");
-  reviewCloseButton.focus();
+  activateFocusTrap(reviewDrawer, reviewCloseButton);
 }
 
 function closeSwipeReviews() {
   reviewDrawer.classList.remove("is-open");
   reviewDrawer.setAttribute("aria-hidden", "true");
+  releaseFocusTrap(reviewDrawer, swipeReviews);
 }
 
 function handleReviewDrawerClick(event) {
@@ -882,7 +973,9 @@ function persistRentalBag() {
   try {
     localStorage.setItem(
       RENTAL_BAG_STORAGE_KEY,
-      JSON.stringify(rentalBag.map((film) => film.id)),
+      sharedLogic.serializeRentalBagIds
+        ? sharedLogic.serializeRentalBagIds(rentalBag)
+        : JSON.stringify(rentalBag.map((film) => film.id)),
     );
   } catch (error) {
     /* storage unavailable (private mode / quota) — bag stays in-memory only */
@@ -898,7 +991,13 @@ function hydrateRentalBag() {
     savedIds = [];
   }
 
-  if (Array.isArray(savedIds)) {
+  const hydratedFilms = sharedLogic.hydrateRentalBagFromIds
+    ? sharedLogic.hydrateRentalBagFromIds(savedIds, films)
+    : [];
+
+  if (hydratedFilms.length) {
+    rentalBag.push(...hydratedFilms);
+  } else if (Array.isArray(savedIds)) {
     savedIds.forEach((id) => {
       const film = films.find((movie) => movie.id === id);
       if (film && !rentalBag.some((rental) => rental.id === id)) {
@@ -994,6 +1093,61 @@ function renderFloatingRentalStack() {
   });
 }
 
+function renderCheckoutShelfStack() {
+  const placeholderLabels = ["MOVIES", "TV SHOWS", "SPORTS", "HOME VIDEOS", "WEDDING", "CONCERTS", "COMMERCIALS"];
+  const visibleTapeLimit = 4;
+  const stackItems = rentalBag.length
+    ? rentalBag.slice(0, visibleTapeLimit).map((film, index) => ({
+        id: film.id,
+        label: film.title,
+        meta: `${getAisleName(film.genre)} • ${film.runtime || "??"} min`,
+        removable: true,
+        index,
+      }))
+    : placeholderLabels.slice(0, visibleTapeLimit).map((label, index) => ({
+        id: null,
+        label,
+        meta: index === 0 ? "waiting for tonight's first rental" : "blank counter tape",
+        removable: false,
+        index,
+      }));
+  const hiddenCount = Math.max(0, rentalBag.length - stackItems.length);
+
+  return `
+    <li class="checkout-vhs-stack-wrap ${rentalBag.length === 0 ? "is-empty" : "has-rentals"}">
+      <div class="checkout-vhs-stack" aria-label="${rentalBag.length ? "VHS tapes stacked on the checkout counter" : "Empty VHS stack waiting for rentals"}">
+        ${stackItems
+          .map(
+            (item) => `
+              <div
+                class="checkout-vhs-case ${item.removable ? "is-rental" : "is-placeholder"}"
+                style="--case-index: ${item.index}; --case-tilt: ${(item.index % 2 === 0 ? -0.45 : 0.36).toFixed(2)}deg"
+              >
+                <span class="checkout-vhs-spine">${item.removable ? String(item.index + 1).padStart(2, "0") : "BB+"}</span>
+                <span class="checkout-vhs-label">${escapeHtml(item.label)}</span>
+                <span class="checkout-vhs-meta">${escapeHtml(item.meta)}</span>
+                ${
+                  item.removable
+                    ? `<button type="button" data-stack-remove="${item.id}" aria-label="Remove ${escapeHtml(item.label)} from Tonight's Stack">×</button>`
+                    : ""
+                }
+              </div>
+            `,
+          )
+          .join("")}
+        ${hiddenCount ? `<span class="checkout-vhs-more">+${hiddenCount} more tapes behind the counter</span>` : ""}
+      </div>
+      <p class="checkout-vhs-stack-caption">
+        ${
+          rentalBag.length
+            ? `${rentalBag.length} tape${rentalBag.length === 1 ? "" : "s"} stacked beside the register.`
+            : "NO TAPES ON THE COUNTER. Pull a VHS from the shelf to start the stack."
+        }
+      </p>
+    </li>
+  `;
+}
+
 function updateTonightQueue() {
   if (!tonightQueueList || !receiptList || !receiptTotal || !stackClerkNote || !startStackScreening) {
     return;
@@ -1016,12 +1170,7 @@ function updateTonightQueue() {
     projectorSessionPaused = true;
     activeProjectionIndex = 0;
     updateProjectorSession();
-    tonightQueueList.innerHTML = `
-      <li class="queue-empty">
-        <strong>NO TAPES ON THE COUNTER.</strong>
-        <span>Pull a VHS from the shelf to build tonight's movie night.</span>
-      </li>
-    `;
+    tonightQueueList.innerHTML = renderCheckoutShelfStack();
     return;
   }
 
@@ -1029,7 +1178,6 @@ function updateTonightQueue() {
   const hours = Math.floor(totalRuntime / 60);
   const minutes = totalRuntime % 60;
   const runtimeLabel = hours > 0 ? `${hours}h ${minutes}m` : `${minutes}m`;
-  const vibeTags = [...new Set(rentalBag.flatMap((film) => film.vibeTags || []))];
   const projectedMood = getProjectedMood(rentalBag);
   const lateFeeRisk = getLateFeeRisk(totalRuntime, rentalBag.length);
   const firstFilm = rentalBag[0];
@@ -1053,20 +1201,7 @@ function updateTonightQueue() {
   receiptTotal.textContent = `${rentalBag.length} tape${rentalBag.length === 1 ? "" : "s"} • ${runtimeLabel} • ${projectedMood} • ${lateFeeRisk}`;
   updateProjectorSession();
 
-  tonightQueueList.innerHTML = rentalBag
-    .map(
-      (film, index) => `
-        <li class="queue-tape" style="--queue-delay: ${index * 70}ms; --stack-offset: ${Math.min(index, 5) * 1.05}rem; --stack-tilt: ${(index % 2 === 0 ? -0.55 : 0.48).toFixed(2)}deg">
-          <span>${index + 1}</span>
-          <div>
-            <strong>${film.title}</strong>
-            <p>${getAisleName(film.genre)} · ${film.runtime || "??"} min · ${vibeTags[index % Math.max(vibeTags.length, 1)] || "projector ready"} · ${index === 0 ? "first tape loaded" : "double-feature compatible"}</p>
-          </div>
-          <button type="button" data-stack-remove="${film.id}" aria-label="Remove ${film.title} from Tonight's Stack">×</button>
-        </li>
-      `,
-    )
-    .join("");
+  tonightQueueList.innerHTML = renderCheckoutShelfStack();
 }
 
 function updateProjectorSession() {
@@ -1348,46 +1483,160 @@ function renderActivityFeed(movieList) {
 
   const activityTemplates = [
     (film) => ({
+      id: `rented-${film.id}`,
+      type: "rented",
       user: "@jawsh",
-      action: `watched ${film.title} instead of sleeping`,
-      tag: "clerk logged",
+      verb: "rented",
+      movie: film.title,
+      note: "instead of sleeping",
+      tag: "live from counter",
       time: "2 min ago",
       stars: renderStars(getReview(film).stars),
+      avatar: getReview(film).avatar,
     }),
     (film) => ({
+      id: `rewatched-${film.id}`,
+      type: "rewatched",
       user: "@videostorekid",
-      action: `rewound ${film.title} for the favorite scene`,
+      verb: "rewatched",
+      movie: film.title,
+      note: "for the favorite scene",
       tag: "most rewound",
       time: "9 min ago",
       stars: renderStars(Math.max(4, getReview(film).stars - 0.5)),
+      avatar: getReview(film).avatar,
     }),
     (film) => ({
+      id: `bagged-${film.id}`,
+      type: "bagged",
       user: "@midnightmovies",
-      action: `tossed ${film.title} onto the checkout counter`,
+      verb: "bagged",
+      movie: film.title,
+      note: "at the checkout counter",
       tag: "live rental",
       time: "14 min ago",
       stars: renderStars(getReview(film).stars),
+      avatar: getReview(film).avatar,
     }),
     (film) => ({
+      id: `clerk-${film.id}`,
+      type: "clerk",
       user: "@filmnerd99",
-      action: `logged ${film.favoriteScene || film.title} as a scene they keep replaying`,
-      tag: "scene diary",
+      verb: "clerk picked",
+      movie: film.title,
+      note: `${film.favoriteScene || "a favorite scene"} keeps replaying`,
+      tag: "clerk picks",
       time: "22 min ago",
       stars: renderStars(getReview(film).stars),
+      avatar: getReview(film).avatar,
     }),
   ];
 
-  recentActivity.innerHTML = "";
-  movieList.slice(0, 4).forEach((film, index) => {
-    const activity = activityTemplates[index % activityTemplates.length](film);
-    const item = document.createElement("article");
-    item.className = "feed-item";
-    item.innerHTML = `
-      <span class="feed-avatar">${getReview(film).avatar}</span>
-      <p><strong>${activity.user}</strong> ${activity.action}<small>${activity.stars} • ${activity.time}</small></p>
-      <span>${activity.tag}</span>
-    `;
-    recentActivity.appendChild(item);
+  activityItems = movieList.slice(0, 8).map((film, index) => activityTemplates[index % activityTemplates.length](film));
+  renderActivityRail();
+  startActivityPulse();
+}
+
+function activityMatchesFilter(activity) {
+  if (activeActivityFilter === "all") {
+    return true;
+  }
+
+  if (activeActivityFilter === "live") {
+    return activity.time === "JUST NOW" || activity.tag.toLowerCase().includes("live");
+  }
+
+  return activity.type === activeActivityFilter;
+}
+
+function renderActivityRail() {
+  if (!recentActivity) {
+    return;
+  }
+
+  const visibleItems = activityItems.filter(activityMatchesFilter);
+  recentActivity.innerHTML = visibleItems.length
+    ? visibleItems
+        .map(
+          (activity, index) => `
+            <article class="feed-item activity-pill ${index === activityPulseIndex % visibleItems.length ? "is-live-pulse" : ""}" data-activity-type="${activity.type}" tabindex="0" aria-label="${activity.user} ${activity.verb} ${activity.movie}, ${activity.time}">
+              <span class="feed-avatar" aria-hidden="true">${activity.avatar}</span>
+              <div class="activity-copy">
+                <p>
+                  <strong>${activity.user}</strong>
+                  <span>${activity.verb}</span>
+                  <em>${activity.movie}</em>
+                </p>
+                <small>${activity.note}</small>
+                <span class="activity-stars">${activity.stars}</span>
+              </div>
+              <div class="activity-meta">
+                <span>${activity.time}</span>
+                <b>${activity.tag}</b>
+              </div>
+            </article>
+          `,
+        )
+        .join("")
+    : `<p class="activity-empty">No activity on this aisle yet.</p>`;
+}
+
+function updateActivityPulse() {
+  if (!recentActivity) {
+    return;
+  }
+
+  const cards = recentActivity.querySelectorAll(".activity-pill");
+  cards.forEach((card, index) => {
+    card.classList.toggle("is-live-pulse", index === activityPulseIndex % cards.length);
+  });
+}
+
+function startActivityPulse() {
+  if (!recentActivity || activityPulseTimer || reducedMotionQuery.matches) {
+    return;
+  }
+
+  activityPulseTimer = window.setInterval(() => {
+    const visibleCount = activityItems.filter(activityMatchesFilter).length;
+    if (!visibleCount) {
+      return;
+    }
+    activityPulseIndex = (activityPulseIndex + 1) % visibleCount;
+    updateActivityPulse();
+  }, 4200);
+}
+
+function setActivityFilter(filter) {
+  activeActivityFilter = filter;
+  activityPulseIndex = 0;
+  activityTabs?.querySelectorAll("[data-activity-filter]").forEach((button) => {
+    const isActive = button.dataset.activityFilter === filter;
+    button.classList.toggle("is-active", isActive);
+    button.setAttribute("aria-pressed", String(isActive));
+    button.setAttribute("aria-selected", String(isActive));
+  });
+  renderActivityRail();
+}
+
+function handleActivityTabClick(event) {
+  const button = event.target.closest("[data-activity-filter]");
+  if (!button) {
+    return;
+  }
+
+  setActivityFilter(button.dataset.activityFilter || "all");
+}
+
+function scrollActivityRail(direction) {
+  if (!recentActivity) {
+    return;
+  }
+
+  const scrollAmount = Math.max(260, recentActivity.clientWidth * 0.72);
+  recentActivity.scrollBy({
+    left: direction * scrollAmount,
+    behavior: reducedMotionQuery.matches ? "auto" : "smooth",
   });
 }
 
@@ -1396,18 +1645,23 @@ function prependActivity(film, message) {
     return;
   }
 
-  const item = document.createElement("article");
-  item.className = "feed-item is-new";
-  item.innerHTML = `
-    <span class="feed-avatar">${getReview(film).avatar}</span>
-    <p><strong>@you</strong> ${message.replace(/^@you\s+/, "")}<small>${renderStars(getReview(film).stars)} • live from checkout</small></p>
-    <span>JUST NOW</span>
-  `;
-  recentActivity.prepend(item);
+  activityItems.unshift({
+    id: `you-${film.id}-${Date.now()}`,
+    type: "bagged",
+    user: "@you",
+    verb: "dropped",
+    movie: film.title,
+    note: message.replace(/^@you\s+/, "") || "into the rental bag",
+    tag: "live from checkout",
+    time: "JUST NOW",
+    stars: renderStars(getReview(film).stars),
+    avatar: getReview(film).avatar,
+  });
 
-  while (recentActivity.children.length > 5) {
-    recentActivity.lastElementChild.remove();
-  }
+  activityItems = activityItems.slice(0, 10);
+  activityPulseIndex = 0;
+  renderActivityRail();
+  recentActivity.scrollTo({ left: 0, behavior: reducedMotionQuery.matches ? "auto" : "smooth" });
 }
 
 function filterFilms() {
@@ -1558,7 +1812,7 @@ function openMovieDetail(film) {
   movieDetailExpansion.classList.add("is-open");
   movieDetailExpansion.setAttribute("aria-hidden", "false");
   document.body.classList.add("detail-open");
-  detailCloseButton.focus();
+  activateFocusTrap(movieDetailExpansion, detailCloseButton);
 }
 
 function setDetailVhsView(view) {
@@ -1583,6 +1837,7 @@ function closeMovieDetail() {
   movieDetailExpansion.classList.remove("is-open");
   movieDetailExpansion.setAttribute("aria-hidden", "true");
   document.body.classList.remove("detail-open");
+  releaseFocusTrap(movieDetailExpansion);
 }
 
 function handleDetailButtonClick(event) {
@@ -1884,11 +2139,13 @@ function resetCaseGlare(event) {
 function openRentalBag() {
   rentalBagPanel.classList.add("is-open");
   rentalBagPanel.setAttribute("aria-hidden", "false");
+  activateFocusTrap(rentalBagPanel, closeBagPanel);
 }
 
 function closeRentalBag() {
   rentalBagPanel.classList.remove("is-open");
   rentalBagPanel.setAttribute("aria-hidden", "true");
+  releaseFocusTrap(rentalBagPanel, rentalBagButton);
 }
 
 function removeRental(filmId) {
@@ -1938,7 +2195,9 @@ function openProjectorTheater(film) {
     return;
   }
 
-  projectorTrailerFrame.src = `${film.trailer}?autoplay=1&rel=0&modestbranding=1&playsinline=1`;
+  projectorTrailerFrame.src = sharedLogic.buildTrailerEmbedSrc
+    ? sharedLogic.buildTrailerEmbedSrc(film.trailer)
+    : `${film.trailer}?autoplay=1&rel=0&modestbranding=1&playsinline=1`;
 
   if (projectorTheaterTitle) {
     projectorTheaterTitle.textContent = film.title;
@@ -1952,7 +2211,7 @@ function openProjectorTheater(film) {
   projectorTheater.setAttribute("aria-hidden", "false");
   document.body.classList.add("theater-open");
   playInteractionSound("pull");
-  projectorTheaterClose?.focus();
+  activateFocusTrap(projectorTheater, projectorTheaterClose);
 }
 
 function closeProjectorTheater() {
@@ -1967,7 +2226,7 @@ function closeProjectorTheater() {
   projectorTheater.classList.remove("is-open");
   projectorTheater.setAttribute("aria-hidden", "true");
   document.body.classList.remove("theater-open");
-  startStackScreening?.focus();
+  releaseFocusTrap(projectorTheater, startStackScreening);
 }
 
 function showStackFlare(message, duration = 1800) {
@@ -2166,6 +2425,10 @@ function handleDetailExpansionClick(event) {
 }
 
 function handleEscapeKey(event) {
+  if (trapFocus(event)) {
+    return;
+  }
+
   if (event.key !== "Escape") {
     return;
   }
@@ -2199,13 +2462,14 @@ function openSecretVault() {
   window.setTimeout(() => {
     easterToast.classList.remove("is-visible");
   }, 2800);
-  secretCloseButton.focus();
+  activateFocusTrap(secretVhsVault, secretCloseButton);
 }
 
 function closeSecretVault() {
   secretVhsVault.classList.remove("is-open", "is-rewinding");
   secretVhsVault.setAttribute("aria-hidden", "true");
   document.body.classList.remove("secret-open");
+  releaseFocusTrap(secretVhsVault);
 }
 
 function rewindSecretTape() {
@@ -2271,12 +2535,17 @@ movieGrid.addEventListener("click", handleBagClick);
 movieGrid.addEventListener("click", handleCardDetailOpen);
 movieGrid.addEventListener("click", handleGridUtilityClick);
 movieGrid.addEventListener("keydown", handleCardKeyboard);
-movieGrid.addEventListener("pointermove", updateCaseGlare);
-movieGrid.addEventListener("pointerout", resetCaseGlare);
+if (finePointerQuery.matches && !reducedMotionQuery.matches) {
+  movieGrid.addEventListener("pointermove", updateCaseGlare, { passive: true });
+  movieGrid.addEventListener("pointerout", resetCaseGlare, { passive: true });
+}
 document.addEventListener("click", handleDetailButtonClick, true);
 quickFilters.addEventListener("click", handleQuickFilterClick);
 resetFiltersButton.addEventListener("click", resetFilters);
 soundToggle.addEventListener("click", toggleSound);
+activityTabs?.addEventListener("click", handleActivityTabClick);
+activityRailPrev?.addEventListener("click", () => scrollActivityRail(-1));
+activityRailNext?.addEventListener("click", () => scrollActivityRail(1));
 swipeSkip.addEventListener("click", handleSwipeSkip);
 swipeBag.addEventListener("click", handleSwipeBag);
 swipeReviews.addEventListener("click", openSwipeReviews);

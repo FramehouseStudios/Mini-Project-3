@@ -55,6 +55,12 @@
                 <a class="nav-link" href="films.html">Films</a>
               </li>
               <li class="nav-item">
+                <a class="nav-link" href="#staff-picks">Staff Picks</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="films.html#tonightStackSection">My Rentals</a>
+              </li>
+              <li class="nav-item">
                 <a class="nav-link" href="about.html">About</a>
               </li>
               <li class="nav-item ms-lg-2">
@@ -67,6 +73,12 @@
     </header>
 
     <main>
+      <section class="live-rental-ticker" id="liveRentalTicker" aria-label="Live rentals across Blockbuster+">
+        <span class="ticker-tag">Live</span>
+        <div class="ticker-viewport">
+          <div class="ticker-track" aria-hidden="true"></div>
+        </div>
+      </section>
       <section class="hero-section pitch-hero">
         <div class="container hero-grid">
           <div class="hero-copy">
@@ -81,25 +93,97 @@
             </p>
             <div class="hero-actions">
               <a class="btn btn-warning btn-lg" href="films.html">Browse Rentals</a>
-              <a class="btn btn-outline-light btn-lg" href="#home-currently-playing-heading">Watch the Concept</a>
+              <a
+                class="btn btn-outline-light btn-lg"
+                id="watchConceptButton"
+                href="#home-currently-playing-heading"
+                aria-controls="home-currently-playing-heading"
+                aria-expanded="false"
+              >
+                Watch the Concept
+              </a>
+            </div>
+            <div class="hero-value-props" aria-label="Blockbuster Plus value props">
+              <span>
+                <strong>Curated by Humans</strong>
+                Staff picks, hand-built collections, hidden gems.
+              </span>
+              <span>
+                <strong>Rental Bag</strong>
+                Build your night. We save your picks.
+              </span>
+              <span>
+                <strong>No Algorithm Autoplay</strong>
+                Just good movies, chosen with taste.
+              </span>
             </div>
           </div>
-          <aside class="hero-panel" aria-label="Featured rental" id="heroFeatured">
-            <img
-              id="heroFeaturedImage"
-              src="https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg"
-              alt="Tonight's staff pick poster"
-              width="500"
-              height="750"
-              decoding="async"
-            />
-            <p class="panel-label">Tonight's Staff Pick</p>
-            <h2 id="heroFeaturedTitle">Loading rental…</h2>
-            <p id="heroFeaturedDescription">
-              Pulling tonight's staff pick from the shelf…
-            </p>
-            <div class="rental-meta" id="heroFeaturedMeta"></div>
+          <aside class="hero-panel hero-staff-pick-panel" aria-label="Tonight's staff pick" id="heroFeatured">
+            <div class="hero-staff-pick-copy">
+              <p class="panel-label">Tonight's Staff Pick</p>
+              <h2 id="heroFeaturedTitle">Loading rental…</h2>
+              <p id="heroFeaturedDescription">
+                Pulling tonight's staff pick from the shelf…
+              </p>
+              <div class="rental-meta" id="heroFeaturedMeta"></div>
+              <a class="btn btn-warning btn-sm" href="films.html">View Details</a>
+            </div>
+            <div class="hero-staff-pick-art">
+              <img
+                id="heroFeaturedImage"
+                src="https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg"
+                alt="Tonight's staff pick poster"
+                width="500"
+                height="750"
+                decoding="async"
+              />
+            </div>
           </aside>
+        </div>
+      </section>
+
+      <section class="container home-dashboard-preview" aria-label="Blockbuster Plus store dashboard">
+        <div class="home-dashboard-main">
+          <div class="dashboard-section-heading">
+            <p class="eyebrow">Live Right Now</p>
+            <h2>What Everyone's Renting Right Now</h2>
+          </div>
+          <div class="dashboard-staff-shelf" aria-label="Staff pick shelf preview">
+            <button class="dashboard-shelf-arrow" id="dashboardShelfPrev" type="button" aria-label="Scroll staff picks left">‹</button>
+            <div class="dashboard-staff-strip">
+              <article>
+                <img src="https://image.tmdb.org/t/p/w500/4911T5FbJ9eD2Faz5Z8cT3SUhU3.jpg" alt="Moonlight poster" width="500" height="750" />
+                <span>Moonlight</span>
+                <small>quiet ache tape</small>
+              </article>
+              <article>
+                <img src="https://image.tmdb.org/t/p/w500/8IB2e4r4oVhHnANbnm7O3Tj6tF8.jpg" alt="Inception poster" width="500" height="750" />
+                <span>Inception</span>
+                <small>mind-bender wall</small>
+              </article>
+              <article>
+                <img src="https://image.tmdb.org/t/p/w500/uS9m8OBk1A8eM9I042bx8XXpqAq.jpg" alt="The Silence of the Lambs poster" width="500" height="750" />
+                <span>Silence of the Lambs</span>
+                <small>midnight classic</small>
+              </article>
+              <article>
+                <img src="https://image.tmdb.org/t/p/w500/lHV8HHlhwNup2VbpiACtlKzaGIQ.jpg" alt="Hereditary poster" width="500" height="750" />
+                <span>Hereditary</span>
+                <small>lights-on rental</small>
+              </article>
+              <article>
+                <img src="https://image.tmdb.org/t/p/w500/39wmItIWsg5sZMyRUHLkWBcuVCM.jpg" alt="Spirited Away poster" width="500" height="750" />
+                <span>Spirited Away</span>
+                <small>comfort shelf</small>
+              </article>
+              <article>
+                <img src="https://image.tmdb.org/t/p/w500/eWdyYQreja6JGCzqHWXpWHDrrPo.jpg" alt="The Grand Budapest Hotel poster" width="500" height="750" />
+                <span>Grand Budapest</span>
+                <small>weekend lobby</small>
+              </article>
+            </div>
+            <button class="dashboard-shelf-arrow" id="dashboardShelfNext" type="button" aria-label="Scroll staff picks right">›</button>
+          </div>
         </div>
       </section>
 
@@ -188,6 +272,9 @@
       </section>
 
       <section class="container currently-playing home-now-playing" aria-labelledby="home-currently-playing-heading">
+        <button class="concept-collapse-button" id="conceptCloseButton" type="button" aria-label="Return to manifesto hero">
+          Return to manifesto
+        </button>
         <div class="projection-copy">
           <p class="eyebrow">Front store display</p>
           <h2 id="home-currently-playing-heading">Now Playing Tonight</h2>
@@ -286,20 +373,38 @@
       </section>
 
       <section class="container experience-strip pitch-feature-strip" aria-label="Experiential Blockbuster Plus features">
-        <article>
-          <span>01</span>
+        <article class="cinema-ticket-card">
+          <span class="ticket-punch ticket-punch-left" aria-hidden="true"></span>
+          <span class="ticket-punch ticket-punch-right" aria-hidden="true"></span>
+          <span class="ticket-microcopy">ADMIT ONE</span>
+          <span class="ticket-number">01</span>
           <strong>Staff Picks Wall</strong>
           <p>Human taste, handwritten notes, and curated movie-night shelves.</p>
+          <span class="ticket-tag">Staff Curated</span>
+          <span class="ticket-serial">BB+ 11PM · ROW A · SEAT 01</span>
+          <span class="ticket-barcode" aria-hidden="true"></span>
         </article>
-        <article>
-          <span>02</span>
+        <article class="cinema-ticket-card">
+          <span class="ticket-punch ticket-punch-left" aria-hidden="true"></span>
+          <span class="ticket-punch ticket-punch-right" aria-hidden="true"></span>
+          <span class="ticket-microcopy">Now Screening</span>
+          <span class="ticket-number">02</span>
           <strong>Rental Bag</strong>
           <p>Throw VHS rentals into a plastic bag and build the night.</p>
+          <span class="ticket-tag">Rental Bag Access</span>
+          <span class="ticket-serial">BB+ CHECKOUT · ROW B · SEAT 02</span>
+          <span class="ticket-barcode" aria-hidden="true"></span>
         </article>
-        <article>
-          <span>03</span>
+        <article class="cinema-ticket-card">
+          <span class="ticket-punch ticket-punch-left" aria-hidden="true"></span>
+          <span class="ticket-punch ticket-punch-right" aria-hidden="true"></span>
+          <span class="ticket-microcopy">After Hours</span>
+          <span class="ticket-number">03</span>
           <strong>Late-Night Cinema Mode</strong>
           <p>Moody recommendations for rain, insomnia, heartbreak, and comfort.</p>
+          <span class="ticket-tag">Late Night Mode</span>
+          <span class="ticket-serial">BB+ AFTER HOURS · ROW C · SEAT 03</span>
+          <span class="ticket-barcode" aria-hidden="true"></span>
         </article>
       </section>
 
@@ -312,6 +417,11 @@
             rainstorms, hallway-scene confessions, comfort tapes, and movies
             that made the apartment feel less empty.
           </p>
+          <div class="guestbook-stats" aria-label="Guestbook activity stats">
+            <span><strong>128</strong> notes tonight</span>
+            <span><strong>42</strong> tapes logged</span>
+            <span><strong>1:14AM</strong> peak aisle hour</span>
+          </div>
           <div class="regulars-row" aria-label="Tonight's regulars">
             <span><strong>JO</strong>@jawshojeda<br /><em>rainy dramas</em></span>
             <span><strong>VK</strong>@videostorekid<br /><em>midnight horror</em></span>
@@ -323,6 +433,7 @@
           <div class="crowd-heading">
             <p class="eyebrow">Tonight's Crowd</p>
             <h3 id="tonightsCrowdHeading">Live from the aisles</h3>
+            <span class="guestbook-live-badge">Live now · 39 renters</span>
           </div>
           <div class="live-rail" aria-label="Live rental activity">
             <span><i></i>@filmnerd99 rented <strong>Moonlight</strong> for the quiet walk home</span>
@@ -365,6 +476,7 @@
             <li>Hereditary</li>
             <li>Spirited Away</li>
           </ol>
+          <p class="receipt-total-line">3 tapes · 5h 42m · comfort spiral</p>
           <p class="receipt-note">Clerk note: returned late 4 times, always forgiven.</p>
           <span class="receipt-stamp">BE KIND REWIND</span>
         </article>
@@ -379,11 +491,15 @@
         <article class="culture-card quote-card">
           <p class="eyebrow">Quote pinned to the board</p>
           <blockquote>“Some movies feel like conversations you almost had.”</blockquote>
-          <p class="pin-note">recommended after heartbreak · comfort tape</p>
+          <div class="quote-board-meta" aria-label="Pinned quote details">
+            <span>After-hours note</span>
+            <span>Comfort tape</span>
+          </div>
+          <p class="pin-note">recommended after heartbreak · left at the counter at 1:14AM</p>
           <span class="culture-tag">lonely apartment movie</span>
         </article>
 
-        <article class="culture-card activity-log-card diary-card">
+        <article class="culture-card activity-log-card diary-card guestbook-recommendation-card">
           <span class="mini-avatar">SM</span>
           <div>
             <p><strong>@sunkenplace</strong> recommended <em>Get Out</em> to everyone in line. “This tape ruined my entire Tuesday.”</p>
@@ -534,11 +650,11 @@
         </aside>
       </section>
 
-      <section class="container section-block home-rental-shelf" aria-labelledby="trending-heading">
+      <section class="container section-block home-rental-shelf" id="staff-picks" aria-labelledby="trending-heading">
         <div class="section-heading">
           <div>
-            <p class="eyebrow">Staff recommends</p>
-            <h2 id="trending-heading">Friday Night Picks</h2>
+            <p class="eyebrow">Now Streaming Across Blockbuster+</p>
+            <h2 id="trending-heading">Movies People Can't Stop Watching Tonight</h2>
             <p class="friday-shelf-subtitle">
               A midnight shelf wall of clerk-approved tapes, regulars' reactions,
               and one rental already humming in the projector.
@@ -606,6 +722,7 @@
             class="projector-theater-close"
             id="projectorTheaterClose"
             type="button"
+            aria-label="Pause screening and close projector"
           >
             Pause Screening
           </button>
@@ -662,6 +779,7 @@
       </div>
     </aside>
 
+    <script src="js/blockbuster-logic.js"></script>
     <script src="js/camera.js"></script>
     <script src="js/home.js"></script>
     <script>

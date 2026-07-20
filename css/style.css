@@ -20039,6 +20039,157 @@ body.theater-open .sound-toggle {
   }
 }
 
+/* Store Activity — horizontal live rail polish pass. */
+.activity-feed {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  margin-right: 0;
+  border-radius: clamp(22px, 3vw, 32px);
+  padding: clamp(1rem, 1.7vw, 1.35rem);
+  background:
+    radial-gradient(ellipse at 18% -20%, rgba(255, 221, 90, 0.16), transparent 18rem),
+    radial-gradient(ellipse at 92% 10%, rgba(59, 130, 246, 0.2), transparent 20rem),
+    linear-gradient(135deg, rgba(17, 24, 43, 0.94), rgba(5, 9, 20, 0.86));
+  box-shadow:
+    0 26px 70px rgba(0, 0, 0, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.activity-feed::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(255, 213, 0, 0.1), transparent 16%, transparent 84%, rgba(83, 127, 255, 0.12)),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.025) 0 1px, transparent 1px 32px);
+  opacity: 0.55;
+}
+
+.activity-feed > * {
+  position: relative;
+  z-index: 1;
+}
+
+.activity-feed .feed-heading {
+  grid-template-columns: minmax(0, 1fr) auto;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 0.74rem;
+}
+
+.activity-feed h2 {
+  letter-spacing: -0.015em;
+}
+
+.activity-live-label {
+  background:
+    linear-gradient(180deg, rgba(85, 246, 165, 0.14), rgba(85, 246, 165, 0.055)),
+    rgba(2, 6, 23, 0.52);
+  box-shadow:
+    0 0 22px rgba(85, 246, 165, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.activity-tabs {
+  gap: 0.48rem;
+  margin-top: -0.08rem;
+}
+
+.activity-tabs button {
+  min-height: 2.12rem;
+  padding: 0.48rem 0.72rem;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.activity-rail-shell {
+  gap: 0.64rem;
+}
+
+.activity-rail {
+  gap: 0.82rem;
+  padding: 0.2rem 0.1rem 0.56rem;
+  mask-image: linear-gradient(90deg, transparent, #000 2.4rem, #000 calc(100% - 2.4rem), transparent);
+}
+
+.activity-rail-button {
+  width: 2.15rem;
+  height: 2.15rem;
+  flex: 0 0 auto;
+}
+
+.activity-rail .feed-item {
+  flex-basis: clamp(16.5rem, 22vw, 20rem);
+  min-height: 6.6rem;
+  border: 1px solid rgba(255, 255, 255, 0.105);
+  border-radius: 20px;
+  padding: 0.72rem 0.78rem;
+  backdrop-filter: blur(18px) saturate(120%);
+}
+
+.activity-rail .feed-item:focus-visible {
+  outline: 2px solid rgba(255, 213, 0, 0.72);
+  outline-offset: 3px;
+}
+
+.activity-rail .feed-item::before {
+  content: "";
+  position: absolute;
+  top: 0.72rem;
+  right: 0.72rem;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 999px;
+  background: rgba(255, 213, 0, 0.8);
+  box-shadow: 0 0 14px rgba(255, 213, 0, 0.38);
+  opacity: 0.5;
+}
+
+.activity-rail .feed-item.is-live-pulse::before {
+  background: #55f6a5;
+  box-shadow: 0 0 18px rgba(85, 246, 165, 0.52);
+  opacity: 1;
+}
+
+.activity-rail .feed-item p {
+  padding-right: 0.7rem;
+}
+
+.activity-copy small {
+  max-width: 24ch;
+}
+
+.activity-meta {
+  margin-top: 0.42rem;
+}
+
+@media (min-width: 1280px) {
+  .activity-rail .feed-item {
+    flex-basis: calc((100% - 2.46rem) / 4);
+  }
+}
+
+@media (max-width: 900px) {
+  .activity-rail {
+    mask-image: none;
+  }
+
+  .activity-rail .feed-item {
+    flex-basis: min(44vw, 19rem);
+  }
+}
+
+@media (max-width: 575px) {
+  .activity-feed {
+    border-radius: 22px;
+    padding: 0.92rem;
+  }
+
+  .activity-rail .feed-item {
+    flex-basis: min(84vw, 19rem);
+  }
+}
+
 /* VHS inspection modal: physical front/back object with readable rental-box details. */
 .movie-detail-expansion {
   padding: clamp(0.8rem, 2.2vw, 1.45rem);

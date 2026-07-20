@@ -18,9 +18,14 @@
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-ritual: cubic-bezier(0.33, 1, 0.68, 1);
+  --ease-premium: cubic-bezier(0.2, 0.78, 0.18, 1);
+  --ease-shelf: cubic-bezier(0.18, 0.9, 0.22, 1);
   --motion-fast: 240ms;
   --motion-med: 520ms;
   --motion-slow: 900ms;
+  --motion-polish-fast: 180ms;
+  --motion-polish-med: 420ms;
+  --motion-polish-slow: 760ms;
 }
 
 * {
@@ -102,4 +107,3 @@ img {
 a {
   color: inherit;
 }
-

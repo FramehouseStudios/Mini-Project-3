@@ -63,8 +63,8 @@
             tonight's rental to your plastic Blockbuster+ checkout bag.
           </p>
           <p class="rental-dashboard-hint">
-            Tip: click any VHS once to flip to the back cover, then click again
-            for the full rental box.
+            Tip: flip a VHS case for the back cover, flip again for the full
+            rental box.
           </p>
         </div>
         <div class="rental-status-row" aria-label="Rental status">
@@ -145,10 +145,23 @@
         </article>
         <aside class="activity-feed" aria-labelledby="activityFeedHeading">
           <div class="feed-heading">
-            <p class="eyebrow">Recently logged</p>
+            <p class="eyebrow">Live from the aisles</p>
             <h2 id="activityFeedHeading">Store Activity</h2>
+            <p class="activity-live-label"><span aria-hidden="true"></span>Live checkout ticker</p>
           </div>
-          <div class="feed-list" id="recentActivity"></div>
+          <div class="activity-tabs" id="activityTabs" role="tablist" aria-label="Filter store activity">
+            <button class="is-active" type="button" role="tab" aria-selected="true" aria-pressed="true" data-activity-filter="all">All</button>
+            <button type="button" role="tab" aria-selected="false" aria-pressed="false" data-activity-filter="rented">Rented</button>
+            <button type="button" role="tab" aria-selected="false" aria-pressed="false" data-activity-filter="rewatched">Rewatched</button>
+            <button type="button" role="tab" aria-selected="false" aria-pressed="false" data-activity-filter="bagged">Bagged</button>
+            <button type="button" role="tab" aria-selected="false" aria-pressed="false" data-activity-filter="clerk">Clerk Picks</button>
+            <button type="button" role="tab" aria-selected="false" aria-pressed="false" data-activity-filter="live">Live Now</button>
+          </div>
+          <div class="activity-rail-shell">
+            <button class="activity-rail-button" id="activityRailPrev" type="button" aria-label="Scroll activity left">‹</button>
+            <div class="feed-list activity-rail" id="recentActivity" tabindex="0" aria-live="polite" aria-label="Live store activity"></div>
+            <button class="activity-rail-button" id="activityRailNext" type="button" aria-label="Scroll activity right">›</button>
+          </div>
         </aside>
       </section>
 
@@ -211,6 +224,9 @@
           <p>
             Browse one rental at a time. Pass it back to the shelf, toss it into
             the bag, or open the regulars' reviews before you commit.
+          </p>
+          <p class="swipe-instruction">
+            Skip it, review it, or throw it in tonight's bag.
           </p>
         </div>
         <div class="swipe-shelf-stage" id="swipeShelfStage" aria-live="polite">
@@ -349,6 +365,7 @@
             class="projector-theater-close"
             id="projectorTheaterClose"
             type="button"
+            aria-label="Pause screening and close projector"
           >
             Pause Screening
           </button>
@@ -416,6 +433,7 @@
       </div>
     </footer>
 
+    <script src="js/blockbuster-logic.js"></script>
     <script src="js/camera.js"></script>
     <script src="js/app.js"></script>
   </body>
