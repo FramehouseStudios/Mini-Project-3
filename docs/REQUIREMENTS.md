@@ -2,58 +2,61 @@
 
 ## Product Goal
 
-Continue Blockbuster+ as the primary product while preserving the completed Mini Project 2 React work, then deliver one repository that demonstrates the progression from frontend application design into Modules 8 and 9: relational data design, an MVC backend, external API integration, and REST API development.
+Deliver Blockbuster+ as one complete project that evolves the Mini Project 2 React application into the Mini Project 3 full-stack assignment. There is one user experience, one npm workspace tree, one API, and one database-backed film domain.
 
 ## Audience
 
-- Film lovers looking for a curated alternative to algorithm-first streaming services
-- A professor reviewing frontend craft, database understanding, API structure, and presentation readiness
+- Film lovers looking for a focused alternative to algorithm-first streaming catalogs
+- A professor reviewing React craft, planning evidence, MVC boundaries, relational data, CRUD, and presentation readiness
 
 ## User Capabilities
 
-- Browse a database-backed film catalog
-- Search and filter films by title and genre in the browser
-- Receive mood-based recommendations
-- Build and retain a rental bag in the browser
-- Inspect individual film details and reviews
-- Use the API to create, read, update, and delete film records
-- Filter and paginate records from the API
-- Refresh records from an external data source
+- Browse, search, filter, and sort a database-backed film catalog
+- Open dynamic film-detail routes
+- Add or remove films from a persistent rental bag
+- Submit a controlled local review form
+- Create, read, update, and delete catalog records through the UI
+- Demonstrate the same CRUD operations through Swagger or Postman
 
 ## Functional Requirements
 
-1. Serve all Blockbuster+ pages through one Express application.
-2. Use MVC boundaries for film API behavior.
-3. Create the SQLite database automatically.
-4. On an empty database, fetch Studio Ghibli data before starting the server.
-5. Preserve the original curated film catalog and use it as a network fallback.
-6. Support full film CRUD and useful catalog queries.
-7. Return predictable success and error responses.
-8. Provide both Swagger UI and a Postman collection.
-9. Include automated tests for browser logic and backend behavior.
+1. Register the Vite app as the root npm workspace at `apps/web`.
+2. Use modern React functional components and React Router with at least three routes.
+3. Demonstrate `useState`, `useEffect`, `useContext`, `useMemo`, a custom hook, controlled forms, and immutable updates.
+4. Fetch records with Axios and render loading, error, empty, and success states.
+5. Use Material UI for a responsive, accessible component system.
+6. Serve the built React SPA through the Express application.
+7. Use Model, Controller, and Route boundaries for film API behavior.
+8. Create the normalized SQLite schema automatically.
+9. Populate an empty database from an external API at startup, with a curated offline fallback.
+10. Support complete film CRUD and predictable API responses.
+11. Provide Swagger UI, a Postman collection, automated tests, and a clear review path.
 
 ## Non-Functional Requirements
 
-- One-command local startup after dependency installation
-- No required API key or committed secret
-- Responsive and keyboard-accessible frontend behavior
-- Immutable, testable browser helper logic
-- Database constraints for invalid ratings, years, and runtimes
-- Safe duplicate handling when external data is refreshed
-- Clear grading and presentation documentation
+- One-command production startup after dependency installation
+- No API key or committed secret
+- Responsive keyboard-accessible UI with visible focus states
+- URL-backed catalog filters and resilient request states
+- Request cancellation for unmounted React views
+- Immutable Context and derived-list operations
+- Database constraints for invalid years, ratings, runtimes, and relationships
+- Safe duplicate handling during external refreshes
+- Honest, concise documentation for grading and presentation
 
 ## Success Criteria
 
-- A fresh startup produces a usable database from the external API and curated catalog.
-- The visual catalog renders records returned by `/api/v1/films`.
-- Postman can run create, read, update, and delete sequentially.
-- Swagger lists every required operation.
-- `npm run check` exits successfully.
+- `npm start` builds the Vite workspace and starts the complete application.
+- The dashboard and film routes render records returned by `/api/v1/films`.
+- Rental selections survive navigation and refresh.
+- The Catalog Manager completes a create/read/update/delete cycle.
+- Swagger and the Postman collection expose every required operation.
+- A network failure during seed still leaves a usable curated catalog.
+- `npm run check` exits successfully with no lint warnings or failing tests.
 
 ## Future Scope
 
-- Authentication and per-user rental bags
-- User-created reviews through the interface
-- Production database deployment
-- Admin editing interface
-- Scheduled external data refreshes
+- Authentication and per-user rentals
+- Persisted review records submitted through the API
+- Role-based access for catalog management
+- Production database hosting and scheduled seed refreshes

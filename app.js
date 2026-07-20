@@ -7,6 +7,7 @@ const openApiDocument = require('./docs/openapi.json');
 
 const app = express();
 const rootDirectory = __dirname;
+const webDistDirectory = path.join(rootDirectory, 'apps', 'web', 'dist');
 
 app.disable('x-powered-by');
 app.use(express.json({ limit: '250kb' }));
@@ -48,18 +49,29 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openApiDocument, {
   customSiteTitle: 'Blockbuster+ API Documentation',
 }));
 
-app.use('/css', express.static(path.join(rootDirectory, 'css')));
-app.use('/js', express.static(path.join(rootDirectory, 'js')));
-app.get('/data/films.json', (_req, res) => res.sendFile(path.join(rootDirectory, 'data', 'films.json')));
-
-app.get(['/', '/index.html'], (_req, res) => res.sendFile(path.join(rootDirectory, 'index.html')));
-app.get(['/films', '/films.html'], (_req, res) => res.sendFile(path.join(rootDirectory, 'films.html')));
-app.get(['/about', '/about.html'], (_req, res) => res.sendFile(path.join(rootDirectory, 'about.html')));
-
 app.use('/api', (req, res) => {
   res.status(404).json({
     success: false,
     error: { code: 'NOT_FOUND', message: `No API route matches ${req.method} ${req.originalUrl}` },
+  });
+});
+
+app.get('/index.html', (_req, res) => res.redirect(308, '/'));
+app.get('/films.html', (_req, res) => res.redirect(308, '/films'));
+app.get('/about.html', (_req, res) => res.redirect(308, '/about'));
+app.use(express.static(webDistDirectory, { index: false }));
+
+app.use((req, res, next) => {
+  if (req.method === 'GET' && req.accepts('html')) {
+    return res.sendFile(path.join(webDistDirectory, 'index.html'));
+  }
+  return next();
+});
+
+app.use((req, res) => {
+  res.status(404).json({
+    success: false,
+    error: { code: 'NOT_FOUND', message: `No route matches ${req.method} ${req.originalUrl}` },
   });
 });
 

@@ -1,0 +1,42 @@
+<svg viewBox="0 0 580 540" width="580" height="540" xmlns="http://www.w3.org/2000/svg" font-family="Arial, Helvetica, sans-serif">
+  <rect x="0" y="0" width="580" height="540" fill="#071126"/>
+  <text x="20" y="34" font-size="16" font-weight="800" fill="#f6f8ff">4 · Rental Bag  (/rentals)</text>
+  <g transform="translate(20,50)">
+    <rect x="0" y="0" width="540" height="470" fill="#071126" stroke="#aebbd3" stroke-width="1.5"/>
+    <rect x="1.5" y="1.5" width="537" height="24" fill="#101d38"/>
+    <circle cx="16" cy="13" r="4" fill="#aebbd3"/><circle cx="30" cy="13" r="4" fill="#aebbd3"/><circle cx="44" cy="13" r="4" fill="#aebbd3"/>
+    <rect x="66" y="6" width="330" height="14" rx="7" fill="#101d38" stroke="#c8c8c8"/>
+    <text x="76" y="16" font-size="9" fill="#aebbd3">blockbuster-plus.local/rentals</text>
+    <rect x="1.5" y="25.5" width="537" height="30" fill="#1757d1"/>
+    <text x="14" y="46" font-size="13" font-weight="700" fill="#f6f8ff">▢ Blockbuster+</text>
+    <text x="250" y="45" font-size="10" fill="#f6f8ff">Dashboard · Films · Rental Bag · About</text>
+    <circle cx="518" cy="41" r="9" fill="#0a2c74"/><text x="518" y="45" font-size="9" fill="#f6f8ff" text-anchor="middle">2</text>
+
+    <text x="14" y="80" font-size="16" font-weight="800" fill="#f6f8ff">Rental Bag</text>
+    <text x="14" y="96" font-size="9" fill="#aebbd3">saved films via global Context (no prop-drilling) + localStorage persistence</text>
+    <rect x="426" y="66" width="100" height="24" rx="4" fill="#101d38" stroke="#1757d1"/><text x="476" y="82" font-size="9" fill="#1757d1" text-anchor="middle">Clear saved</text>
+
+    <rect x="14" y="106" width="164" height="50" rx="5" fill="#101d38" stroke="#334464"/><text x="24" y="124" font-size="8" fill="#aebbd3">Shortlist total</text><text x="24" y="146" font-size="15" font-weight="800" fill="#f6f8ff">$174.15</text>
+    <rect x="190" y="106" width="160" height="50" rx="5" fill="#101d38" stroke="#334464"/><text x="200" y="124" font-size="8" fill="#aebbd3">Average rating</text><text x="200" y="146" font-size="15" font-weight="800" fill="#f6f8ff">4.2</text>
+    <rect x="362" y="106" width="164" height="50" rx="5" fill="#101d38" stroke="#334464"/><text x="372" y="124" font-size="8" fill="#aebbd3">Highest price</text><text x="372" y="146" font-size="15" font-weight="800" fill="#f6f8ff">$109.95</text>
+
+    <text x="14" y="184" font-size="11" font-weight="700" fill="#f6f8ff">Saved shortlist</text>
+    <rect x="430" y="172" width="96" height="16" rx="8" fill="#c9835b"/><text x="478" y="183" font-size="8" fill="#f6f8ff" text-anchor="middle">genres…</text>
+
+    <rect x="14" y="196" width="512" height="64" rx="5" fill="#101d38" stroke="#334464"/>
+    <rect x="26" y="206" width="44" height="44" rx="4" fill="#0c1830" stroke="#334464" stroke-dasharray="4 3"/><text x="48" y="231" font-size="7" fill="#aebbd3" text-anchor="middle">IMG</text>
+    <rect x="82" y="210" width="60" height="14" rx="7" fill="#eaddd1"/><rect x="148" y="210" width="50" height="14" rx="7" fill="#c9835b"/>
+    <rect x="82" y="232" width="200" height="9" rx="3" fill="#233658"/><text x="82" y="254" font-size="8" fill="#aebbd3">★★★★  rating · reviews</text>
+    <rect x="378" y="218" width="64" height="24" rx="4" fill="#101d38" stroke="#1757d1"/><text x="410" y="234" font-size="8" fill="#1757d1" text-anchor="middle">Details</text>
+    <rect x="450" y="218" width="64" height="24" rx="4" fill="#101d38" stroke="#1757d1"/><text x="482" y="234" font-size="8" fill="#1757d1" text-anchor="middle">🗑 Remove</text>
+
+    <rect x="14" y="268" width="512" height="64" rx="5" fill="#101d38" stroke="#334464"/>
+    <rect x="26" y="278" width="44" height="44" rx="4" fill="#0c1830" stroke="#334464" stroke-dasharray="4 3"/><text x="48" y="303" font-size="7" fill="#aebbd3" text-anchor="middle">IMG</text>
+    <rect x="82" y="282" width="60" height="14" rx="7" fill="#eaddd1"/><rect x="148" y="282" width="50" height="14" rx="7" fill="#c9835b"/>
+    <rect x="82" y="304" width="200" height="9" rx="3" fill="#233658"/><text x="82" y="326" font-size="8" fill="#aebbd3">★★★★  rating · reviews</text>
+    <rect x="378" y="290" width="64" height="24" rx="4" fill="#101d38" stroke="#1757d1"/><text x="410" y="306" font-size="8" fill="#1757d1" text-anchor="middle">Details</text>
+    <rect x="450" y="290" width="64" height="24" rx="4" fill="#101d38" stroke="#1757d1"/><text x="482" y="306" font-size="8" fill="#1757d1" text-anchor="middle">🗑 Remove</text>
+
+    <text x="14" y="356" font-size="9" fill="#aebbd3" font-style="italic">Empty state: "No saved films yet" + Browse films CTA</text>
+  </g>
+</svg>

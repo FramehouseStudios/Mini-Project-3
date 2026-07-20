@@ -1,0 +1,36 @@
+<svg viewBox="0 0 580 540" width="580" height="540" xmlns="http://www.w3.org/2000/svg" font-family="Arial, Helvetica, sans-serif">
+  <rect x="0" y="0" width="580" height="540" fill="#071126"/>
+  <text x="20" y="34" font-size="16" font-weight="800" fill="#f6f8ff">2 · Films  (/films)</text>
+  <g transform="translate(20,50)">
+    <rect x="0" y="0" width="540" height="470" fill="#071126" stroke="#aebbd3" stroke-width="1.5"/>
+    <rect x="1.5" y="1.5" width="537" height="24" fill="#101d38"/>
+    <circle cx="16" cy="13" r="4" fill="#aebbd3"/><circle cx="30" cy="13" r="4" fill="#aebbd3"/><circle cx="44" cy="13" r="4" fill="#aebbd3"/>
+    <rect x="66" y="6" width="330" height="14" rx="7" fill="#101d38" stroke="#c8c8c8"/>
+    <text x="76" y="16" font-size="9" fill="#aebbd3">blockbuster-plus.local/films?genre=…&amp;sort=…</text>
+    <rect x="1.5" y="25.5" width="537" height="30" fill="#1757d1"/>
+    <text x="14" y="46" font-size="13" font-weight="700" fill="#f6f8ff">▢ Blockbuster+</text>
+    <text x="250" y="45" font-size="10" fill="#f6f8ff">Dashboard · Films · Rental Bag · About</text>
+    <circle cx="518" cy="41" r="9" fill="#0a2c74"/><text x="518" y="45" font-size="9" fill="#f6f8ff" text-anchor="middle">2</text>
+
+    <text x="14" y="80" font-size="16" font-weight="800" fill="#f6f8ff">Films</text>
+    <text x="14" y="96" font-size="9" fill="#aebbd3">search · category filter · sort · save  (page state via useState; data via useFilms)</text>
+
+    <rect x="14" y="106" width="250" height="32" rx="4" fill="#101d38" stroke="#c29a86"/><text x="26" y="126" font-size="9" fill="#aebbd3">🔍  Search films</text>
+    <rect x="274" y="106" width="120" height="32" rx="4" fill="#101d38" stroke="#c29a86"/><text x="286" y="126" font-size="9" fill="#aebbd3">Category ▼</text>
+    <rect x="402" y="106" width="124" height="32" rx="4" fill="#101d38" stroke="#c29a86"/><text x="414" y="126" font-size="9" fill="#aebbd3">Sort ▼</text>
+    <text x="14" y="158" font-size="9" fill="#aebbd3">Showing 12 of 20 films   [chips: Search · Category · Sort]</text>
+    <rect x="440" y="146" width="86" height="22" rx="4" fill="#101d38" stroke="#1757d1"/><text x="483" y="161" font-size="9" fill="#1757d1" text-anchor="middle">Reset filters</text>
+
+    <rect x="14" y="176" width="164" height="44" rx="5" fill="#101d38" stroke="#334464"/><text x="24" y="192" font-size="8" fill="#aebbd3">Visible results</text><text x="24" y="211" font-size="14" font-weight="800" fill="#f6f8ff">12</text>
+    <rect x="190" y="176" width="160" height="44" rx="5" fill="#101d38" stroke="#334464"/><text x="200" y="192" font-size="8" fill="#aebbd3">Avg visible price</text><text x="200" y="211" font-size="14" font-weight="800" fill="#f6f8ff">$54.20</text>
+    <rect x="362" y="176" width="164" height="44" rx="5" fill="#101d38" stroke="#334464"/><text x="372" y="192" font-size="8" fill="#aebbd3">Saved shortlist</text><text x="372" y="211" font-size="14" font-weight="800" fill="#f6f8ff">2</text>
+
+    <text x="14" y="240" font-size="10" font-weight="700" fill="#aebbd3">FilmGrid → FilmCard ✕ N  (responsive 1 / 2 / 3 columns)</text>
+    <rect x="14" y="248" width="164" height="100" rx="5" fill="#101d38" stroke="#334464"/><rect x="22" y="256" width="148" height="40" rx="3" fill="#0c1830" stroke="#334464" stroke-dasharray="5 3"/><text x="96" y="280" font-size="8" fill="#aebbd3" text-anchor="middle">IMG</text><rect x="22" y="302" width="120" height="8" rx="3" fill="#233658"/><text x="22" y="326" font-size="9" font-weight="700" fill="#f6f8ff">$  ★★★★  ♡</text><text x="118" y="342" font-size="8" fill="#aebbd3">View ▸</text>
+    <rect x="190" y="248" width="160" height="100" rx="5" fill="#101d38" stroke="#334464"/><rect x="198" y="256" width="144" height="40" rx="3" fill="#0c1830" stroke="#334464" stroke-dasharray="5 3"/><text x="270" y="280" font-size="8" fill="#aebbd3" text-anchor="middle">IMG</text><rect x="198" y="302" width="120" height="8" rx="3" fill="#233658"/><text x="198" y="326" font-size="9" font-weight="700" fill="#f6f8ff">$  ★★★★  ♡</text><text x="292" y="342" font-size="8" fill="#aebbd3">View ▸</text>
+    <rect x="362" y="248" width="164" height="100" rx="5" fill="#101d38" stroke="#334464"/><rect x="370" y="256" width="148" height="40" rx="3" fill="#0c1830" stroke="#334464" stroke-dasharray="5 3"/><text x="444" y="280" font-size="8" fill="#aebbd3" text-anchor="middle">IMG</text><rect x="370" y="302" width="120" height="8" rx="3" fill="#233658"/><text x="370" y="326" font-size="9" font-weight="700" fill="#f6f8ff">$  ★★★★  ♡</text><text x="466" y="342" font-size="8" fill="#aebbd3">View ▸</text>
+    <rect x="14" y="356" width="164" height="100" rx="5" fill="#101d38" stroke="#334464"/><rect x="22" y="364" width="148" height="40" rx="3" fill="#0c1830" stroke="#334464" stroke-dasharray="5 3"/><text x="96" y="388" font-size="8" fill="#aebbd3" text-anchor="middle">IMG</text><rect x="22" y="410" width="120" height="8" rx="3" fill="#233658"/><text x="22" y="434" font-size="9" font-weight="700" fill="#f6f8ff">$  ★★★★  ♡</text><text x="118" y="450" font-size="8" fill="#aebbd3">View ▸</text>
+    <rect x="190" y="356" width="160" height="100" rx="5" fill="#101d38" stroke="#334464"/><rect x="198" y="364" width="144" height="40" rx="3" fill="#0c1830" stroke="#334464" stroke-dasharray="5 3"/><text x="270" y="388" font-size="8" fill="#aebbd3" text-anchor="middle">IMG</text><rect x="198" y="410" width="120" height="8" rx="3" fill="#233658"/><text x="198" y="434" font-size="9" font-weight="700" fill="#f6f8ff">$  ★★★★  ♡</text><text x="292" y="450" font-size="8" fill="#aebbd3">View ▸</text>
+    <rect x="362" y="356" width="164" height="100" rx="5" fill="#101d38" stroke="#334464"/><rect x="370" y="364" width="148" height="40" rx="3" fill="#0c1830" stroke="#334464" stroke-dasharray="5 3"/><text x="444" y="388" font-size="8" fill="#aebbd3" text-anchor="middle">IMG</text><rect x="370" y="410" width="120" height="8" rx="3" fill="#233658"/><text x="370" y="434" font-size="9" font-weight="700" fill="#f6f8ff">$  ★★★★  ♡</text><text x="466" y="450" font-size="8" fill="#aebbd3">View ▸</text>
+  </g>
+</svg>

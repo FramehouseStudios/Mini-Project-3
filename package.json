@@ -5,19 +5,22 @@
   "main": "server.js",
   "type": "commonjs",
   "workspaces": [
-    "previous-projects/mini-project-2-marketflow"
+    "apps/web"
   ],
   "scripts": {
+    "prestart": "npm run build:web",
     "start": "node server.js",
     "dev": "node --watch server.js",
+    "dev:web": "npm run dev --workspace @blockbuster-plus/web",
+    "build": "npm run build:web",
+    "build:web": "npm run build --workspace @blockbuster-plus/web",
     "seed": "node scripts/seed-database.js",
+    "pretest": "npm run build:web",
     "test": "NODE_ENV=test node --test test/*.test.js",
-    "check": "npm run lint && npm run test && npm run validate:data && npm run check:css && npm run check:mini2",
-    "check:mini2": "npm run lint --workspace mini-project-2-marketflow && npm run build --workspace mini-project-2-marketflow",
+    "check": "npm run lint && npm run lint:web && npm run test && npm run validate:data",
+    "lint:web": "npm run lint --workspace @blockbuster-plus/web",
     "lint": "eslint . --max-warnings 0",
-    "validate:data": "node scripts/validate-films.mjs",
-    "check:css": "node scripts/build-css.mjs --check",
-    "build:css": "node scripts/build-css.mjs"
+    "validate:data": "node scripts/validate-films.mjs"
   },
   "engines": {
     "node": ">=22.5.0"

@@ -2,9 +2,7 @@
 
 Submitted by Joshua Ojeda
 
-Blockbuster+ is a full-stack reimagining of the neighborhood video store. It combines a polished, responsive film-discovery frontend with an Express MVC API, a normalized SQLite database, startup data from an external film API, and complete CRUD operations.
-
-This repository is the unified submission for Mini Project 3 and continues the work developed in the earlier mini projects. It includes Mini Project 2's complete Git history and an independently runnable MarketFlow React workspace for transparent project continuity.
+Blockbuster+ is one cohesive full-stack film discovery and rental-planning application. Mini Project 2's React/Vite work now powers the frontend of Mini Project 3 instead of living as a second lab. The same application combines React, routing, hooks, Context, Material UI, Axios, an Express MVC API, SQLite, startup data integration, and complete CRUD.
 
 ## Quick Start
 
@@ -15,70 +13,71 @@ npm install
 npm start
 ```
 
-Then open:
+`npm start` builds the registered React workspace and starts Express. Open:
 
 - Application: <http://localhost:3000>
 - Film catalog: <http://localhost:3000/films>
+- UI CRUD manager: <http://localhost:3000/catalog-manager>
 - Swagger: <http://localhost:3000/api-docs>
 - API health: <http://localhost:3000/health>
 
-Use `npm start` for this version of the project. Live Server can still display the static fallback, but it does not run Express or SQLite.
+Do not use Live Server for this project. Express must run so the React app can reach SQLite and the REST API.
 
-## Included Mini Project 2
+## One Application, Two Milestones
 
-The completed Mini Project 2 application is preserved at:
+The React/Vite application is registered in the root npm workspace at `apps/web`. It is not a separate earlier-project submission. The React concepts were retained and adapted to the Blockbuster+ film domain, while Mini Project 3 adds the database and API layers.
 
-```text
-previous-projects/mini-project-2-marketflow/
-```
+### Mini Project 2 React requirements
 
-It remains a standalone React/Vite application with React Router, hooks, Context, Material UI, Axios, Fake Store API data, and separate page wireframes. Run it independently with:
-
-```bash
-npm run dev --workspace mini-project-2-marketflow
-```
-
-Its lint and production build are also included in the root `npm run check` quality gate. See [Mini Project 2 integration](docs/MINI_PROJECT_2_INTEGRATION.md) for the exact lineage and feature mapping.
-
-## Assignment Requirements
-
-| Requirement | Implementation |
+| Requirement | Blockbuster+ evidence |
 | --- | --- |
-| MVC architecture | `models/Film.js`, `controllers/filmController.js`, `routes/filmRoutes.js`, and the HTML views |
-| External API startup routine | First launch fetches the keyless Studio Ghibli API |
-| Matching database structure | Film source fields map to SQLite; tags and reviews are normalized into related tables |
-| Complete CRUD | Create, read, update, and delete film endpoints |
-| Postman or Swagger demonstration | Interactive Swagger UI plus an importable Postman collection |
-| Planning and design evidence | Requirements, schema, API contract, architecture, and presentation documents |
+| React application created with Vite | `apps/web/`, registered in root `workspaces` |
+| Functional components | Reusable components and routed pages in `apps/web/src/` |
+| At least three React Router routes | Dashboard, films, detail, rental bag, catalog manager, and about |
+| `useState` | Filters, controlled reviews, catalog CRUD form, dialogs, and request state |
+| `useEffect` | API requests, cancellation, and rental-bag persistence |
+| UI component library | Material UI theme, layout, controls, cards, dialogs, and feedback |
+| Fetched data displayed dynamically | Axios custom hook loads database records seeded from an external film API |
+| Global state | Context shares immutable rental-bag state across routes |
+| Custom hook | `useFilms` and `useFilm` encapsulate API lifecycle behavior |
+| Dynamic routing | `/films/:filmId` loads a database-backed detail view |
+| Form handling | Controlled review form and full catalog CRUD form |
+| Design evidence | `docs/REACT_FRONTEND_DESIGN.md` and `docs/react-wireframes/` |
+| Branches and pull requests | Preserved in the merged Mini Project 2 Git history |
 
-## Data Flow
+### Mini Project 3 technical requirements
+
+| Requirement | Blockbuster+ evidence |
+| --- | --- |
+| MVC architecture | `models/Film.js`, `controllers/filmController.js`, `routes/filmRoutes.js` |
+| Startup external API routine | `server.js` and `services/filmSeedService.js` seed an empty database |
+| Matching database structure | Source fields map to `films`; repeated tags and reviews use related tables |
+| Create | `POST /api/v1/films` and the Catalog Manager |
+| Read | `GET /api/v1/films` and `GET /api/v1/films/:identifier` |
+| Update | `PUT/PATCH /api/v1/films/:id` and the Catalog Manager |
+| Delete | `DELETE /api/v1/films/:id` and confirmed deletion in the Catalog Manager |
+| Postman or Swagger demo | Interactive Swagger UI and importable Postman collection |
+
+## Architecture
 
 ```text
-Browser views
-    -> js/blockbuster-api.js
-    -> /api/v1/films
-    -> routes/filmRoutes.js
-    -> controllers/filmController.js
-    -> models/Film.js
-    -> SQLite
+React/Vite SPA (apps/web)
+  -> Axios service + custom hooks
+  -> /api/v1/films
+  -> Express routes
+  -> controller
+  -> Film model
+  -> normalized SQLite database
 ```
 
-On the first launch, the server:
+On an empty database, startup fetches `https://ghibliapi.vercel.app/films`, maps the returned film fields into the database contract, and combines them with the curated Blockbuster+ catalog. If the external service is unavailable, the curated records keep the application and grading workflow usable.
 
-1. Checks whether the SQLite catalog is empty.
-2. Fetches films from `https://ghibliapi.vercel.app/films`.
-3. Loads the 16 original Blockbuster+ editorial selections.
-4. Maps both sources into one database contract.
-5. Preserves the curated version when the same title exists in both sources.
-
-The normal first seed produces 37 unique films: 16 curated records and 21 non-duplicate external records. If the external service is temporarily unavailable, the original curated catalog keeps the application usable.
-
-## API Highlights
+## API
 
 ```text
 GET    /health
 GET    /api/v1/films
-GET    /api/v1/films/:id
+GET    /api/v1/films/:identifier
 POST   /api/v1/films
 PUT    /api/v1/films/:id
 PATCH  /api/v1/films/:id
@@ -88,75 +87,67 @@ GET    /api/v1/films/stats
 POST   /api/v1/films/seed
 ```
 
-Filters include `q`, `genre`, `mood`, `minRating`, `year`, `source`, sorting, and pagination.
+The list endpoint supports search, genre, mood, year, source, minimum rating, sorting, and pagination.
 
-## Demonstration
-
-Swagger works directly in the browser at <http://localhost:3000/api-docs>.
-
-For Postman, import:
-
-```text
-docs/blockbuster-plus.postman_collection.json
-```
-
-Run its requests from top to bottom. The Create request saves its returned film ID automatically, so the Read, Update, and Delete requests operate on that same record.
-
-## Quality Checks
+## Verification
 
 ```bash
 npm run check
 ```
 
-This command runs:
+The quality gate runs root ESLint, React ESLint, the Vite production build, frontend logic tests, API integration tests including full CRUD, and catalog data validation.
 
-- ESLint across server, browser, script, and test code with zero warnings allowed
-- Frontend logic tests
-- API and full CRUD integration tests
-- Film catalog validation
-- Generated CSS synchronization checks
-- Mini Project 2 React lint and production build
+For Postman, import `docs/blockbuster-plus.postman_collection.json` and run the requests in order. The create request stores its film ID for the subsequent read, update, and delete requests.
+
+## Development
+
+For Vite hot reload, use two terminals:
+
+```bash
+npm run dev
+```
+
+```bash
+npm run dev:web
+```
+
+Open <http://localhost:5173>. Vite proxies `/api` and `/health` to Express on port 3000.
 
 ## Project Structure
 
 ```text
 blockbuster-plus/
-|-- app.js                         # Express app, views, middleware, API docs
+|-- apps/web/                      # React 19 + Vite npm workspace
+|   `-- src/                       # Routes, components, hooks, Context, API client
+|-- app.js                         # Express middleware, API, Swagger, SPA serving
 |-- server.js                      # Startup seed and HTTP server
-|-- config/database.js             # SQLite connection and schema
-|-- models/Film.js                 # Database queries and domain mapping
-|-- controllers/filmController.js  # Request and response logic
-|-- routes/filmRoutes.js            # REST routes
-|-- services/filmSeedService.js    # External API and curated seed mapping
-|-- index.html                      # Home view
-|-- films.html                      # Catalog view
-|-- about.html                      # Project view
-|-- js/blockbuster-api.js           # Shared browser API client and fallback
-|-- data/films.json                 # Original curated fallback catalog
-|-- previous-projects/
-|   `-- mini-project-2-marketflow/  # Runnable React/Vite Mini Project 2 workspace
-|-- docs/                           # Rubric, API, schema, and presentation docs
-|-- test/                           # Unit and integration tests
-`-- scripts/                        # Seed, validation, and CSS scripts
+|-- config/database.js             # SQLite schema and connection
+|-- models/Film.js                 # Data access, mapping, and validation
+|-- controllers/filmController.js  # HTTP request/response logic
+|-- routes/filmRoutes.js           # Versioned REST routes
+|-- services/filmSeedService.js    # External API mapping and seed fallback
+|-- data/films.json                # Curated fallback catalog
+|-- docs/                          # Requirements, wireframes, schema, API, Postman
+|-- test/                          # Frontend logic and API integration tests
+`-- scripts/                       # Seed and data validation tools
 ```
 
-## Submission Helpers
+## Review Documents
 
 - [Submission checklist](SUBMISSION.md)
-- [Requirements and design](docs/REQUIREMENTS.md)
+- [Requirements](docs/REQUIREMENTS.md)
 - [Architecture](docs/ARCHITECTURE.md)
-- [Mini Project 2 integration](docs/MINI_PROJECT_2_INTEGRATION.md)
+- [Project evolution](docs/PROJECT_EVOLUTION.md)
+- [React design plan](docs/REACT_FRONTEND_DESIGN.md)
+- [React route wireframes](docs/react-wireframes/README.md)
 - [Database schema](docs/data-schema.md)
 - [API reference](docs/API_REFERENCE.md)
 - [Presentation script](docs/PRESENTATION_SCRIPT.md)
 - [Postman collection](docs/blockbuster-plus.postman_collection.json)
 
-## Main Technologies
+## Technology
 
-- HTML, CSS, JavaScript, and Bootstrap conventions
-- Node.js and Express 5
+- React 19, Vite, React Router, hooks, Context, Axios, and Material UI
+- Node.js, Express 5, and MVC architecture
 - SQLite through Node's built-in `node:sqlite`
-- MVC architecture
-- Fetch API and an external Studio Ghibli API
-- Swagger UI and Postman
-- Node's built-in test runner
+- Studio Ghibli external API, Swagger UI, Postman, ESLint, and Node test runner

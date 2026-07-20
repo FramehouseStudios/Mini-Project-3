@@ -1,0 +1,47 @@
+<svg viewBox="0 0 580 540" width="580" height="540" xmlns="http://www.w3.org/2000/svg" font-family="Arial, Helvetica, sans-serif">
+  <rect width="580" height="540" fill="#071126"/>
+  <text x="20" y="34" font-size="16" font-weight="800" fill="#f6f8ff">5 · Catalog Manager  (/catalog-manager)</text>
+  <g transform="translate(20,50)">
+    <rect width="540" height="470" fill="#071126" stroke="#aebbd3" stroke-width="1.5"/>
+    <rect x="1.5" y="1.5" width="537" height="24" fill="#101d38"/>
+    <circle cx="16" cy="13" r="4" fill="#aebbd3"/><circle cx="30" cy="13" r="4" fill="#aebbd3"/><circle cx="44" cy="13" r="4" fill="#aebbd3"/>
+    <rect x="66" y="6" width="330" height="14" rx="7" fill="#101d38" stroke="#334464"/>
+    <text x="76" y="16" font-size="9" fill="#aebbd3">blockbuster-plus.local/catalog-manager</text>
+    <rect x="1.5" y="25.5" width="537" height="30" fill="#1757d1"/>
+    <text x="14" y="46" font-size="13" font-weight="700" fill="#f6f8ff">▢ Blockbuster+</text>
+    <text x="228" y="45" font-size="9" fill="#f6f8ff">Dashboard · Films · Rental Bag · Manager · About</text>
+
+    <text x="14" y="82" font-size="16" font-weight="800" fill="#f6f8ff">Catalog Manager</text>
+    <text x="14" y="98" font-size="9" fill="#aebbd3">controlled form · REST CRUD · server validation · SQLite records</text>
+
+    <rect x="14" y="112" width="512" height="172" rx="5" fill="#101d38" stroke="#334464"/>
+    <text x="26" y="136" font-size="12" font-weight="700" fill="#f6f8ff">Add a film</text>
+    <g fill="#0c1830" stroke="#334464">
+      <rect x="26" y="150" width="202" height="28" rx="4"/><rect x="238" y="150" width="132" height="28" rx="4"/><rect x="380" y="150" width="134" height="28" rx="4"/>
+      <rect x="26" y="188" width="150" height="28" rx="4"/><rect x="186" y="188" width="150" height="28" rx="4"/><rect x="346" y="188" width="168" height="28" rx="4"/>
+      <rect x="26" y="226" width="350" height="40" rx="4"/>
+    </g>
+    <g font-size="8" fill="#aebbd3">
+      <text x="36" y="167">Title</text><text x="248" y="167">Genre</text><text x="390" y="167">Director</text>
+      <text x="36" y="205">Year</text><text x="196" y="205">Rating</text><text x="356" y="205">Runtime</text><text x="36" y="244">Description</text>
+    </g>
+    <rect x="388" y="232" width="126" height="30" rx="4" fill="#1757d1"/><text x="451" y="251" text-anchor="middle" font-size="9" font-weight="700" fill="#f6f8ff">Create film</text>
+
+    <text x="14" y="312" font-size="12" font-weight="700" fill="#f6f8ff">Database records</text>
+    <text x="480" y="312" font-size="9" fill="#aebbd3">37 films</text>
+    <g fill="#101d38" stroke="#334464">
+      <rect x="14" y="326" width="250" height="58" rx="5"/><rect x="276" y="326" width="250" height="58" rx="5"/>
+      <rect x="14" y="396" width="250" height="58" rx="5"/><rect x="276" y="396" width="250" height="58" rx="5"/>
+    </g>
+    <g font-size="9" fill="#f6f8ff" font-weight="700">
+      <text x="26" y="346">Film title</text><text x="288" y="346">Film title</text><text x="26" y="416">Film title</text><text x="288" y="416">Film title</text>
+    </g>
+    <g font-size="8" fill="#aebbd3">
+      <text x="26" y="363">Year · Genre · Rating · Runtime</text><text x="288" y="363">Year · Genre · Rating · Runtime</text>
+      <text x="26" y="433">Year · Genre · Rating · Runtime</text><text x="288" y="433">Year · Genre · Rating · Runtime</text>
+    </g>
+    <g font-size="8" fill="#ffd633" font-weight="700">
+      <text x="190" y="374">Edit · Delete</text><text x="452" y="374">Edit · Delete</text><text x="190" y="444">Edit · Delete</text><text x="452" y="444">Edit · Delete</text>
+    </g>
+  </g>
+</svg>

@@ -17,7 +17,7 @@ module.exports = [
       'node_modules/**',
       'data/*.sqlite*',
       'coverage/**',
-      'previous-projects/**',
+      'apps/web/**',
     ],
   },
   {
@@ -44,18 +44,6 @@ module.exports = [
       ecmaVersion: 'latest',
       sourceType: 'module',
       globals: globals.node,
-    },
-    rules: sharedRules,
-  },
-  {
-    files: ['js/**/*.js'],
-    languageOptions: {
-      ecmaVersion: 'latest',
-      sourceType: 'script',
-      globals: {
-        ...globals.browser,
-        module: 'readonly',
-      },
     },
     rules: sharedRules,
   },

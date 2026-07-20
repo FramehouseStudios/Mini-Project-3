@@ -4,24 +4,25 @@ Submitted by Joshua Ojeda
 
 ## Project
 
-Blockbuster+ is a full-stack film discovery and rental-planning application. The browser experience, MVC API, external startup import, SQLite database, CRUD routes, test suite, Postman collection, and Swagger documentation all run from this repository.
+Blockbuster+ is the single priority application for this submission. Mini Project 2's React/Vite implementation has been evolved into the frontend at `apps/web`; Mini Project 3 adds the MVC API, external startup seed, SQLite persistence, and complete CRUD behind that same interface.
 
 ## Grading Checklist
 
 | Requirement | Status | Evidence |
 | --- | --- | --- |
-| MVC architecture | Complete | `models/`, `controllers/`, `routes/`, HTML views |
+| React/Vite workspace | Complete | Root `package.json` registers `apps/web` |
+| React functional components and routing | Complete | Six routes in `apps/web/src/App.jsx` |
+| React hooks and Context | Complete | `useFilms`, page state, `AppContext` |
+| Material UI and Axios | Complete | Themed UI and `services/filmApi.js` |
+| Design and wireframes | Complete | `docs/REACT_FRONTEND_DESIGN.md`, `docs/react-wireframes/` |
+| MVC architecture | Complete | `models/`, `controllers/`, `routes/` |
 | Startup external API import | Complete | `server.js`, `services/filmSeedService.js` |
-| Database reflects API data | Complete | `config/database.js`, `docs/data-schema.md` |
-| Create | Complete | `POST /api/v1/films` |
-| Read | Complete | `GET /api/v1/films` and `GET /api/v1/films/:id` |
-| Update | Complete | `PUT/PATCH /api/v1/films/:id` |
-| Delete | Complete | `DELETE /api/v1/films/:id` |
+| Database reflects source data | Complete | `config/database.js`, `docs/data-schema.md` |
+| Create, read, update, delete | Complete | REST endpoints, API tests, and `/catalog-manager` |
 | Postman demonstration | Complete | `docs/blockbuster-plus.postman_collection.json` |
 | Swagger demonstration | Complete | `/api-docs` |
-| Design evidence | Complete | `docs/REQUIREMENTS.md`, `docs/ARCHITECTURE.md` |
-| Mini Project 2 continuity | Complete | Merged Git history and runnable `previous-projects/mini-project-2-marketflow/` workspace |
-| Automated verification | Complete | Zero-warning ESLint plus tests, data validation, and CSS checks through `npm run check` |
+| Automated verification | Complete | `npm run check` |
+| Mini Project 2 Git evidence | Complete | Earlier branches and merged pull requests remain in repository history |
 
 ## Professor Review Path
 
@@ -30,21 +31,14 @@ npm install
 npm start
 ```
 
-1. Open <http://localhost:3000> to see the full application.
-2. Open <http://localhost:3000/films> to confirm database-backed films render.
-3. Open <http://localhost:3000/api-docs> for interactive CRUD documentation.
-4. Import the Postman collection and run requests 1 through 9.
-5. Run `npm run check` to verify tests, data, and CSS.
-6. Review `docs/MINI_PROJECT_2_INTEGRATION.md`; the same check also lints and builds the included MarketFlow React workspace.
+1. Open <http://localhost:3000> for the dashboard.
+2. Open <http://localhost:3000/films> to search, filter, sort, and save films.
+3. Open a film detail route to demonstrate dynamic routing and the controlled review form.
+4. Open <http://localhost:3000/rentals> to demonstrate shared Context and localStorage.
+5. Open <http://localhost:3000/catalog-manager> to create, edit, and delete a test film.
+6. Open <http://localhost:3000/api-docs> to repeat CRUD without relying on the frontend.
+7. Run `npm run check` for the complete automated quality gate.
 
-## Expected First-Run Evidence
+## Expected First Run
 
-With the external service available, startup reports:
-
-```text
-Database seeded with 16 curated and 22 external films
-Blockbuster+ running at http://localhost:3000
-Swagger documentation at http://localhost:3000/api-docs
-```
-
-One overlapping title is intentionally preserved as the curated version, resulting in 37 unique database records.
+With the external service available, startup reports the curated and external record counts. If it is offline, startup logs a warning and uses the curated catalog so the demonstration remains functional.

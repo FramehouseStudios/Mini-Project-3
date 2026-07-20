@@ -1,0 +1,34 @@
+<svg viewBox="0 0 580 540" width="580" height="540" xmlns="http://www.w3.org/2000/svg" font-family="Arial, Helvetica, sans-serif">
+  <rect x="0" y="0" width="580" height="540" fill="#071126"/>
+  <text x="20" y="34" font-size="16" font-weight="800" fill="#f6f8ff">7 · Key &amp; Component Hierarchy</text>
+  <g transform="translate(20,50)">
+    <rect x="0" y="0" width="540" height="470" fill="#071126" stroke="#aebbd3" stroke-width="1.5"/>
+
+    <text x="20" y="34" font-size="13" font-weight="800" fill="#f6f8ff">Wireframe key</text>
+    <rect x="20" y="46" width="40" height="22" rx="3" fill="#0c1830" stroke="#334464" stroke-dasharray="5 3"/><text x="70" y="61" font-size="10" fill="#aebbd3">Image / media placeholder</text>
+    <rect x="20" y="76" width="40" height="22" rx="4" fill="#1757d1"/><text x="70" y="91" font-size="10" fill="#aebbd3">Primary button / CTA</text>
+    <rect x="20" y="106" width="40" height="22" rx="4" fill="#101d38" stroke="#1757d1"/><text x="70" y="121" font-size="10" fill="#aebbd3">Secondary / outline button</text>
+    <rect x="20" y="136" width="40" height="16" rx="8" fill="#eaddd1"/><text x="70" y="148" font-size="10" fill="#aebbd3">Chip / tag / category</text>
+    <rect x="20" y="162" width="40" height="8" rx="3" fill="#233658"/><text x="70" y="170" font-size="10" fill="#aebbd3">Text content / label</text>
+
+    <line x1="20" y1="190" x2="520" y2="190" stroke="#334464"/>
+
+    <text x="20" y="214" font-size="13" font-weight="800" fill="#f6f8ff">Component hierarchy</text>
+    <g font-family="Courier New, monospace" font-size="11" fill="#f6f8ff">
+      <text x="20" y="236">App  (Routes)</text>
+      <text x="20" y="254">└─ AppProvider          ← Context: rentalFilmIds</text>
+      <text x="20" y="272">   └─ Layout             ← AppBar + nav + Outlet</text>
+      <text x="20" y="290">      ├─ DashboardPage    ← StatCard, FilmGrid</text>
+      <text x="20" y="308">      ├─ FilmsPage        ← FilmControls,</text>
+      <text x="20" y="324">      │                     FilmGrid → FilmCard</text>
+      <text x="20" y="342">      ├─ FilmDetailPage   ← FilmReviewForm</text>
+      <text x="20" y="360">      ├─ RentalBagPage    ← Context selections</text>
+      <text x="20" y="378">      ├─ CatalogManagerPage ← CRUD form</text>
+      <text x="20" y="396">      └─ AboutPage</text>
+    </g>
+    <line x1="20" y1="408" x2="520" y2="408" stroke="#334464"/>
+    <text x="20" y="428" font-size="10" fill="#f6f8ff"><tspan font-weight="700">Hooks:</tspan>  useState · useEffect · useContext · useMemo · route hooks</text>
+    <text x="20" y="446" font-size="10" fill="#f6f8ff"><tspan font-weight="700">Custom hook:</tspan>  useFilms() → Axios → /api/v1/films</text>
+    <text x="20" y="464" font-size="10" fill="#f6f8ff"><tspan font-weight="700">Tools:</tspan>  React 19 · Vite · React Router · MUI · Axios</text>
+  </g>
+</svg>
