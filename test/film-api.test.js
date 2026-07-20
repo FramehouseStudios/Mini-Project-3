@@ -3,7 +3,11 @@ const assert = require('node:assert/strict');
 const app = require('../app');
 const Film = require('../models/Film');
 const { resetDatabase } = require('../config/database');
-const { loadCuratedFilms, mapExternalFilm } = require('../services/filmSeedService');
+const {
+  loadCuratedFilms,
+  mapExternalFilm,
+  seedFilmDatabase,
+} = require('../services/filmSeedService');
 
 let server;
 let baseUrl;
@@ -96,6 +100,36 @@ test('completes a full create, read, update, and delete workflow', async () => {
 
   const missingResponse = await fetch(`${baseUrl}/api/v1/films/${created.data.id}`);
   assert.equal(missingResponse.status, 404);
+});
+
+test('rejects invalid film input with a predictable API error', async () => {
+  const response = await fetch(`${baseUrl}/api/v1/films`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ title: 'Incomplete Film' }),
+  });
+  const payload = await response.json();
+
+  assert.equal(response.status, 400);
+  assert.equal(payload.success, false);
+  assert.equal(payload.error.code, 'BAD_REQUEST');
+  assert.match(payload.error.message, /required/i);
+});
+
+test('seeds the curated catalog when the external API is offline', async () => {
+  resetDatabase();
+
+  const result = await seedFilmDatabase({
+    fetchExternal: async () => {
+      throw new Error('External service unavailable');
+    },
+  });
+
+  assert.equal(result.curatedCount, 16);
+  assert.equal(result.externalCount, 0);
+  assert.equal(result.externalError, 'External service unavailable');
+  assert.equal(result.stats.total_films, 16);
+  assert.equal(Film.list({ limit: 100 }).data.length, 16);
 });
 
 test('maps the external API structure into the database film contract', () => {

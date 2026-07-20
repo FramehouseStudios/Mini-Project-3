@@ -986,7 +986,7 @@ function hydrateRentalBag() {
   try {
     savedIds = JSON.parse(localStorage.getItem(RENTAL_BAG_STORAGE_KEY) || "[]");
   } catch (error) {
-    savedIds = [];
+    /* malformed storage is treated like an empty bag */
   }
 
   const hydratedFilms = sharedLogic.hydrateRentalBagFromIds

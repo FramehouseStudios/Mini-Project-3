@@ -5,7 +5,6 @@ const homeMidnightWeather = document.querySelector("#midnightWeather");
 const homeMidnightNeed = document.querySelector("#midnightNeed");
 const homeMidnightIntensity = document.querySelector("#midnightIntensity");
 const homeMidnightIntensityLabel = document.querySelector("#midnightIntensityLabel");
-const homeMidnightSubmit = document.querySelector("#midnightSubmit");
 const homeMidnightFreeText = document.querySelector("#midnightFreeText");
 const homeEmotionWaveform = document.querySelector("#emotionWaveform");
 const homeMidnightResult = document.querySelector("#midnightResult");

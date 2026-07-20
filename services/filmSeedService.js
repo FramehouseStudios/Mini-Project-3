@@ -112,13 +112,13 @@ async function fetchExternalFilms() {
   return payload.map(mapExternalFilm);
 }
 
-async function seedFilmDatabase() {
+async function seedFilmDatabase({ fetchExternal = fetchExternalFilms } = {}) {
   const curatedFilms = loadCuratedFilms();
   let externalFilms = [];
   let externalError = null;
 
   try {
-    externalFilms = await fetchExternalFilms();
+    externalFilms = await fetchExternal();
   } catch (error) {
     externalError = error.message;
   }

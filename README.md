@@ -94,6 +94,7 @@ npm run check
 
 This command runs:
 
+- ESLint across server, browser, script, and test code with zero warnings allowed
 - Frontend logic tests
 - API and full CRUD integration tests
 - Film catalog validation

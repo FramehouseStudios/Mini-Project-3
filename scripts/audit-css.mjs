@@ -38,7 +38,6 @@ const css = await read("css/style.css");
 
 // Walk top-level + nested rules. Strip comments first.
 const clean = css.replace(/\/\*[\s\S]*?\*\//g, "");
-let i = 0;
 const rules = []; // { selector, start, end }
 function parseBlock(text, base) {
   let depth = 0;

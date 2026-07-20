@@ -20,7 +20,7 @@ Blockbuster+ is a full-stack film discovery and rental-planning application. The
 | Postman demonstration | Complete | `docs/blockbuster-plus.postman_collection.json` |
 | Swagger demonstration | Complete | `/api-docs` |
 | Design evidence | Complete | `docs/REQUIREMENTS.md`, `docs/ARCHITECTURE.md` |
-| Automated verification | Complete | `npm run check` |
+| Automated verification | Complete | Zero-warning ESLint plus tests, data validation, and CSS checks through `npm run check` |
 
 ## Professor Review Path
 
