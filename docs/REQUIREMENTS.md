@@ -2,7 +2,7 @@
 
 ## Product Goal
 
-Deliver Blockbuster+ as one complete project that evolves the Mini Project 2 React application into the Mini Project 3 full-stack assignment. There is one user experience, one npm workspace tree, one API, and one database-backed film domain.
+Deliver Blockbuster+ as one complete project that carries Mini Lab 1's storefront requirements into Mini Lab 2's React application and Mini Lab 3's full-stack assignment. There is one user experience, one npm workspace tree, one API, and one database-backed film domain.
 
 ## Audience
 
@@ -20,17 +20,19 @@ Deliver Blockbuster+ as one complete project that evolves the Mini Project 2 Rea
 
 ## Functional Requirements
 
-1. Register the Vite app as the root npm workspace at `apps/web`.
-2. Use modern React functional components and React Router with at least three routes.
-3. Demonstrate `useState`, `useEffect`, `useContext`, `useMemo`, a custom hook, controlled forms, and immutable updates.
-4. Fetch records with Axios and render loading, error, empty, and success states.
-5. Use Material UI for a responsive, accessible component system.
-6. Serve the built React SPA through the Express application.
-7. Use Model, Controller, and Route boundaries for film API behavior.
-8. Create the normalized SQLite schema automatically.
-9. Populate an empty database from an external API at startup, with a curated offline fallback.
-10. Support complete film CRUD and predictable API responses.
-11. Provide Swagger UI, a Postman collection, automated tests, and a clear review path.
+1. Preserve Mini Lab 1's responsive movie storefront, dynamic cards, search, genre filters, rental bag, VHS styling, and review elements.
+2. Preserve the original Bootstrap/Fetch implementation as a snapshot while modernizing the unified React interface with Material UI and Axios.
+3. Register the Vite app as the root npm workspace at `apps/web`.
+4. Use modern React functional components and React Router with at least three routes.
+5. Demonstrate `useState`, `useEffect`, `useContext`, `useMemo`, a custom hook, controlled forms, and immutable updates.
+6. Fetch records with Axios and render loading, error, empty, and success states.
+7. Use Material UI for a responsive, accessible component system.
+8. Serve the built React SPA through the Express application.
+9. Use Model, Controller, and Route boundaries for film API behavior.
+10. Create the normalized SQLite schema automatically.
+11. Populate an empty database from an external API at startup, with a curated offline fallback.
+12. Support complete film CRUD and predictable API responses.
+13. Provide Swagger UI, a Postman collection, automated tests, and a clear review path.
 
 ## Non-Functional Requirements
 

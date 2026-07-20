@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography";
 
 function StatCard({ label, value, helper }) {
   return (
-    <Card>
+    <Card className="stat-card">
       <CardContent>
         <Typography variant="body2" color="text.secondary">
           {label}

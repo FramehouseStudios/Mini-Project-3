@@ -44,8 +44,8 @@ function FilmsPage() {
     <>
       <PageHeader
         eyebrow="Digital rental aisles"
-        title="Films"
-        description="Search by title, director, or synopsis, choose an aisle, and sort a database-backed catalog without losing the current URL state."
+        title="Pull from the shelf."
+        description="Search the wall by title, director, or synopsis, choose an aisle, and sort the database-backed catalog. Your filters stay in the URL, so this exact shelf is easy to revisit."
       />
       <StatusPanel loading={loading} error={error} onRetry={reload} />
 

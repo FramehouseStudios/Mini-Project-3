@@ -11,11 +11,15 @@ function PageHeader({ eyebrow, title, description, action }) {
       spacing={3}
       sx={{ mb: 4 }}
     >
-      <Stack spacing={1.5}>
+      <Stack spacing={1.5} className="page-header-copy">
         {eyebrow && (
           <Chip label={eyebrow} color="secondary" sx={{ alignSelf: "start" }} />
         )}
-        <Typography variant="h2" component="h1">
+        <Typography
+          variant="h1"
+          component="h1"
+          sx={{ fontSize: { xs: "3rem", md: "4.75rem" }, maxWidth: 900 }}
+        >
           {title}
         </Typography>
         {description && (

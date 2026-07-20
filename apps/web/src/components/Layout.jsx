@@ -14,7 +14,7 @@ import { useAppContext } from "../context/AppContext.jsx";
 
 const navItems = [
   { label: "Dashboard", to: "/" },
-  { label: "Films", to: "/films" },
+  { label: "Browse Aisles", to: "/films" },
   { label: "Rental Bag", to: "/rentals" },
   { label: "Catalog Manager", to: "/catalog-manager" },
   { label: "About", to: "/about" },
@@ -24,10 +24,10 @@ function Layout() {
   const { rentalCount } = useAppContext();
 
   return (
-    <Box sx={{ minHeight: "100vh", bgcolor: "background.default" }}>
-      <AppBar position="sticky" color="primary" elevation={0}>
+    <Box sx={{ minHeight: "100vh" }}>
+      <AppBar position="sticky" color="transparent" elevation={0}>
         <Container maxWidth="xl">
-          <Toolbar disableGutters sx={{ minHeight: 72, gap: 3 }}>
+          <Toolbar disableGutters sx={{ minHeight: 76, gap: 3 }}>
             <Stack
               component={NavLink}
               to="/"
@@ -37,7 +37,7 @@ function Layout() {
               flexGrow={1}
               aria-label="Blockbuster Plus dashboard"
             >
-              <LocalMoviesOutlinedIcon />
+              <LocalMoviesOutlinedIcon color="secondary" />
               <Typography variant="h6" component="span" className="brand-wordmark">
                 BLOCKBUSTER<span>+</span>
               </Typography>
@@ -53,11 +53,17 @@ function Layout() {
               {navItems.map((item) => (
                 <Button
                   key={item.to}
-                  color="inherit"
+                  color={item.to === "/films" ? "secondary" : "inherit"}
+                  variant={item.to === "/films" ? "contained" : "text"}
                   component={NavLink}
                   to={item.to}
                   end={item.to === "/"}
-                  sx={{ "&.active": { bgcolor: "rgba(255,255,255,0.14)" } }}
+                  sx={{
+                    "&.active": {
+                      bgcolor: item.to === "/films" ? "secondary.light" : "rgba(255, 210, 31, 0.12)",
+                      color: item.to === "/films" ? "secondary.contrastText" : "secondary.main",
+                    },
+                  }}
                 >
                   {item.label}
                 </Button>
@@ -121,9 +127,40 @@ function Layout() {
         </Container>
       </Box>
 
-      <Container component="main" maxWidth="xl" sx={{ py: { xs: 3, md: 5 } }}>
+      <Container
+        component="main"
+        maxWidth="xl"
+        className="storefront-main"
+        sx={{ py: { xs: 3, md: 5 } }}
+      >
         <Outlet />
       </Container>
+
+      <Box
+        component="footer"
+        sx={{
+          mt: { xs: 5, md: 8 },
+          py: 3,
+          borderTop: "1px solid",
+          borderColor: "divider",
+          bgcolor: "rgba(3, 7, 20, 0.76)",
+        }}
+      >
+        <Container maxWidth="xl">
+          <Stack
+            direction={{ xs: "column", sm: "row" }}
+            justifyContent="space-between"
+            spacing={1}
+          >
+            <Typography variant="body2" color="text.secondary">
+              Blockbuster+ · Submitted by Joshua Ojeda
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Mini Labs 1–3 · React, MVC, SQLite, and complete CRUD
+            </Typography>
+          </Stack>
+        </Container>
+      </Box>
     </Box>
   );
 }

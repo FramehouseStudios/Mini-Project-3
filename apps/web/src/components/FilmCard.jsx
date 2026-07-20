@@ -1,6 +1,7 @@
 import { Link as RouterLink } from "react-router-dom";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -20,6 +21,7 @@ function FilmCard({ film }) {
   return (
     <Card
       component="article"
+      className="film-card"
       sx={{
         height: "100%",
         display: "flex",
@@ -32,13 +34,21 @@ function FilmCard({ film }) {
         },
       }}
     >
-      <CardMedia
-        component="img"
-        image={film.poster || film.banner}
-        alt={`${film.title} poster`}
-        className="film-image"
-        loading="lazy"
-      />
+      <Box className="film-cover">
+        <CardMedia
+          component="img"
+          image={film.poster || film.banner}
+          alt={`${film.title} poster`}
+          className="film-image"
+          loading="lazy"
+        />
+        <Chip
+          className="film-cover-label"
+          label="Blockbuster+ video"
+          size="small"
+          color="secondary"
+        />
+      </Box>
       <CardContent sx={{ flexGrow: 1 }}>
         <Stack direction="row" justifyContent="space-between" spacing={2} mb={2}>
           <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
@@ -79,7 +89,7 @@ function FilmCard({ film }) {
         </Button>
         <Button
           variant={inBag ? "outlined" : "contained"}
-          color={inBag ? "secondary" : "primary"}
+          color="secondary"
           startIcon={inBag ? <CheckCircleIcon /> : <AddShoppingCartIcon />}
           onClick={() => toggleRentalFilm(film.id)}
           aria-pressed={inBag}

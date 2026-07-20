@@ -27,36 +27,53 @@ function DashboardPage() {
         <>
           <Box
             component="section"
+            className="spotlight-hero"
             aria-labelledby="dashboard-spotlight-title"
             sx={{
-              minHeight: { xs: 470, md: 520 },
+              minHeight: { xs: 390, md: 440 },
               display: "flex",
               alignItems: "flex-end",
               position: "relative",
               overflow: "hidden",
-              borderRadius: 2,
+              borderRadius: 1,
               border: "1px solid",
               borderColor: "divider",
               backgroundImage: `url(${spotlight.banner || spotlight.poster})`,
               backgroundSize: "cover",
-              backgroundPosition: "center",
+              backgroundPosition: { xs: "62% center", md: "right center" },
+              boxShadow: "0 30px 80px rgba(0, 0, 0, 0.38)",
               "&::before": {
                 content: '""',
                 position: "absolute",
                 inset: 0,
-                bgcolor: "rgba(3, 9, 24, 0.74)",
+                background:
+                  "linear-gradient(90deg, rgba(3, 7, 20, 0.98) 0%, rgba(3, 7, 20, 0.88) 38%, rgba(3, 7, 20, 0.28) 76%, rgba(3, 7, 20, 0.5) 100%)",
               },
             }}
           >
-            <Stack spacing={2} sx={{ position: "relative", p: { xs: 3, md: 6 }, maxWidth: 760 }}>
-              <Chip label="Tonight's staff pick" color="secondary" sx={{ alignSelf: "start" }} />
-              <Typography id="dashboard-spotlight-title" variant="h2" component="h1">
-                {spotlight.title}
+            <Stack
+              spacing={2}
+              sx={{ position: "relative", zIndex: 1, p: { xs: 3, md: 5 }, maxWidth: 720 }}
+            >
+              <Chip
+                label={`Tonight's staff pick · ${spotlight.title}`}
+                color="secondary"
+                sx={{ alignSelf: "start" }}
+              />
+              <Typography
+                id="dashboard-spotlight-title"
+                variant="h1"
+                component="h1"
+                sx={{ fontSize: { xs: "4rem", md: "6.5rem" }, maxWidth: 640 }}
+              >
+                Pull from the shelf.
               </Typography>
               <Typography variant="h6" color="text.secondary">
                 {spotlight.year} · {spotlight.genre} · {spotlight.runtime} min
               </Typography>
-              <Typography sx={{ maxWidth: 680 }}>{spotlight.description}</Typography>
+              <Typography sx={{ maxWidth: 620 }}>
+                Open the case for details, reviews, and tonight's rental bag.
+              </Typography>
               <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5}>
                 <Button
                   component={RouterLink}
@@ -102,9 +119,11 @@ function DashboardPage() {
             >
               <Box>
                 <Typography variant="h4" component="h2" id="featured-films-title">
-                  Featured after hours
+                  Fresh on the return cart
                 </Typography>
-                <Typography color="text.secondary">High-rated picks ready for tonight.</Typography>
+                <Typography color="text.secondary">
+                  Four staff picks, ready for a closer look.
+                </Typography>
               </Box>
               <Button component={RouterLink} to="/films?sort=rating-high" endIcon={<ArrowForwardIcon />}>
                 See the shelf

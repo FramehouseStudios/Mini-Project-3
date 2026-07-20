@@ -1,5 +1,6 @@
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
+import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
@@ -22,13 +23,15 @@ function FilmGrid({ films }) {
   }
 
   return (
-    <Grid container spacing={3}>
-      {films.map((film) => (
-        <Grid key={film.id} size={{ xs: 12, sm: 6, lg: 4, xl: 3 }}>
-          <FilmCard film={film} />
-        </Grid>
-      ))}
-    </Grid>
+    <Box className="rental-shelf">
+      <Grid container spacing={3}>
+        {films.map((film) => (
+          <Grid key={film.id} size={{ xs: 12, sm: 6, lg: 4, xl: 3 }}>
+            <FilmCard film={film} />
+          </Grid>
+        ))}
+      </Grid>
+    </Box>
   );
 }
 

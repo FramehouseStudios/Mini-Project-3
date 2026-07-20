@@ -2,11 +2,22 @@
 
 ## One Blockbuster+ Application
 
+Mini Lab 1 established the original Blockbuster+ storefront: responsive pages, Bootstrap layout, local JSON loaded with Fetch, dynamic movie cards, title search, genre filters, a rental bag, and VHS-inspired review styling. That exact foundation is preserved in the `mini-lab-1` snapshot, while its strongest interactions and visual identity continue in this unified application.
+
 Mini Project 2 is no longer included as a separate application. Its strongest React implementation patterns have been adapted into Blockbuster+ and live at `apps/web`, the React/Vite workspace registered by the root `package.json`.
 
 The repository still preserves Mini Project 2's authentic Git history, including its planning, feature, polish, and documentation branches merged through pull requests. The application source, however, now has one domain and one runtime.
 
 Source history integrated from: <https://github.com/FramehouseStudios/Mini-Project-2>
+
+## Mini Lab 1 Requirements Retained
+
+- Responsive shared navigation and semantic page structure
+- Dynamic film cards rendered from structured movie data
+- Search by title and filter by genre
+- Interactive rental bag, now shared through Context and persisted in localStorage
+- VHS-inspired shelf styling, ratings, and review elements
+- Original Bootstrap and Fetch concepts upgraded to Material UI and Axios in the React build
 
 ## React Requirements Retained
 

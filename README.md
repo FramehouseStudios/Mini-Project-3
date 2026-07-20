@@ -2,7 +2,7 @@
 
 Submitted by Joshua Ojeda
 
-Blockbuster+ is one cohesive full-stack film discovery and rental-planning application. Mini Project 2's React/Vite work now powers the frontend of Mini Project 3 instead of living as a second lab. The same application combines React, routing, hooks, Context, Material UI, Axios, an Express MVC API, SQLite, startup data integration, and complete CRUD.
+Blockbuster+ is one cohesive full-stack film discovery and rental-planning application. Mini Lab 1's responsive JavaScript storefront became Mini Lab 2's React/Vite frontend, which now powers Mini Lab 3's database-backed application instead of living as separate projects. The result combines responsive UI, movie search and filtering, React, routing, hooks, Context, Material UI, Axios, an Express MVC API, SQLite, startup data integration, and complete CRUD.
 
 ## Quick Start
 
@@ -23,9 +23,25 @@ npm start
 
 Do not use Live Server for this project. Express must run so the React app can reach SQLite and the REST API.
 
-## One Application, Two Milestones
+## One Application, Three Milestones
 
-The React/Vite application is registered in the root npm workspace at `apps/web`. It is not a separate earlier-project submission. The React concepts were retained and adapted to the Blockbuster+ film domain, while Mini Project 3 adds the database and API layers.
+The React/Vite application is registered in the root npm workspace at `apps/web`. It is not a separate earlier-project submission. Mini Lab 1 established the storefront behavior and VHS direction, Mini Lab 2 rebuilt it as a reusable React experience, and Mini Lab 3 added the database and API layers.
+
+### Mini Lab 1 storefront requirements
+
+| Requirement | Blockbuster+ evidence |
+| --- | --- |
+| Three-page website | Expanded into six routed views: dashboard, films, details, rental bag, catalog manager, and about |
+| Responsive navigation | Shared desktop and mobile navigation in `apps/web/src/components/Layout.jsx` |
+| Semantic HTML | Navigation, `main`, page sections, articles, headings, labels, and accessible control names |
+| Bootstrap layout and buttons | Preserved in the original `mini-lab-1` snapshot; the unified React app modernizes the same responsive layout intent with Material UI Grid and Button components |
+| Local JSON movie data and Fetch | The original data contract evolved into Axios requests to the Express API and a normalized SQLite catalog seeded at startup |
+| Dynamic movie cards | Reusable `FilmCard` and `FilmGrid` components render records returned by the API |
+| Search by title and filter by genre | URL-backed controls on the Films page also support director, synopsis, and sorting |
+| Interactive rental bag | React Context uses immutable updates, and localStorage preserves selections across refreshes |
+| VHS-inspired styling | Dark rental aisles, yellow case spines, shelf framing, condensed display type, and movie-cover art |
+| Letterboxd-style review elements | Film details include ratings and a controlled review form with locally persisted submissions |
+| Git and GitHub | Earlier project history and the original Mini Lab 1 snapshot remain preserved alongside this unified submission |
 
 ### Mini Project 2 React requirements
 
@@ -116,7 +132,7 @@ Open <http://localhost:5173>. Vite proxies `/api` and `/health` to Express on po
 ## Project Structure
 
 ```text
-blockbuster-plus/
+mini-lab-3/
 |-- apps/web/                      # React 19 + Vite npm workspace
 |   `-- src/                       # Routes, components, hooks, Context, API client
 |-- app.js                         # Express middleware, API, Swagger, SPA serving
@@ -135,7 +151,7 @@ blockbuster-plus/
 ## Review Documents
 
 - [Submission checklist](SUBMISSION.md)
-- [Requirements](docs/REQUIREMENTS.md)
+- [Requirements for all three labs](docs/REQUIREMENTS.md)
 - [Architecture](docs/ARCHITECTURE.md)
 - [Project evolution](docs/PROJECT_EVOLUTION.md)
 - [React design plan](docs/REACT_FRONTEND_DESIGN.md)
