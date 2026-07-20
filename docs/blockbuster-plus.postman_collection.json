@@ -1,0 +1,75 @@
+{
+  "info": {
+    "name": "Blockbuster+ Full-Stack Film API",
+    "description": "Professor-ready CRUD demonstration for Mini Project 3.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3000" },
+    { "key": "filmId", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "1 - Health Check",
+      "request": { "method": "GET", "url": "{{baseUrl}}/health" }
+    },
+    {
+      "name": "2 - Read Film Catalog",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/v1/films?sort=rating&order=desc&limit=10" }
+    },
+    {
+      "name": "3 - Filter External API Films",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/v1/films?source=studio-ghibli-api&sort=year&order=desc" }
+    },
+    {
+      "name": "4 - Create Film",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const response = pm.response.json();",
+              "pm.collectionVariables.set('filmId', response.data.id);",
+              "pm.test('Film created', () => pm.expect(pm.response.code).to.equal(201));"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"The Last Video Store\",\n  \"genre\": \"Documentary\",\n  \"director\": \"Joshua Ojeda\",\n  \"year\": 2026,\n  \"rating\": 8.7,\n  \"runtime\": 112,\n  \"description\": \"A documentary about the final neighborhood video store.\",\n  \"moods\": [\"Nostalgic\", \"Hopeful\"],\n  \"weatherTags\": [\"Raining\"],\n  \"reviews\": [{ \"stars\": 4.5, \"username\": \"night_clerk\", \"avatar\": \"NC\", \"quote\": \"Rewind this one.\" }]\n}"
+        },
+        "url": "{{baseUrl}}/api/v1/films"
+      }
+    },
+    {
+      "name": "5 - Read Created Film",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/v1/films/{{filmId}}" }
+    },
+    {
+      "name": "6 - Update Created Film",
+      "request": {
+        "method": "PATCH",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"rating\": 9.1,\n  \"lateNightScore\": 96\n}" },
+        "url": "{{baseUrl}}/api/v1/films/{{filmId}}"
+      }
+    },
+    {
+      "name": "7 - Delete Created Film",
+      "request": { "method": "DELETE", "url": "{{baseUrl}}/api/v1/films/{{filmId}}" }
+    },
+    {
+      "name": "8 - Catalog Statistics",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/v1/films/stats" }
+    },
+    {
+      "name": "9 - Refresh External Data",
+      "request": { "method": "POST", "url": "{{baseUrl}}/api/v1/films/seed" }
+    }
+  ]
+}

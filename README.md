@@ -1,123 +1,141 @@
 # Blockbuster+
 
-Blockbuster+ is a modern reimagining of the classic video rental store. It combines Blockbuster nostalgia with modern streaming design and interactive VHS-style movie browsing.
+Submitted by Joshua Ojeda
 
-## Purpose
+Blockbuster+ is a full-stack reimagining of the neighborhood video store. It combines a polished, responsive film-discovery frontend with an Express MVC API, a normalized SQLite database, startup data from an external film API, and complete CRUD operations.
 
-The purpose of this app is to create a more curated and tactile movie discovery experience for film lovers who miss physical media and video store culture.
+This repository is the unified submission for Mini Project 3 and continues the product developed in the earlier mini projects.
 
-## Features
+## Quick Start
 
-- Three-page website
-- Responsive navigation
-- Semantic HTML structure
-- Bootstrap layout and buttons
-- Local JSON movie data
-- Fetch API
-- Dynamic movie cards
-- Search by title
-- Filter by genre
-- Interactive rental bag system
-- VHS-inspired styling
-- Letterboxd-style review elements
-
-## Technologies Used
-
-- HTML
-- CSS
-- JavaScript
-- Fetch API
-- Bootstrap
-- Git
-- GitHub
-
-## Setup Instructions
-
-1. Clone the repository.
-2. Open the project in VS Code.
-3. Use Live Server to open `index.html`.
-4. Navigate through the app using the navbar.
-
-## Contributor
-
-Created by Joshua Ojeda.
-
-## Future Improvements
-
-- Add a real movie API
-- Save rental bag items with localStorage
-- Add user reviews
-- Add trailers
-- Deploy with GitHub Pages
-
-## Backend Integration (future)
-
-The app is intentionally frontend-only for this assignment, but the data layer
-is documented and validated so a backend can be added later **without changing
-any HTML/CSS**:
-
-- **`docs/data-schema.md`** — audited field contract for `data/films.json`,
-  the controlled vocabularies (genre / moods / weather), and a proposed
-  normalized model for a real database.
-- **`docs/api-contracts.md`** — request/response contracts for a future API
-  (`GET /films`, `GET /films/:id`, `GET /reviews?filmId=`, `POST /rental-bag`,
-  `DELETE /rental-bag/:id`, `POST /midnight-recommendation`) plus the exact
-  URL-only migration path for `js/app.js` / `js/home.js`.
-- **`scripts/validate-films.mjs`** — zero-dependency catalog validator. Run it
-  after any data edit and in CI:
-
-  ```bash
-  node scripts/validate-films.mjs              # offline structural check
-  node scripts/validate-films.mjs --check-urls # also verifies poster URLs + trailer embeds
-  ```
-
-  Exit code `0` = valid, `1` = errors (with a per-field report).
-
-## Logic Tests
-
-Core frontend logic is covered with Node's built-in test runner:
+Use Node.js 22.5 or newer. Node 24 is recommended.
 
 ```bash
-node --test
+npm install
+npm start
 ```
 
-The suite locks the natural-language mood parser/scorer, rental bag
-persist/hydrate helpers, and trailer embed mapping so interaction logic can
-change safely without silently breaking the presentation flow.
+Then open:
 
-## Styles (`css/style.css` is generated)
+- Application: <http://localhost:3000>
+- Film catalog: <http://localhost:3000/films>
+- Swagger: <http://localhost:3000/api-docs>
+- API health: <http://localhost:3000/health>
 
-`css/style.css` is a **build artifact** — do not edit it directly. The source
-of truth is the ordered partials in **`css/src/`** (`01-base.css` …
-`10-late-passes-responsive.css`), split by area so edits stay focused instead
-of scrolling a 13k-line monolith.
+Use `npm start` for this version of the project. Live Server can still display the static fallback, but it does not run Express or SQLite.
+
+## Assignment Requirements
+
+| Requirement | Implementation |
+| --- | --- |
+| MVC architecture | `models/Film.js`, `controllers/filmController.js`, `routes/filmRoutes.js`, and the HTML views |
+| External API startup routine | First launch fetches the keyless Studio Ghibli API |
+| Matching database structure | Film source fields map to SQLite; tags and reviews are normalized into related tables |
+| Complete CRUD | Create, read, update, and delete film endpoints |
+| Postman or Swagger demonstration | Interactive Swagger UI plus an importable Postman collection |
+| Planning and design evidence | Requirements, schema, API contract, architecture, and presentation documents |
+
+## Data Flow
+
+```text
+Browser views
+    -> js/blockbuster-api.js
+    -> /api/v1/films
+    -> routes/filmRoutes.js
+    -> controllers/filmController.js
+    -> models/Film.js
+    -> SQLite
+```
+
+On the first launch, the server:
+
+1. Checks whether the SQLite catalog is empty.
+2. Fetches films from `https://ghibliapi.vercel.app/films`.
+3. Loads the 16 original Blockbuster+ editorial selections.
+4. Maps both sources into one database contract.
+5. Preserves the curated version when the same title exists in both sources.
+
+The normal first seed produces 37 unique films: 16 curated records and 21 non-duplicate external records. If the external service is temporarily unavailable, the original curated catalog keeps the application usable.
+
+## API Highlights
+
+```text
+GET    /health
+GET    /api/v1/films
+GET    /api/v1/films/:id
+POST   /api/v1/films
+PUT    /api/v1/films/:id
+PATCH  /api/v1/films/:id
+DELETE /api/v1/films/:id
+GET    /api/v1/films/genres
+GET    /api/v1/films/stats
+POST   /api/v1/films/seed
+```
+
+Filters include `q`, `genre`, `mood`, `minRating`, `year`, `source`, sorting, and pagination.
+
+## Demonstration
+
+Swagger works directly in the browser at <http://localhost:3000/api-docs>.
+
+For Postman, import:
+
+```text
+docs/blockbuster-plus.postman_collection.json
+```
+
+Run its requests from top to bottom. The Create request saves its returned film ID automatically, so the Read, Update, and Delete requests operate on that same record.
+
+## Quality Checks
 
 ```bash
-node scripts/build-css.mjs           # rebuild css/style.css from css/src/*
-node scripts/build-css.mjs --check   # CI: fail if style.css is out of date
+npm run check
 ```
 
-Partials are concatenated in filename order with no separator, so the shipped
-stylesheet is **byte-identical** to the old monolith (cascade/order unchanged —
-zero visual change). `css/style.css` stays committed so the site still works
-with no build step. Further breaking up the large `03-components-core.css`
-should be done one component at a time, re-running the build and diffing the
-output to keep it byte-stable.
+This command runs:
 
-### Auditing CSS size
+- Frontend logic tests
+- API and full CRUD integration tests
+- Film catalog validation
+- Generated CSS synchronization checks
 
-```bash
-node scripts/audit-css.mjs          # dead-rule + size summary (read-only)
-node scripts/audit-css.mjs --list   # also print every dead-candidate selector
+## Project Structure
+
+```text
+blockbuster-plus/
+|-- app.js                         # Express app, views, middleware, API docs
+|-- server.js                      # Startup seed and HTTP server
+|-- config/database.js             # SQLite connection and schema
+|-- models/Film.js                 # Database queries and domain mapping
+|-- controllers/filmController.js  # Request and response logic
+|-- routes/filmRoutes.js            # REST routes
+|-- services/filmSeedService.js    # External API and curated seed mapping
+|-- index.html                      # Home view
+|-- films.html                      # Catalog view
+|-- about.html                      # Project view
+|-- js/blockbuster-api.js           # Shared browser API client and fallback
+|-- data/films.json                 # Original curated fallback catalog
+|-- docs/                           # Rubric, API, schema, and presentation docs
+|-- test/                           # Unit and integration tests
+`-- scripts/                        # Seed, validation, and CSS scripts
 ```
 
-Conservative, zero-dependency, **read-only**. A rule is only reported dead when
-*every* class/id base-name in its whole selector list appears nowhere in any
-HTML/JS string (element/`*`/attribute selectors are never flagged), so anything
-it lists is safe to delete. Reality check from this tool: the bulk of the
-stylesheet is **live, referenced** CSS, not dead code (~0.6%) or duplication
-(~1.7%). Meaningful size reduction therefore requires a deliberate,
-browser-verified design-system consolidation (shared tokens/utilities for the
-repeated gradient/shadow/glass recipes) done per partial with the byte-stable
-build as the safety net — not a mechanical purge. Keep defensive utilities
-(`.visually-hidden`, the `.col-*` grid shim) even if currently unreferenced.
+## Submission Helpers
+
+- [Submission checklist](SUBMISSION.md)
+- [Requirements and design](docs/REQUIREMENTS.md)
+- [Architecture](docs/ARCHITECTURE.md)
+- [Database schema](docs/data-schema.md)
+- [API reference](docs/API_REFERENCE.md)
+- [Presentation script](docs/PRESENTATION_SCRIPT.md)
+- [Postman collection](docs/blockbuster-plus.postman_collection.json)
+
+## Main Technologies
+
+- HTML, CSS, JavaScript, and Bootstrap conventions
+- Node.js and Express 5
+- SQLite through Node's built-in `node:sqlite`
+- MVC architecture
+- Fetch API and an external Studio Ghibli API
+- Swagger UI and Postman
+- Node's built-in test runner

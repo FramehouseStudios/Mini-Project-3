@@ -235,13 +235,11 @@ const vhsDetails = {
 
 async function fetchFilms() {
   try {
-    const response = await fetch("data/films.json");
-
-    if (!response.ok) {
-      throw new Error("Film data could not be loaded.");
-    }
-
-    films = await response.json();
+    const result = window.BlockbusterApi
+      ? await window.BlockbusterApi.loadFilms()
+      : { films: await fetch("data/films.json").then((response) => response.json()), source: "curated-json" };
+    films = result.films;
+    document.documentElement.dataset.catalogSource = result.source;
     hydrateRentalBag();
     populateGenreFilter(films);
     renderFilms(films);

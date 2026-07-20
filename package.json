@@ -1,0 +1,26 @@
+{
+  "name": "blockbuster-plus",
+  "version": "3.0.0",
+  "description": "A full-stack MVC film discovery and rental-planning application",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "seed": "node scripts/seed-database.js",
+    "test": "NODE_ENV=test node --test test/*.test.js",
+    "check": "npm run test && npm run validate:data && npm run check:css",
+    "validate:data": "node scripts/validate-films.mjs",
+    "check:css": "node scripts/build-css.mjs --check",
+    "build:css": "node scripts/build-css.mjs"
+  },
+  "engines": {
+    "node": ">=22.5.0"
+  },
+  "author": "Joshua Ojeda",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0",
+    "swagger-ui-express": "^5.0.1"
+  }
+}

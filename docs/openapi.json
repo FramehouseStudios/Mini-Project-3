@@ -1,0 +1,192 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Blockbuster+ Film API",
+    "version": "1.0.0",
+    "description": "MVC REST API for the Blockbuster+ catalog. The SQLite database is seeded from the Studio Ghibli API and enriched with the project's curated film data."
+  },
+  "servers": [
+    { "url": "http://localhost:3000", "description": "Local development server" }
+  ],
+  "tags": [
+    { "name": "System" },
+    { "name": "Films" },
+    { "name": "Catalog" }
+  ],
+  "paths": {
+    "/health": {
+      "get": {
+        "tags": ["System"],
+        "summary": "Check server and database health",
+        "responses": { "200": { "description": "Service is healthy" } }
+      }
+    },
+    "/api/v1/films": {
+      "get": {
+        "tags": ["Films"],
+        "summary": "List, filter, and sort films",
+        "parameters": [
+          { "in": "query", "name": "q", "schema": { "type": "string" }, "description": "Search title, director, or description" },
+          { "in": "query", "name": "genre", "schema": { "type": "string" } },
+          { "in": "query", "name": "mood", "schema": { "type": "string" } },
+          { "in": "query", "name": "minRating", "schema": { "type": "number", "minimum": 0, "maximum": 10 } },
+          { "in": "query", "name": "year", "schema": { "type": "integer" } },
+          { "in": "query", "name": "sort", "schema": { "type": "string", "enum": ["rating", "year", "rewatches", "title", "newest"] } },
+          { "in": "query", "name": "order", "schema": { "type": "string", "enum": ["asc", "desc"] } },
+          { "in": "query", "name": "limit", "schema": { "type": "integer", "minimum": 1, "maximum": 100 } },
+          { "in": "query", "name": "offset", "schema": { "type": "integer", "minimum": 0 } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Film collection",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/FilmCollectionResponse" } } }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Films"],
+        "summary": "Create a film",
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/FilmInput" } } }
+        },
+        "responses": {
+          "201": { "description": "Film created" },
+          "400": { "$ref": "#/components/responses/BadRequest" }
+        }
+      }
+    },
+    "/api/v1/films/{id}": {
+      "parameters": [
+        { "in": "path", "name": "id", "required": true, "schema": { "type": "integer" } }
+      ],
+      "get": {
+        "tags": ["Films"],
+        "summary": "Get one film by id",
+        "responses": {
+          "200": { "description": "Film found" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      },
+      "put": {
+        "tags": ["Films"],
+        "summary": "Update a film",
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/FilmInput" } } }
+        },
+        "responses": {
+          "200": { "description": "Film updated" },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      },
+      "patch": {
+        "tags": ["Films"],
+        "summary": "Partially update a film",
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "type": "object", "additionalProperties": true } } }
+        },
+        "responses": {
+          "200": { "description": "Film updated" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      },
+      "delete": {
+        "tags": ["Films"],
+        "summary": "Delete a film",
+        "responses": {
+          "200": { "description": "Film deleted" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      }
+    },
+    "/api/v1/films/genres": {
+      "get": {
+        "tags": ["Catalog"],
+        "summary": "Summarize catalog genres",
+        "responses": { "200": { "description": "Genre statistics" } }
+      }
+    },
+    "/api/v1/films/stats": {
+      "get": {
+        "tags": ["Catalog"],
+        "summary": "Get database statistics",
+        "responses": { "200": { "description": "Catalog statistics" } }
+      }
+    },
+    "/api/v1/films/seed": {
+      "post": {
+        "tags": ["Catalog"],
+        "summary": "Fetch the external API and upsert seed data",
+        "responses": { "200": { "description": "Seed completed" } }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Review": {
+        "type": "object",
+        "required": ["stars", "username", "avatar", "quote"],
+        "properties": {
+          "stars": { "type": "number", "minimum": 0, "maximum": 5, "example": 4.5 },
+          "username": { "type": "string", "example": "night_clerk" },
+          "avatar": { "type": "string", "example": "NC" },
+          "quote": { "type": "string", "example": "A perfect after-hours rental." }
+        }
+      },
+      "FilmInput": {
+        "type": "object",
+        "required": ["title", "genre", "director", "year", "rating", "runtime", "description"],
+        "properties": {
+          "title": { "type": "string", "example": "The Last Video Store" },
+          "genre": { "type": "string", "example": "Documentary" },
+          "director": { "type": "string", "example": "Joshua Ojeda" },
+          "year": { "type": "integer", "example": 2026 },
+          "rating": { "type": "number", "minimum": 0, "maximum": 10, "example": 8.7 },
+          "runtime": { "type": "integer", "minimum": 1, "example": 112 },
+          "description": { "type": "string", "example": "A documentary about the final neighborhood video store." },
+          "poster": { "type": "string", "format": "uri" },
+          "moods": { "type": "array", "items": { "type": "string" }, "example": ["Nostalgic", "Hopeful"] },
+          "weatherTags": { "type": "array", "items": { "type": "string" }, "example": ["Raining"] },
+          "reviews": { "type": "array", "items": { "$ref": "#/components/schemas/Review" } }
+        }
+      },
+      "Film": {
+        "allOf": [
+          { "$ref": "#/components/schemas/FilmInput" },
+          {
+            "type": "object",
+            "properties": {
+              "id": { "type": "integer" },
+              "slug": { "type": "string" },
+              "source": { "type": "string" },
+              "createdAt": { "type": "string", "format": "date-time" },
+              "updatedAt": { "type": "string", "format": "date-time" }
+            }
+          }
+        ]
+      },
+      "FilmCollectionResponse": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean", "example": true },
+          "data": { "type": "array", "items": { "$ref": "#/components/schemas/Film" } },
+          "page": {
+            "type": "object",
+            "properties": {
+              "limit": { "type": "integer" },
+              "offset": { "type": "integer" },
+              "total": { "type": "integer" }
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "BadRequest": { "description": "The request failed validation" },
+      "NotFound": { "description": "The requested film was not found" }
+    }
+  }
+}

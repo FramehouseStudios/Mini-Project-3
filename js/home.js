@@ -1121,12 +1121,11 @@ function handleWatchConcept(event) {
 
 async function loadHomeMidnightFilms() {
   try {
-    const response = await fetch("data/films.json");
-    if (!response.ok) {
-      throw new Error("Could not load films.");
-    }
-
-    homeFilms = await response.json();
+    const result = window.BlockbusterApi
+      ? await window.BlockbusterApi.loadFilms()
+      : { films: await fetch("data/films.json").then((response) => response.json()), source: "curated-json" };
+    homeFilms = result.films;
+    document.documentElement.dataset.catalogSource = result.source;
     renderHomeStorefront();
     renderHomeProjectorFeature(0);
     if (homeMidnightForm) {
